@@ -71,7 +71,7 @@ export default function Login(props) {
                     onSubmit={onSubmit}
                 >
                     <div className="campo-form">
-                        <label htmlFor="numEmpleado">Número Empleado</label>
+                        <label htmlFor="numEmpleado">Número Empleado </label>
                         <input
                             type="number"
                             id="numEmpleado"
