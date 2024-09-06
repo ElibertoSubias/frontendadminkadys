@@ -82,7 +82,7 @@ export default function Login(props) {
                         />
                     </div>
                     <div className="campo-form">
-                        <label htmlFor="password">Contraseña</label>
+                        <label htmlFor="password">Contraseña </label>
                         <input
                             type="password"
                             id="password"
