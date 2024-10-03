@@ -1,0 +1,94 @@
+<div class="col-md-12 mt-3 cont-body p-4" style="padding-top: 78px !important;max-width: 85%;">
+    <h3>Agregar nueva pelicula</h3>
+    <div *ngIf="movie">
+        <form [formGroup]="movieForm">
+            <div class="row">
+                <div class="col-2 mb-3">
+                    <label for="txtTitulo" class="form-label">Titulo:</label>
+                    <input type="text" formControlName="titulo" name="titulo" class="form-control" id="txtTitulo">
+                    <div *ngIf="!movieForm.value.titulo" class="form-text text-danger">* Campo requerido</div>
+                </div>
+                <div class="col-4 mb-3">
+                    <label for="txtDescripcion" class="form-label">Descripcion:</label>
+                    <input type="text" formControlName="descripcion" class="form-control" id="txtDescripcion"/>
+                    <div *ngIf="!movieForm.value.descripcion" class="form-text text-danger">* Campo requerido</div>
+                </div>
+                <div class="col-2 mb-3">
+                    <label for="txtColor" class="form-label">Color:</label>
+                    <input type="text" formControlName="color" class="form-control" id="txtColor"/>
+                    <div *ngIf="!movieForm.value.color" class="form-text text-danger">* Campo requerido</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2 mb-3">
+                    <label for="txtStockS" class="form-label">Stock "S":</label>
+                    <input type="text" formControlName="stockS" class="form-control" id="txtStockS">
+                    <div *ngIf="!movieForm.value.stockS" class="form-text text-danger">* Campo requerido</div>
+                </div>
+                <div class="col-2 mb-3">
+                    <label for="txtStockM" class="form-label">Stock "M":</label>
+                    <input type="text" formControlName="stockM" class="form-control" id="txtStockM">
+                    <div *ngIf="!movieForm.value.stockM" class="form-text text-danger">* Campo requerido</div>
+                </div>
+                <div class="col-2 mb-3">
+                    <label for="txtStockL" class="form-label">Stock "L":</label>
+                    <input type="text" formControlName="stockL" class="form-control" id="txtStockL">
+                    <div *ngIf="!movieForm.value.stockL" class="form-text text-danger">* Campo requerido</div>
+                </div>
+                <div class="col-2 mb-3">
+                    <label for="txtStockXL" class="form-label">Stock "XL":</label>
+                    <input type="text" formControlName="stockXL" class="form-control" id="txtStockXL">
+                    <div *ngIf="!movieForm.value.stockXL" class="form-text text-danger">* Campo requerido</div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="txtPrecio" class="form-label">Precio:</label>
+                <input type="text" formControlName="precio" class="form-control" id="txtPrecio">
+                <div *ngIf="!movieForm.value.precio" class="form-text text-danger">* Campo requerido</div>
+            </div>
+            <div class="mb-3">
+                <label for="fileImagenUrl" class="form-label">Foto de portada:</label>
+                <input type="text" formControlName="imagenUrl" name="imagenUrl" hidden>
+                <input type="button" id="fileImagenUrl" class="btn btn-primary m-2" (click)="addPortada()" value="Seleccionar portada" />
+                <input id="txtImagenUrl" (change)="onChange($event)" #fileImagenUrl type="file" style='display: none;'>
+                <div *ngIf="!movieForm.value.imagenUrl" class="form-text text-danger">* Campo requerido</div>
+                <div *ngIf="file">
+                    <section class="file-info">
+                        Detalles de la imagen:
+                        <ul>
+                        <li>Name: {{file.name}}</li>
+                        <li>Type: {{file.type}}</li>
+                        <li>Size: {{file.size}} bytes</li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="txtCategoria" class="form-label">Categorias:</label>
+                <div class="row m-0">
+                    <div class="col-md-8 p-0">
+                        <input type="text" formControlName="categorias" hidden>
+                        <input type="text" (keyup.enter)="addGenre()" #txtCategoria class="form-control" id="txtCategoria">
+                        <div *ngIf="!categorias.length" class="form-text text-danger">* Campo requerido</div>
+                    </div>
+                    <div class="col-md-4 p-0">
+                        <button (click)="addGenre()" type="button" class="btn btn-primary">Agregar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <ul class="list-group">
+                    <li  class="estilo-cat list-group-item d-flex justify-content-between" *ngFor="let categoria of categorias; index as i; first as isFirst">
+                        {{categoria}}
+                        <mat-icon class="puntero" (click)="deleteGenre(categoria)">delete</mat-icon>
+                        <!-- <span *ngIf="isFirst">default</span> -->
+                      </li>
+                </ul>
+            </div>
+            <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-success" style="margin-right: 20px;" (click)="saveMovie()" [disabled]="!movieForm.valid">Actualizar</button>
+                <a [routerLink]="['/movie/',movie.idDress]" routerLinkActive="active" ariaCurrentWhenActive="page" class="btn btn-danger">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>

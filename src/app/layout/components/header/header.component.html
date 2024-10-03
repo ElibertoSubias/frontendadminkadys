@@ -1,0 +1,42 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light p-3 position-fixed" style="left: 15%;width: 85%;z-index: 1;">
+    <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 24 24">
+            <path d="M 12 2 A 1 1 0 0 0 11.289062 2.296875 L 1.203125 11.097656 A 0.5 0.5 0 0 0 1 11.5 A 0.5 0.5 0 0 0 1.5 12 L 4 12 L 4 20 C 4 20.552 4.448 21 5 21 L 9 21 C 9.552 21 10 20.552 10 20 L 10 14 L 14 14 L 14 20 C 14 20.552 14.448 21 15 21 L 19 21 C 19.552 21 20 20.552 20 20 L 20 12 L 22.5 12 A 0.5 0.5 0 0 0 23 11.5 A 0.5 0.5 0 0 0 22.796875 11.097656 L 12.716797 2.3027344 A 1 1 0 0 0 12.710938 2.296875 A 1 1 0 0 0 12 2 z"></path>
+        </svg>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="row collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        <div class="d-flex justify-content-end">
+            <div class="form-inline my-2 my-lg-0 d-flex justify-content-end">
+                <input #txtFiltro (keyup.enter)="filterMovies()" class="col form-control mr-sm-2" type="search" placeholder="Titulos" aria-label="Search">
+                <button (click)="filterMovies()" class="col-3 btn btn-outline-success my-2 my-sm-0 p-1" type="button">Buscar</button>
+            </div>
+        </div>
+    </div>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item m-2">
+                <a routerLink="/home" routerLinkActive="active" ariaCurrentWhenActive="page" class="text-decoration-none">Home</a>
+            </li>
+            <li class="nav-item m-2">
+                <a style="cursor: pointer;" routerLink="/new-movie" routerLinkActive="active" ariaCurrentWhenActive="page" class="text-decoration-none">
+                <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15 12L12 12M12 12L9 12M12 12L12 9M12 12L12 15" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M7 3.33782C8.47087 2.48697 10.1786 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 10.1786 2.48697 8.47087 3.33782 7" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </a>
+            </li>
+            <li class="nav-item m-2">
+                <div style="cursor: pointer;" (click)="salir()">
+                    <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 3V12M18.3611 5.64001C19.6195 6.8988 20.4764 8.50246 20.8234 10.2482C21.1704 11.994 20.992 13.8034 20.3107 15.4478C19.6295 17.0921 18.4759 18.4976 16.9959 19.4864C15.5159 20.4752 13.776 21.0029 11.9961 21.0029C10.2162 21.0029 8.47625 20.4752 6.99627 19.4864C5.51629 18.4976 4.36274 17.0921 3.68146 15.4478C3.00019 13.8034 2.82179 11.994 3.16882 10.2482C3.51584 8.50246 4.37272 6.8988 5.6311 5.64001" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </li>
+        </ul>
+    </div>
+    </div>
+</nav>
