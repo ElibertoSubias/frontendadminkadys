@@ -45,7 +45,7 @@
                 <div *ngIf="!movieForm.value.precio" class="form-text text-danger">* Campo requerido</div>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-3 mb-3">
                 <label for="txtCategoria" class="form-label">Categorias:</label>
@@ -60,11 +60,11 @@
                 </div>
             </div>
             <div class="col-3 mb-3">
-                <label for="fileImagenUrl" class="form-label">Foto de portada:</label>
+                <label for="fileImagenUrl" class="form-label">Foto de portada:</label><br>
                 <input type="button" id="fileImagenUrl" class="btn btn-primary mt-0 m-2" style="margin-left: 0px !important;" (click)="addPortada()" value="Seleccionar portada" />
                 <input id="txtImagenUrl" formControlName="imagenUrl" (change)="onChange($event)" #fileImagenUrl type="file" style='display: none;'>
                 <div *ngIf="!movieForm.value.imagenUrl" class="form-text text-danger">* Campo requerido</div>
-                <div *ngIf="file">
+                <!-- <div *ngIf="file">
                     <section class="file-info">
                         Detalles de la imagen:
                         <ul>
@@ -73,7 +73,7 @@
                         <li>Size: {{file.size}} bytes</li>
                         </ul>
                     </section>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="mb-3">

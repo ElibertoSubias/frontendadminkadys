@@ -2,9 +2,9 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 // import { Genre } from '../../interfaces/Genre';
 import { HttpClient, HttpResponse } from "@angular/common/http";
-import { throwError } from "rxjs";
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MoviesService } from '../../services/movies.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-workspace',
@@ -17,10 +17,11 @@ export class EditMovieComponent implements OnInit {
   movie: any = {};
   idDress: number = 0;
   id: string = "";
+  baseUrl: string = environment.appBaseUrlMedia;
 
   constructor(
     private route:ActivatedRoute,
-    private http: HttpClient, 
+    private http: HttpClient,
     private fb: FormBuilder,
     private moviesService : MoviesService,
     private router: Router
@@ -54,10 +55,14 @@ export class EditMovieComponent implements OnInit {
   titulo: string = "";
   descripcion: string = "";
   color: string = "";
-  stock: string = "";
+  stockS: string = "";
+  stockM: string = "";
+  stockL: string = "";
+  stockXL: string = "";
   categoria: string = "";
   categorias: String[] = [];
   imagenUrl: string = "";
+  imageUrlActualizar: any = null;
   precio: string = "";
 
   status: "initial" | "uploading" | "success" | "fail" = "initial"; // Variable to store file status
@@ -75,7 +80,10 @@ export class EditMovieComponent implements OnInit {
           titulo: this.movie.titulo,
           descripcion: this.movie.descripcion,
           color: this.movie.color,
-          stock: this.movie.stock,
+          stockS: this.movie.stockS,
+          stockM: this.movie.stockM,
+          stockL: this.movie.stockL,
+          stockXL: this.movie.stockXL,
           imagenUrl: this.movie.imagenUrl,
           precio: this.movie.precio,
           categorias: this.movie.categorias
@@ -93,14 +101,14 @@ export class EditMovieComponent implements OnInit {
     this.movieForm.value.imagenUrl = this.file ? this.file.name : this.movieForm.value.imagenUrl;
     this.moviesService.updateMovie(this.movieForm.value, this.id).subscribe({
       next: (event: any) => {
-        
+
         // Subimos portada en caso de ser grabada con exito la pelicula
         if (this.file) {
           this.onUpload(event.dress._id);
         } else {
           this.router.navigate([`/movie/${this.idDress}`]);
         }
-        
+
       },
       error: (err: any) => {
         console.log(err);
@@ -111,7 +119,7 @@ export class EditMovieComponent implements OnInit {
 
   onChange(event: any) {
     const file: File = event.target.files[0];
-
+    this.imageUrlActualizar = URL.createObjectURL(file)
     if (file) {
       this.status = "initial";
       this.file = file;
@@ -125,15 +133,15 @@ export class EditMovieComponent implements OnInit {
   onUpload(id: string) {
     if (this.file) {
       const formData = new FormData();
-  
+
       formData.append('archivo', this.file, this.file.name);
-  
+
       this.moviesService.uploadImage(formData, id).subscribe({
         next: (event: any) => {
-          
+
           // Correcto
           this.router.navigate([`/movie/${this.idDress}`]);
-          
+
         },
         error: (err: any) => {
           console.log(err);
