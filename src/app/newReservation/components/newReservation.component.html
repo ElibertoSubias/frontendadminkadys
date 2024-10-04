@@ -1,0 +1,59 @@
+<div class="col-md-12 cont-body p-4 mt-3" style="padding-top: 78px !important;max-width: 85%;">
+    <h3>Nueva Reservacion</h3>
+    <form [formGroup]="movieForm">
+        <div class="row">
+            <div class="col-2 mb-3">
+                <label for="txtCodigo" class="form-label">Codigo:</label>
+                <input (keyup.enter)="searchDress()" (focusout)="searchDress()" type="text" formControlName="codigo" name="codigo" class="form-control" id="txtCodigo">
+                <div *ngIf="!movieForm.value.codigo" class="form-text text-danger">* Campo requerido</div>
+            </div>
+            <div class="col-2 mb-3">
+                <label for="txtFechaEvento" class="form-label">Fecha:</label>
+                <input (change)="checkDateEvent()" type="date" formControlName="fechaEvento" class="form-control" id="txtFechaEvento"/>
+                <div *ngIf="!movieForm.value.fechaEvento" class="form-text text-danger">* Campo requerido</div>
+            </div>
+            
+            <div class="col-1 mb-3">
+                <label for="txtTalla" class="form-label">Talla:</label>
+                <select id="txtTalla" formControlName="talla" class="form-select" aria-label="Selecciona una talla">
+                    <option></option>
+                    <option *ngIf="vestido && vestido.stockSDisponible >= 1" value="S">S</option>
+                    <option *ngIf="vestido && vestido.stockMDisponible >= 1" value="M">M</option>
+                    <option *ngIf="vestido && vestido.stockLDisponible >= 1" value="L">L</option>
+                    <option *ngIf="vestido && vestido.stockXLDisponible >= 1" value="XL">XL</option>
+                </select>
+                <div *ngIf="!movieForm.value.talla" class="form-text text-danger">* Campo requerido</div>
+                <!-- <label for="txtTalla" class="form-label">Talla:</label>
+                <input type="text" formControlName="talla" class="form-control" id="txtTalla"/>
+                <div *ngIf="!movieForm.value.talla" class="form-text text-danger">* Campo requerido</div> -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 mb-3">
+                <label for="txtNombre" class="form-label">Nombre:</label>
+                <input type="text" formControlName="nombre" class="form-control" id="txtNombre">
+                <div *ngIf="!movieForm.value.nombre" class="form-text text-danger">* Campo requerido</div>
+            </div>
+            <div class="col-2 mb-3">
+                <label for="txtApPaterno" class="form-label">Apellido Paterno:</label>
+                <input type="text" formControlName="apPaterno" class="form-control" id="txtApPaterno">
+                <div *ngIf="!movieForm.value.apPaterno" class="form-text text-danger">* Campo requerido</div>
+            </div>
+            <div class="col-2 mb-3">
+                <label for="txtApMaterno" class="form-label">Apellido Materno:</label>
+                <input type="text" formControlName="apMaterno" class="form-control" id="txtApMaterno">
+                <div *ngIf="!movieForm.value.apMaterno" class="form-text text-danger">* Campo requerido</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4 mb-3">
+                <label for="txtDireccion" class="form-label">Direccion:</label>
+                <input type="text" formControlName="direccion" class="form-control" id="txtDireccion">
+                <div *ngIf="!movieForm.value.direccion" class="form-text text-danger">* Campo requerido</div>
+            </div>
+        </div>
+        <!-- <div class="col-12"> -->
+            <button type="button" class="btn btn-success col-12" (click)="addReservation()" [disabled]="!movieForm.valid">Reservar</button>
+        <!-- </div> -->
+    </form>
+</div>

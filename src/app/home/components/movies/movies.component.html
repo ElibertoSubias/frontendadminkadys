@@ -39,8 +39,14 @@
                             </p>
                         </div>
                     </div>
-                    <button class="btn btn-success col-12">Reservar</button>
-                    
+                    <a
+                        [routerLink]="['/new-reservation/',movie.idDress]" 
+                        routerLinkActive="active" 
+                        ariaCurrentWhenActive="page" 
+                        class="btn btn-success col-12"
+                    >
+                        Reservar
+                    </a>
                 </div>
             </div>
         </div>

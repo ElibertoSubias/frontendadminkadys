@@ -17,6 +17,18 @@ export class MoviesService {
         return this.http.post<any>(`${environment.appBaseUrl}/dresses`, JSON.stringify(data), {headers});
     }
 
+    public saveReservation(data: any): Observable<any> {
+        const token = this.getToken();
+        const headers = { 'Content-Type': 'application/json', 'x-auth-token': `${token}` };
+        return this.http.post<any>(`${environment.appBaseUrl}/reservation`, JSON.stringify(data), {headers});
+    }
+
+    public checkDateEvent(fechaEvento: string, idDress: string): Observable<any> {
+        const token = this.getToken();
+        const headers = { 'x-auth-token': `${token}` };
+        return this.http.get<any>(`${environment.appBaseUrl}/reservation/check-date/${fechaEvento}/dress/${idDress}`, {headers});
+    }
+
     public updateMovie(data: any, id: string): Observable<any> {
         const token = this.getToken();
         const headers = { 'Content-Type': 'application/json', 'x-auth-token': `${token}` };

@@ -46,6 +46,16 @@ export const APP_ROUTES: Routes = [
         loadChildren: () => import('./editMovie/editMovie.module').then(m => m.EditMovieModule)
       },
       {
+        path: 'new-reservation/:id',
+        canActivate: [AppGuard],
+        loadChildren: () => import('./newReservation/newReservation.module').then(m => m.NewReservationModule)
+      },
+      {
+        path: 'new-reservation',
+        canActivate: [AppGuard],
+        loadChildren: () => import('./newReservation/newReservation.module').then(m => m.NewReservationModule)
+      },
+      {
           path: '**',
           redirectTo: 'home',
           pathMatch: 'full',
