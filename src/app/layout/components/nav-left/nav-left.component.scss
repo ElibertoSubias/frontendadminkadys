@@ -4,3 +4,29 @@
     height: 100%;
     position: fixed;
 }
+
+.cont-nav {
+    margin: 0px 10px;
+    border-radius: 10px;
+    background: #d1cfcf;
+    padding-bottom: 5px;
+}
+
+.cont-nav a {
+    margin: 5px 5px 0px 5px;
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+.cont-nav a:hover {
+    background: #ffffff;
+}
+
+.active {
+    background: #ffffff;
+}
+
+.items-nav {
+    color: black;
+    margin-left: 10px;
+}

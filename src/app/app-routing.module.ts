@@ -31,19 +31,24 @@ export const APP_ROUTES: Routes = [
         loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
       },
       {
-        path: 'movie/:id',
+        path: 'dress/:id',
         canActivate: [AppGuard],
-        loadChildren: () => import('./detailMovie/detailMovie.module').then(m => m.DetailMovieModule)
+        loadChildren: () => import('./detailItem/detailItem.module').then(m => m.DetailItemModule)
       },
       {
-        path: 'new-movie',
+        path: 'new-dress',
         canActivate: [AppGuard],
-        loadChildren: () => import('./addMovie/addMovie.module').then(m => m.AddMovieModule)
+        loadChildren: () => import('./addItem/addItem.module').then(m => m.AddItemModule)
       },
       {
-        path: 'edit-movie/:id',
+        path: 'edit-dress/:id',
         canActivate: [AppGuard],
-        loadChildren: () => import('./editMovie/editMovie.module').then(m => m.EditMovieModule)
+        loadChildren: () => import('./editItem/editItem.module').then(m => m.EditItemModule)
+      },
+      {
+        path: 'reports',
+        canActivate: [AppGuard],
+        loadChildren: () => import('./reports/reports.module').then(m => m.ReportsModule)
       },
       {
         path: 'new-reservation/:id',

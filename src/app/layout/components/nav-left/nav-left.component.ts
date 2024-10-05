@@ -11,13 +11,18 @@ import { ApiService } from '../../../services/api.service';
 export class NavLeftComponent implements OnInit {
 
   @ViewChild('txtFiltro') txtFiltro:ElementRef | undefined;
+  pathActive: string = "";
 
   constructor(
     public router: Router,
     private moviesService : MoviesService,
     private route: ActivatedRoute,
     private apiService : ApiService
-  ) { }
+  ) { 
+    router.events.subscribe((val) => {
+      this.pathActive = this.router.url;
+    });
+  }
 
   ngOnInit(): void {
     

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, viewChild, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, viewChild, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MoviesService } from '../../../services/movies.service';
 import { ApiService } from '../../../services/api.service';
@@ -8,7 +8,7 @@ import { ApiService } from '../../../services/api.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, AfterViewInit {
 
   @ViewChild('txtFiltro') txtFiltro:ElementRef | undefined;
   
@@ -22,12 +22,17 @@ export class HeaderComponent implements OnInit {
     private apiService : ApiService
   ) { 
     router.events.subscribe((val) => {
-      if (this.router.url != "/home") {
-        this.showFilter = false;
-      } else {
+      if (this.router.url.indexOf('/home') > -1) {
         this.showFilter = true;
+      } else {
+        this.showFilter = false;
       }
-  });
+    });
+  }
+  ngAfterViewInit(): void {
+    if (this.route.snapshot.queryParams['filter']) {
+      this.txtFiltro!.nativeElement.value = this.route.snapshot.queryParams['filter'];
+    }
   }
 
   ngOnInit(): void {

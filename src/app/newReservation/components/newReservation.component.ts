@@ -146,6 +146,7 @@ export class NewReservationComponent implements OnInit {
       next: (event: any) => {
         this.vestidoStock = event.dressExistente;
         this.idDress = event.dressExistente._id;
+        this.imagenUrl = event.dressExistente.imagenUrl;
         this.movieForm.patchValue({
           codigo: event.dressExistente.idDress,
           idDress: event.dressExistente._id
