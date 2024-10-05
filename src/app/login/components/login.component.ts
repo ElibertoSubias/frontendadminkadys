@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import { MoviesService } from '../../services/movies.service';
 import { ApiService } from '../../services/api.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-workspace',
@@ -42,7 +43,13 @@ export class LoginComponent implements OnInit {
         this.router.navigateByUrl("/home");
       },
       error: (err: any) => {
-        alert("Error al iniciar sesion")
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Usuario/Password incorrectos!",
+          showConfirmButton: false,
+          timer: 1500
+        });
       },
       complete: () => {
         // this.currentFile = undefined;

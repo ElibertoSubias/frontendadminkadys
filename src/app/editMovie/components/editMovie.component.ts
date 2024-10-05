@@ -5,6 +5,7 @@ import { HttpClient, HttpResponse } from "@angular/common/http";
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MoviesService } from '../../services/movies.service';
 import { environment } from '../../../environments/environment';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-workspace',
@@ -91,7 +92,13 @@ export class EditMovieComponent implements OnInit {
       },
       error: (err: any) => {
         console.log(err);
-        alert("Ocurrio un error al obtener la pelicula");
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Ocurrio un error al obtener vestido!",
+          showConfirmButton: false,
+          timer: 1500
+        });
       },
     });
   }
@@ -102,17 +109,30 @@ export class EditMovieComponent implements OnInit {
     this.moviesService.updateMovie(this.movieForm.value, this.id).subscribe({
       next: (event: any) => {
 
-        // Subimos portada en caso de ser grabada con exito la pelicula
+        // Subimos portada en caso de ser grabada con exito
         if (this.file) {
           this.onUpload(event.dress._id);
         } else {
-          this.router.navigate([`/movie/${this.idDress}`]);
+          Swal.fire({
+            title: "Informacion grabada con exito!",
+            showDenyButton: false,
+            showCancelButton: false,
+            confirmButtonText: "Ok"
+          }).then((result) => {
+            this.router.navigate([`/movie/${this.idDress}`]);
+          });
         }
 
       },
       error: (err: any) => {
         console.log(err);
-        alert("Ocurrio un error al actualizar la pelicula, intenta de nuevo.");
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Ocurrio un error al actualizar vestido, intenta de nuevo!",
+          showConfirmButton: false,
+          timer: 1500
+        });
       },
     });
   }
@@ -140,12 +160,25 @@ export class EditMovieComponent implements OnInit {
         next: (event: any) => {
 
           // Correcto
-          this.router.navigate([`/movie/${this.idDress}`]);
+          Swal.fire({
+            title: "Informacion grabada con exito!",
+            showDenyButton: false,
+            showCancelButton: false,
+            confirmButtonText: "Ok"
+          }).then((result) => {
+            this.router.navigate([`/movie/${this.idDress}`]);
+          });
 
         },
         error: (err: any) => {
           console.log(err);
-          alert("Ocurrio un error al actualizar la pelicula, intenta de nuevo.");
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Ocurrio un error al grabar imagen, intenta de nuevo!",
+            showConfirmButton: false,
+            timer: 1500
+          });
         },
       });
     }

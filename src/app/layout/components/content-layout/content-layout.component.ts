@@ -9,6 +9,8 @@ export class ContentLayoutComponent implements OnInit {
 
   constructor() { }
 
+  showFilter: boolean = true;
+
   ngOnInit(): void {
   }
 

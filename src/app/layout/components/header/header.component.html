@@ -8,10 +8,10 @@
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="row collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+    <div *ngIf="showFilter" class="row collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
         <div class="d-flex justify-content-end">
             <div class="form-inline my-2 my-lg-0 d-flex justify-content-end">
-                <input #txtFiltro (keyup.enter)="filterMovies()" class="col form-control mr-sm-2" type="search" placeholder="Titulos" aria-label="Search">
+                <input #txtFiltro (keyup.enter)="filterMovies()" class="col form-control mr-sm-2" type="search" placeholder="Codigo" aria-label="Search">
                 <button (click)="filterMovies()" class="col-3 btn btn-outline-success my-2 my-sm-0 p-1" type="button">Buscar</button>
             </div>
         </div>

@@ -1,3 +1,32 @@
 <div class="nav-left">
-    Menu Izquierda
+    <div>
+        <h2 class="p-2 text-center">Kadys Renta de Vestidos</h2>
+    </div>
+    <div>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a 
+                    style="cursor: pointer;" 
+                    routerLink="/new-reservation" 
+                    routerLinkActive="active" 
+                    ariaCurrentWhenActive="page" 
+                    class="nav-link text-decoration-none"
+                >Renta de Vestido
+                </a>
+            </li>
+            <li class="nav-item">
+                <a 
+                    style="cursor: pointer;" 
+                    routerLink="/new-movie" 
+                    routerLinkActive="active" 
+                    ariaCurrentWhenActive="page" 
+                    class="nav-link text-decoration-none"
+                >Agregar nuevo vestido
+                </a>
+            </li>
+            <li class="nav-item">
+              <a (click)="salir()" class="nav-link" href="#">Cerrar</a>
+            </li>
+          </ul>
+    </div>
 </div>

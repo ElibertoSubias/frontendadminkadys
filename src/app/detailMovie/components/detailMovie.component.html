@@ -5,14 +5,23 @@
         <div class="col-6 p-0">
           <div class="card-body color-fondo-info" style="width: 100%;">
             <h2 class="card-title text-start">{{movie.descripcion}}</h2>
-            <p class="card-text">{{movie.idDress}}</p>
-            <h2 class="card-title text-start">Color: {{movie.color}}</h2>
-            <h2 class="card-title text-start">Stocks:</h2>
-            <p class="card-title text-start">"S": {{movie.stockS}}</p>
-            <p class="card-title text-start">"M": {{movie.stockM}}</p>
-            <p class="card-title text-start">"L": {{movie.stockL}}</p>
-            <p class="card-title text-start">"XL": {{movie.stockXL}}</p>
-            <h2 class="card-title text-start">Precio: {{movie.precio}}</h2>
+            <p class="card-text">Codigo: {{movie.idDress}}</p>
+            <div class="row">
+              <div class="col-6">
+                <h2 class="card-title text-start m-0">Color:</h2>
+                <p>{{movie.color}}</p>
+              </div>
+              <div class="col-6">
+                <h2 class="card-title text-start m-0">Stocks:</h2>
+                <div class="row">
+                  <p class="col-3 card-title text-start">S: {{movie.stockS}}</p>
+                  <p class="col-3 card-title text-start">M: {{movie.stockM}}</p>
+                  <p class="col-3 card-title text-start">L: {{movie.stockL}}</p>
+                  <p class="col-3 card-title text-start">XL: {{movie.stockXL}}</p>
+                </div>
+              </div>
+            </div>
+            <h2 class="card-title text-start">Precio: ${{movie.precio}}</h2>
             <h2 class="card-title text-start">Categorias:</h2>
             <div class="mb-3">
               <ul class="list-group">

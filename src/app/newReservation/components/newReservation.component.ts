@@ -5,6 +5,8 @@ import { HttpClient, HttpResponse } from "@angular/common/http";
 import { throwError } from "rxjs";
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MoviesService } from '../../services/movies.service';
+import Swal from 'sweetalert2';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-workspace',
@@ -53,6 +55,8 @@ export class NewReservationComponent implements OnInit {
   idDress: number = 0;
   vestido: any = null;
   vestidoStock: any = null;
+  baseUrl: string = environment.appBaseUrlMedia;
+  imagenUrl: string = "";
 
   status: "initial" | "uploading" | "success" | "fail" = "initial"; // Variable to store file status
   file?: File;
@@ -64,6 +68,7 @@ export class NewReservationComponent implements OnInit {
         next: (event: any) => {
           this.vestidoStock = event.dressExistente;
           this.idDress = event.dressExistente._id;
+          this.imagenUrl = event.dressExistente.imagenUrl
           this.movieForm.patchValue({
             codigo: event.dressExistente.idDress,
             idDress: event.dressExistente._id
@@ -71,7 +76,13 @@ export class NewReservationComponent implements OnInit {
         },
         error: (err: any) => {
           console.log(err);
-          alert("Ocurrio un error al obtener vestido");
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Ocurrio un error al obtener vestido!",
+            showConfirmButton: false,
+            timer: 1500
+          });
         },
       });
     }
@@ -94,7 +105,14 @@ export class NewReservationComponent implements OnInit {
         }
       },
       error: (err: any) => {
-        alert("Ocurrio un error al crear la pelicula, intenta de nuevo.");
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Ocurrio un error al consultar fecha, intenta de nuevo!",
+          showConfirmButton: false,
+          timer: 1500
+        });
+        this.movieForm.value.fecha = "";
         console.log(err);
       },
       complete: () => {
@@ -106,15 +124,19 @@ export class NewReservationComponent implements OnInit {
   addReservation() {
     this.moviesService.saveReservation(this.movieForm.value).subscribe({
       next: (event: any) => {
+        Swal.fire("Reservacion creada con exito!");
         this.movieForm.reset();
       },
       error: (err: any) => {
-        alert("Ocurrio un error al crear la pelicula, intenta de nuevo.");
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Ocurrio un error al crear la reservacion, intenta de nuevo!",
+          showConfirmButton: false,
+          timer: 1500
+        });
         console.log(err);
-      },
-      complete: () => {
-        // this.currentFile = undefined;
-      },
+      }
     });
   }
 
@@ -131,7 +153,13 @@ export class NewReservationComponent implements OnInit {
       },
       error: (err: any) => {
         console.log(err);
-        alert("Ocurrio un error al obtener vestido");
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Ocurrio un error al obtener vestido",
+          showConfirmButton: false,
+          timer: 1500
+        });
       },
     });
   }

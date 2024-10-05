@@ -5,6 +5,7 @@ import { HttpClient, HttpResponse } from "@angular/common/http";
 import { throwError } from "rxjs";
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MoviesService } from '../../services/movies.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-workspace',
@@ -63,7 +64,6 @@ export class AddMovieComponent implements OnInit {
   file?: File;
 
   ngOnInit(): void {
-
   }
 
   saveMovie() {
@@ -72,12 +72,18 @@ export class AddMovieComponent implements OnInit {
     this.moviesService.saveMovie(this.movieForm.value).subscribe({
       next: (event: any) => {
         
-        // Subimos portada en caso de ser grabada con exito la pelicula
+        // Subimos portada en caso de ser grabada con exito
         this.onUpload(event.dress._id);
         
       },
       error: (err: any) => {
-        alert("Ocurrio un error al crear la pelicula, intenta de nuevo.");
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Ocurrio un error al crear vestido, intenta de nuevo!",
+          showConfirmButton: false,
+          timer: 1500
+        });
         console.log(err);
       },
       complete: () => {
@@ -109,11 +115,23 @@ export class AddMovieComponent implements OnInit {
         next: (event: any) => {
           
           // Correcto
-          this.router.navigate([`/home`]);
-          
+          Swal.fire({
+            title: "Vestido creado con exito!",
+            showDenyButton: false,
+            showCancelButton: false,
+            confirmButtonText: "Ok"
+          }).then((result) => {
+            this.router.navigate([`/home`]);
+          });
         },
         error: (err: any) => {
-          alert("Ocurrio un error al crear la pelicula, intenta de nuevo.");
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Ocurrio un error al grabar imagen, intenta de nuevo!",
+            showConfirmButton: false,
+            timer: 1500
+          });
           console.log(err);
         },
         complete: () => {

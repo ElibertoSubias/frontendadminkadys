@@ -11,13 +11,24 @@ import { ApiService } from '../../../services/api.service';
 export class HeaderComponent implements OnInit {
 
   @ViewChild('txtFiltro') txtFiltro:ElementRef | undefined;
+  
+
+  showFilter: boolean = true;
 
   constructor(
     public router: Router,
     private moviesService : MoviesService,
     private route: ActivatedRoute,
     private apiService : ApiService
-  ) { }
+  ) { 
+    router.events.subscribe((val) => {
+      if (this.router.url != "/home") {
+        this.showFilter = false;
+      } else {
+        this.showFilter = true;
+      }
+  });
+  }
 
   ngOnInit(): void {
     

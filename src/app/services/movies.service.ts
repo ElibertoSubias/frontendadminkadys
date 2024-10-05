@@ -50,13 +50,13 @@ export class MoviesService {
     public getAllMovies(): Observable<any> {
         const token = this.getToken();
         const headers = { 'x-auth-token': `${token}` };
-        return this.http.get<any>(`${environment.appBaseUrl}/dresses`, { headers });
+        return this.http.get<any>(`${environment.appBaseUrl}/dresses/all`, { headers });
     }
 
-    public getMoviesByFilter(titulo: string): Observable<any> {
+    public getMoviesByFilter(code: string): Observable<any> {
         const token = this.getToken();
         const headers = { 'x-auth-token': `${token}` };
-        return this.http.get<any>(`${environment.appBaseUrl}/movies/titulo/${titulo}`, { headers });
+        return this.http.get<any>(`${environment.appBaseUrl}/dresses/code/${code}`, { headers });
     }
 
     public getMovie(id: number): Observable<any> {

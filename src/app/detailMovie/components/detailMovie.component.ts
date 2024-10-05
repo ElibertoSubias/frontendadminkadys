@@ -4,6 +4,7 @@ import { MoviesService } from '../../services/movies.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { CookieService } from 'ngx-cookie-service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-workspace',
@@ -36,7 +37,13 @@ export class DetailMovieComponent implements OnInit {
           this.cookies.delete("token");
           this.router.navigate([`/login`]);
         } else {
-          alert("Ocurrio un error al obtener las informacion.");
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Ocurrio un error al obtener vestidos!",
+            showConfirmButton: false,
+            timer: 1500
+          });
         }
       },
     });
@@ -45,11 +52,17 @@ export class DetailMovieComponent implements OnInit {
   removeMovie() {
     this.moviesService.removeMovie(this.movie._id).subscribe({
       next: (event: any) => {
-        this.router.navigate([`/home/`]);
+        this.router.navigate([`/home`]);
       },
       error: (err: any) => {
         console.log(err);
-        alert("Ocurrio un error al eliminar la pelicula.");
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Ocurrio un error al eliminar vestido, intenta de nuevo!",
+          showConfirmButton: false,
+          timer: 1500
+        });
       },
     });
   }

@@ -4,6 +4,7 @@ import { MoviesService } from '../../../services/movies.service';
 import { environment } from '../../../../environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-workspace',
@@ -40,7 +41,13 @@ export class MoviesComponent implements OnInit {
             this.cookies.delete("token");
             this.router.navigate([`/login`]);
           } else {
-            alert("Ocurrio un error al obtener la informacion.");
+            Swal.fire({
+              position: "top-end",
+              icon: "error",
+              title: "Ocurrio un error al obtener la informacion!",
+              showConfirmButton: false,
+              timer: 1500
+            });
           }
         },
       });
@@ -56,7 +63,13 @@ export class MoviesComponent implements OnInit {
             this.cookies.delete("token");
             this.router.navigate([`/login`]);
           } else {
-            alert("Ocurrio un error al obtener las informacion.");
+            Swal.fire({
+              position: "top-end",
+              icon: "error",
+              title: "Ocurrio un error al obtener la informacion!",
+              showConfirmButton: false,
+              timer: 1500
+            });
           }
         },
       });

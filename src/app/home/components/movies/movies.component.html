@@ -10,8 +10,8 @@
         </div>
     </div>
 </div>
-<div class="row row-cols-1 row-cols-md-3 g-4 pb-5" style="margin: 0px 1%">
-    <div *ngFor="let movie of movies">
+<div class="row row-cols-1 row-cols-md-3 g-4 pb-5" style="margin: 0px 1%;">
+    <div *ngFor="let movie of movies"   [ngStyle]="{'width': (movies.length==1) ? '400px' : ''}">
         <div class="col">
             <div class="card">
                 <div class="cont-image">
