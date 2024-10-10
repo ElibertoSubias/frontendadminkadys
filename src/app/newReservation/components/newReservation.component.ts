@@ -57,6 +57,7 @@ export class NewReservationComponent implements OnInit {
   vestidoStock: any = null;
   baseUrl: string = environment.appBaseUrlMedia;
   imagenUrl: string = "";
+  totalDisponible: number = 0;
 
   status: "initial" | "uploading" | "success" | "fail" = "initial"; // Variable to store file status
   file?: File;
@@ -89,19 +90,12 @@ export class NewReservationComponent implements OnInit {
   }
 
   checkDateEvent() {
-    this.moviesService.checkDateEvent(this.movieForm.value.fechaEvento, this.idDress.toString()).subscribe({
+    this.moviesService.checkDateEvent(this.movieForm.value.fechaEvento, this.idDress.toString(), this.movieForm.value.talla).subscribe({
       next: (data: any) => {
-        this.vestido = Object.assign({}, this.vestidoStock);
-        for (let dress of data.dresses) {
-          if (dress.talla == "S") {
-            this.vestido.stockSDisponible--;
-          } else if (dress.talla == "M") {
-            this.vestido.stockMDisponible--;
-          } else if (dress.talla == "L") {
-            this.vestido.stockLDisponible--;
-          } else if (dress.talla == "XL") {
-            this.vestido.stockXLDisponible--;
-          }
+        this.totalDisponible = data.totalStock;
+        if (data.totalStock == 0) {
+          this.movieForm.controls['talla'].reset();
+          Swal.fire("Vestido no disponible para esta fecha!");
         }
       },
       error: (err: any) => {
