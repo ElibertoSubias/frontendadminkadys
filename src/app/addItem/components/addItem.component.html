@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-2 mb-3">
                 <label for="txtCodigo" class="form-label">Codigo:</label>
-                <input type="text" formControlName="codigo" name="codigo" class="form-control" id="txtCodigo">
+                <input type="number" formControlName="codigo" name="codigo" class="form-control" id="txtCodigo">
                 <div *ngIf="!dressForm.value.codigo" class="form-text text-danger">* Campo requerido</div>
             </div>
             <div class="col-4 mb-3">

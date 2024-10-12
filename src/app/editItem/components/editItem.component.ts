@@ -105,7 +105,7 @@ export class EditItemComponent implements OnInit {
   saveItem() {
     this.dressForm.value.categorias = this.categorias;
     this.dressForm.value.imagenUrl = this.file ? this.file.name : this.dressForm.value.imagenUrl;
-    this.moviesService.updateMovie(this.dressForm.value, this.id).subscribe({
+    this.moviesService.updateMovie(this.dressForm.value, this.dress._id).subscribe({
       next: (event: any) => {
 
         // Subimos portada en caso de ser grabada con exito
@@ -128,7 +128,7 @@ export class EditItemComponent implements OnInit {
         Swal.fire({
           position: "top-end",
           icon: "error",
-          title: "Ocurrio un error al actualizar vestido, intenta de nuevo!",
+          title: err.error.msg,
           showConfirmButton: false,
           timer: 1500
         });

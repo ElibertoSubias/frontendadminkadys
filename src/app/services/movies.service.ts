@@ -50,7 +50,7 @@ export class MoviesService {
     public removeMovie(id: string): Observable<any> {
         const token = this.getToken();
         const headers = { 'Content-Type': 'application/json', 'x-auth-token': `${token}` };
-        return this.http.delete<any>(`${environment.appBaseUrl}/movies/${id}`, {headers});
+        return this.http.delete<any>(`${environment.appBaseUrl}/dresses/${id}`, {headers});
     }
 
     public uploadImage(file: any, id: string): Observable<any> {
