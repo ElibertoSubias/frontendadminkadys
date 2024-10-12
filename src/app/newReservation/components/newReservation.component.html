@@ -5,55 +5,87 @@
             <div class="row">
                 <div class="col-3 mb-3">
                     <label for="txtCodigo" class="form-label">Codigo:</label>
-                    <input (keyup.enter)="searchDress()" (focusout)="searchDress()" type="text" formControlName="codigo" name="codigo" class="form-control" id="txtCodigo">
+                    <input (keyup.enter)="searchDress()" id="txtCodigo" (focusout)="searchDress()" type="text" formControlName="codigo" name="codigo" class="form-control">
                     <div *ngIf="!movieForm.value.codigo" class="form-text text-danger">* Campo requerido</div>
                 </div>
                 <div class="col-4 mb-3">
                     <label for="txtFechaEvento" class="form-label">Fecha:</label>
-                    <input type="date" formControlName="fechaEvento" class="form-control" id="txtFechaEvento"/>
-                    <div *ngIf="!movieForm.value.fechaEvento" class="form-text text-danger">* Campo requerido</div>
+                    <input (change)="movieForm.controls['talla'].reset()" id="txtFechaEvento" type="date" formControlName="fechaEvento" class="form-control" #txtFechaEvento/>
+                    <div *ngIf="movieForm.controls['fechaEvento'].errors" class="form-text text-danger">* Campo requerido</div>
                 </div>
-                
                 <div class="col-2 mb-3">
                     <label for="txtTalla" class="form-label">Talla:</label>
-                    <select (change)="checkDateEvent()" id="txtTalla" formControlName="talla" class="form-select" aria-label="Selecciona una talla">
+                    <select (change)="checkDateEvent()" #txtTalla formControlName="talla" class="form-select" aria-label="Selecciona una talla">
                         <option value=""></option>
                         <option value="S">S</option>
                         <option value="M">M</option>
                         <option value="L">L</option>
                         <option value="XL">XL</option>
                     </select>
-                    <div *ngIf="!movieForm.value.talla" class="form-text text-danger">* Campo requerido</div>
-                    <!-- <label for="txtTalla" class="form-label">Talla:</label>
-                    <input type="text" formControlName="talla" class="form-control" id="txtTalla"/>
-                    <div *ngIf="!movieForm.value.talla" class="form-text text-danger">* Campo requerido</div> -->
+                    <div *ngIf="movieForm.controls['talla'].errors" class="form-text text-danger">* Campo requerido</div>
                 </div>
                 <div class="col-2 mb-3">
-                    <label for="txtFechaEvento" class="form-label">Disponibles:<strong class="p-2">{{totalDisponible}}</strong></label>
+                    <label for="txtDisponible" class="form-label">Disponibles:</label>
+                    <label class="form-label">
+                        <strong class="p-2">{{totalDisponible}}</strong>
+                    </label>
                 </div>
             </div>
             <div class="row">
                 <div class="col-4 mb-3">
                     <label for="txtNombre" class="form-label">Nombre:</label>
-                    <input type="text" formControlName="nombre" class="form-control" id="txtNombre">
-                    <div *ngIf="!movieForm.value.nombre" class="form-text text-danger">* Campo requerido</div>
+                    <input type="text" formControlName="nombre" class="form-control" #txtNombre>
+                    <div *ngIf="movieForm.controls['nombre'].errors" class="form-text text-danger">* Campo requerido</div>
                 </div>
                 <div class="col-4 mb-3">
                     <label for="txtApPaterno" class="form-label">Apellido Paterno:</label>
-                    <input type="text" formControlName="apPaterno" class="form-control" id="txtApPaterno">
-                    <div *ngIf="!movieForm.value.apPaterno" class="form-text text-danger">* Campo requerido</div>
+                    <input type="text" formControlName="apPaterno" class="form-control" #txtApPaterno>
+                    <div *ngIf="movieForm.controls['apPaterno'].errors" class="form-text text-danger">* Campo requerido</div>
                 </div>
                 <div class="col-4 mb-3">
                     <label for="txtApMaterno" class="form-label">Apellido Materno:</label>
-                    <input type="text" formControlName="apMaterno" class="form-control" id="txtApMaterno">
-                    <div *ngIf="!movieForm.value.apMaterno" class="form-text text-danger">* Campo requerido</div>
+                    <input type="text" formControlName="apMaterno" class="form-control" #txtApMaterno>
+                    <div *ngIf="movieForm.controls['apMaterno'].errors" class="form-text text-danger">* Campo requerido</div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-8 mb-3">
                     <label for="txtDireccion" class="form-label">Direccion:</label>
-                    <input type="text" formControlName="direccion" class="form-control" id="txtDireccion">
-                    <div *ngIf="!movieForm.value.direccion" class="form-text text-danger">* Campo requerido</div>
+                    <input type="text" formControlName="direccion" class="form-control" #txtDireccion>
+                    <div *ngIf="movieForm.controls['direccion'].errors" class="form-text text-danger">* Campo requerido</div>
+                </div>
+                <div class="col-4 mb-3">
+                    <label for="txtTelefono" class="form-label">Telefono:</label>
+                    <input type="text" formControlName="telefono" class="form-control" #txtTelefono>
+                    <div *ngIf="movieForm.controls['telefono'].errors" class="form-text text-danger">* Campo requerido</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 mb-3">
+                    <label for="txtFechaRecoleccion" class="form-label">Fecha de recoleccion:</label>
+                    <input type="date" formControlName="fechaRecoleccion" class="form-control" #txtFechaRecoleccion/>
+                    <div *ngIf="movieForm.controls['fechaRecoleccion'].errors" class="form-text text-danger">* Campo requerido</div>
+                </div>
+                <div class="col-4 mb-3">
+                    <label for="txtTipoComprobante" class="form-label">Tipo de comprobante:</label>
+                    <select (change)="checkDateEvent()" id="txtTipoComprobante" #txtTipoComprobante formControlName="tipoComprobante" class="form-select">
+                        <option value=""></option>
+                        <option value="1">INE</option>
+                        <option value="2">Efectivo</option>
+                    </select>
+                    <div *ngIf="movieForm.controls['tipoComprobante'].errors" class="form-text text-danger">* Campo requerido</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 mb-3">
+                    <label for="txtAnticipo" class="form-label">Anticipo:</label>
+                    <input type="text" formControlName="anticipo" class="form-control" #txtAnticipo>
+                    <div *ngIf="movieForm.controls['anticipo'].errors" class="form-text text-danger">* Campo requerido</div>
+                </div>
+                <div class="col-4 mb-3">
+                    <label for="txtCantRestante" class="form-label">Cant. Restante:</label>
+                    <input type="text" formControlName="cantRestante" class="form-control" #txtCantRestante>
+                    <div *ngIf="movieForm.controls['cantRestante'].errors" class="form-text text-danger">* Campo requerido</div>
                 </div>
             </div>
             <!-- <div class="col-12"> -->

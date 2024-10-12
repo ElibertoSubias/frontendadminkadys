@@ -3,9 +3,9 @@
     <form [formGroup]="dressForm">
         <div class="row">
             <div class="col-2 mb-3">
-                <label for="txtTitulo" class="form-label">Titulo:</label>
-                <input type="text" formControlName="titulo" name="titulo" class="form-control" id="txtTitulo">
-                <div *ngIf="!dressForm.value.titulo" class="form-text text-danger">* Campo requerido</div>
+                <label for="txtCodigo" class="form-label">Codigo:</label>
+                <input type="text" formControlName="codigo" name="codigo" class="form-control" id="txtCodigo">
+                <div *ngIf="!dressForm.value.codigo" class="form-text text-danger">* Campo requerido</div>
             </div>
             <div class="col-4 mb-3">
                 <label for="txtDescripcion" class="form-label">Descripcion:</label>
@@ -22,8 +22,8 @@
             <div class="col-2 mb-3">
                 <label for="txtStockS" class="form-label">Talla "S":</label>
                 <input 
-                    type="number" f
-                    ormControlName="stockS" 
+                    type="number" 
+                    formControlName="stockS" 
                     class="form-control" 
                     id="txtStockS"
                     min="0"

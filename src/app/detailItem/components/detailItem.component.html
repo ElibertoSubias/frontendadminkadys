@@ -40,6 +40,12 @@
     <div class="d-flex justify-content-end">
       <a 
         style="margin-right: 10px !important;" 
+        class="btn btn-success" 
+        [routerLink]="['/new-reservation/',dress.idDress]" 
+        routerLinkActive="active" 
+        ariaCurrentWhenActive="page">Reservar</a>
+      <a 
+        style="margin-right: 10px !important;" 
         class="btn btn-primary" 
         [routerLink]="['/edit-dress/',dress.idDress]" 
         routerLinkActive="active" 

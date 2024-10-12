@@ -6,9 +6,9 @@
                 <form [formGroup]="dressForm">
                     <div class="row">
                         <div class="col-4 mb-3">
-                            <label for="txtTitulo" class="form-label">Titulo:</label>
-                            <input type="text" formControlName="titulo" name="titulo" class="form-control" id="txtTitulo">
-                            <div *ngIf="!dressForm.value.titulo" class="form-text text-danger">* Campo requerido</div>
+                            <label for="txtCodigo" class="form-label">Codigo:</label>
+                            <input type="text" formControlName="codigo" name="codigo" class="form-control" id="txtCodigo">
+                            <div *ngIf="!dressForm.value.codigo" class="form-text text-danger">* Campo requerido</div>
                         </div>
                         <div class="col-6 mb-3">
                             <label for="txtDescripcion" class="form-label">Descripcion:</label>
@@ -131,7 +131,7 @@
         <div class="d-flex justify-content-end">
             <button type="button" class="btn btn-success" style="margin-right: 20px;" (click)="saveItem()"
                 [disabled]="!dressForm.valid">Actualizar</button>
-            <a [routerLink]="['/dress/',dress.idDress]" routerLinkActive="active" ariaCurrentWhenActive="page"
+            <a [routerLink]="['/dress/',dressForm.value.codigo]" routerLinkActive="active" ariaCurrentWhenActive="page"
                 class="btn btn-danger">Cancelar</a>
         </div>
     </div>

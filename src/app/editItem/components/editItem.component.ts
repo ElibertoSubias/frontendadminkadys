@@ -16,7 +16,6 @@ export class EditItemComponent implements OnInit {
 
   dressForm: FormGroup;
   dress: any = {};
-  idDress: number = 0;
   id: string = "";
   baseUrl: string = environment.appBaseUrlMedia;
 
@@ -28,7 +27,7 @@ export class EditItemComponent implements OnInit {
     private router: Router
   ){
     this.dressForm = this.fb.group({
-      titulo: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
+      codigo: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
       descripcion: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(400)]],
       color: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(400)]],
       stockS: ['', [Validators.required]],
@@ -42,7 +41,7 @@ export class EditItemComponent implements OnInit {
   }
 
 
-  @ViewChild('txtTitulo') txtTitulo!:ElementRef;
+  @ViewChild('txtCodigo') txtCodigo!:ElementRef;
   @ViewChild('txtDescripcion') txtDescripcion!:ElementRef;
   @ViewChild('txtColor') txtColor!:ElementRef;
   @ViewChild('txtStockS') txtStockS!:ElementRef;
@@ -53,7 +52,7 @@ export class EditItemComponent implements OnInit {
   @ViewChild('fileImagenUrl') fileImagenUrl!:ElementRef;
   @ViewChild('txtPrecio') txtPrecio!:ElementRef;
 
-  titulo: string = "";
+  codigo: string = "";
   descripcion: string = "";
   color: string = "";
   stockS: string = "";
@@ -70,15 +69,15 @@ export class EditItemComponent implements OnInit {
   file?: File;
 
   ngOnInit(): void {
-    this.idDress = this.route.snapshot.params['id'];
+    this.id = this.route.snapshot.params['id'];
 
-    this.moviesService.getMovie(this.idDress).subscribe({
+    this.moviesService.getMovie(this.id).subscribe({
       next: (event: any) => {
         this.dress = event.dressExistente;
-        this.id = this.dress._id;
+        // this.id = this.dress._id;
         this.categorias = this.dress.categorias;
         this.dressForm.patchValue({
-          titulo: this.dress.titulo,
+          codigo: this.dress.idDress,
           descripcion: this.dress.descripcion,
           color: this.dress.color,
           stockS: this.dress.stockS,
@@ -119,7 +118,7 @@ export class EditItemComponent implements OnInit {
             showCancelButton: false,
             confirmButtonText: "Ok"
           }).then((result) => {
-            this.router.navigate([`/dress/${this.idDress}`]);
+            this.router.navigate([`/dress/${this.id}`]);
           });
         }
 
@@ -166,7 +165,7 @@ export class EditItemComponent implements OnInit {
             showCancelButton: false,
             confirmButtonText: "Ok"
           }).then((result) => {
-            this.router.navigate([`/dress/${this.idDress}`]);
+            this.router.navigate([`/dress/${this.id}`]);
           });
 
         },

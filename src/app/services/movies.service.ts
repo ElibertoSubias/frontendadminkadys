@@ -11,6 +11,18 @@ import { CookieService } from "ngx-cookie-service";
 export class MoviesService {
     constructor(private http : HttpClient, private cookies : CookieService) {}
 
+    public getNextID(): Observable<any> {
+        const token = this.getToken();
+        const headers = { 'x-auth-token': `${token}` };
+        return this.http.get<any>(`${environment.appBaseUrl}/dresses/next-id`, {headers});
+    }
+
+    public checkCodeAvailable(codigo: number): Observable<any> {
+        const token = this.getToken();
+        const headers = { 'x-auth-token': `${token}` };
+        return this.http.get<any>(`${environment.appBaseUrl}/dresses/code-valid/${codigo}`, {headers});
+    }
+
     public saveMovie(data: any): Observable<any> {
         const token = this.getToken();
         const headers = { 'Content-Type': 'application/json', 'x-auth-token': `${token}` };
@@ -23,10 +35,10 @@ export class MoviesService {
         return this.http.post<any>(`${environment.appBaseUrl}/reservation`, JSON.stringify(data), {headers});
     }
 
-    public checkDateEvent(fechaEvento: string, idDress: string, talla: string): Observable<any> {
+    public checkDateEvent(fechaEvento: string, id: string, talla: string): Observable<any> {
         const token = this.getToken();
         const headers = { 'x-auth-token': `${token}` };
-        return this.http.get<any>(`${environment.appBaseUrl}/reservation/check-date/${fechaEvento}/dress/${idDress}/size/${talla}`, {headers});
+        return this.http.get<any>(`${environment.appBaseUrl}/reservation/check-date/${fechaEvento}/dress/${id}/size/${talla}`, {headers});
     }
 
     public updateMovie(data: any, id: string): Observable<any> {
@@ -59,7 +71,7 @@ export class MoviesService {
         return this.http.get<any>(`${environment.appBaseUrl}/dresses/code/${code}`, { headers });
     }
 
-    public getMovie(id: number): Observable<any> {
+    public getMovie(id: string): Observable<any> {
         const token = this.getToken();
         const headers = { 'x-auth-token': `${token}` };
         return this.http.get<any>(`${environment.appBaseUrl}/dresses/${id}`, {headers});

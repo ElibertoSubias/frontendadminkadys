@@ -21,14 +21,14 @@ export class DetailItemComponent implements OnInit {
     private cookies : CookieService
   ){}
 
-  idDress: number = 0;
+  id: string = "";
   dress: any = {};
   baseUrl: string = environment.appBaseUrlMedia;
 
   ngOnInit(): void {
-    this.idDress = this.route.snapshot.params['id'];
+    this.id = this.route.snapshot.params['id'];
 
-    this.moviesService.getMovie(this.idDress).subscribe({
+    this.moviesService.getMovie(this.id).subscribe({
       next: (event: any) => {
         this.dress = event.dressExistente;
       },

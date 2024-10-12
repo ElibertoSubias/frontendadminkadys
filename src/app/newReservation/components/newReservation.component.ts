@@ -25,14 +25,18 @@ export class NewReservationComponent implements OnInit {
     private router: Router
   ){
     this.movieForm = this.fb.group({
-      idDress: ['', [Validators.required]],
       codigo: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
       fechaEvento: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
       talla: ['', [Validators.required]],
       nombre: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       apPaterno: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       apMaterno: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-      direccion: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]]
+      direccion: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(50)]],
+      telefono: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
+      fechaRecoleccion: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
+      tipoComprobante: ['', [Validators.required, Validators.min(1), Validators.max(2)]],
+      anticipo: ['', [Validators.required, Validators.min(1), Validators.max(1000)]],
+      cantRestante: ['', [Validators.required, Validators.min(1), Validators.max(1000)]],
     })
   }
 
@@ -44,6 +48,11 @@ export class NewReservationComponent implements OnInit {
   @ViewChild('txtApPaterno') txtApPaterno!:ElementRef;
   @ViewChild('txtApMaterno') txtApMaterno!:ElementRef;
   @ViewChild('txtDireccion') txtDireccion!:ElementRef;
+  @ViewChild('txtTelefono') txtTelefono!:ElementRef;
+  @ViewChild('txtFechaRecoleccion') txtFechaRecoleccion!:ElementRef;
+  @ViewChild('txtTipoComprobante') txtTipoComprobante!:ElementRef;
+  @ViewChild('txtAnticipo') txtAnticipo!:ElementRef;
+  @ViewChild('txtCantRestante') txtCantRestante!:ElementRef;
 
   codigo: string = "";
   fechaEvento: string = "";
@@ -52,7 +61,12 @@ export class NewReservationComponent implements OnInit {
   apPaterno: string = "";
   apMaterno: string = "";
   direccion: string = "";
-  idDress: number = 0;
+  telefono: string = "";
+  fechaRecoleccion: string = "";
+  tipoComprobante: string = "";
+  anticipo: number = 0;
+  cantRestante: number = 0;
+  id: string = "";
   vestido: any = null;
   vestidoStock: any = null;
   baseUrl: string = environment.appBaseUrlMedia;
@@ -64,15 +78,14 @@ export class NewReservationComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.route.snapshot.params['id']) {
-      this.idDress = this.route.snapshot.params['id'];
-      this.moviesService.getMovie(this.idDress).subscribe({
+      this.id = this.route.snapshot.params['id'];
+      this.moviesService.getMovie(this.id).subscribe({
         next: (event: any) => {
           this.vestidoStock = event.dressExistente;
-          this.idDress = event.dressExistente._id;
+          this.id = event.dressExistente._id;
           this.imagenUrl = event.dressExistente.imagenUrl
           this.movieForm.patchValue({
-            codigo: event.dressExistente.idDress,
-            idDress: event.dressExistente._id
+            codigo: event.dressExistente.idDress
           });
         },
         error: (err: any) => {
@@ -90,7 +103,11 @@ export class NewReservationComponent implements OnInit {
   }
 
   checkDateEvent() {
-    this.moviesService.checkDateEvent(this.movieForm.value.fechaEvento, this.idDress.toString(), this.movieForm.value.talla).subscribe({
+    if (this.txtFechaEvento.nativeElement.value == "") {
+      setTimeout(() => this.txtFechaEvento.nativeElement.focus(), 0);
+      return;
+    }
+    this.moviesService.checkDateEvent(this.movieForm.value.fechaEvento, this.id, this.movieForm.value.talla).subscribe({
       next: (data: any) => {
         this.totalDisponible = data.totalStock;
         if (data.totalStock == 0) {
@@ -135,15 +152,15 @@ export class NewReservationComponent implements OnInit {
   }
 
   searchDress() {
-    this.idDress = this.movieForm.value.codigo;
-    this.moviesService.getMovie(this.idDress).subscribe({
+    // this.idDress = this.movieForm.value.codigo;
+    this.moviesService.getMovie(this.movieForm.value.codigo).subscribe({
       next: (event: any) => {
         this.vestidoStock = event.dressExistente;
-        this.idDress = event.dressExistente._id;
+        this.id = event.dressExistente._id;
         this.imagenUrl = event.dressExistente.imagenUrl;
         this.movieForm.patchValue({
           codigo: event.dressExistente.idDress,
-          idDress: event.dressExistente._id
+          // id: event.dressExistente._id
         });
       },
       error: (err: any) => {

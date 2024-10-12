@@ -23,13 +23,13 @@ export class AddItemComponent implements OnInit {
     private router: Router
   ){
     this.dressForm = this.fb.group({
-      titulo: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
+      codigo: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
       descripcion: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(400)]],
-      color: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(400)]],
-      stockS: ['', [Validators.required]],
-      stockM: ['', [Validators.required]],
-      stockL: ['', [Validators.required]],
-      stockXL: ['', [Validators.required]],
+      color: ['', [Validators.required, Validators.min(0), Validators.max(100)]],
+      stockS: ['', [Validators.required, Validators.min(0), Validators.max(100)]],
+      stockM: ['', [Validators.required, Validators.min(0), Validators.max(100)]],
+      stockL: ['', [Validators.required, Validators.min(0), Validators.max(100)]],
+      stockXL: ['', [Validators.required, Validators.min(0), Validators.max(100)]],
       categorias: ['', [Validators.required]],
       precio: ['', [Validators.required]],
       imagenUrl: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]]
@@ -37,7 +37,7 @@ export class AddItemComponent implements OnInit {
   }
 
 
-  @ViewChild('txtTitulo') txtTitulo!:ElementRef;
+  @ViewChild('txtCodigo') txtCodigo!:ElementRef;
   @ViewChild('txtDescripcion') txtDescripcion!:ElementRef;
   @ViewChild('txtColor') txtColor!:ElementRef;
   @ViewChild('txtStockS') txtStockS!:ElementRef;
@@ -48,7 +48,7 @@ export class AddItemComponent implements OnInit {
   @ViewChild('fileImagenUrl') fileImagenUrl!:ElementRef;
   @ViewChild('txtPrecio') txtPrecio!:ElementRef;
 
-  titulo: string = "";
+  codigo: string = "";
   descripcion: string = "";
   color: string = "";
   stockS: string = "";
@@ -59,36 +59,77 @@ export class AddItemComponent implements OnInit {
   categorias: String[] = [];
   imagenUrl: string = "";
   precio: string = "";
+  nextID: number = 0;
 
   status: "initial" | "uploading" | "success" | "fail" = "initial"; // Variable to store file status
   file?: File;
 
   ngOnInit(): void {
-  }
-
-  saveItem() {
-    this.dressForm.value.categorias = this.categorias;
-    this.dressForm.value.imagenUrl = this.file?.name;
-    this.moviesService.saveMovie(this.dressForm.value).subscribe({
+    this.moviesService.getNextID().subscribe({
       next: (event: any) => {
-        
-        // Subimos portada en caso de ser grabada con exito
-        this.onUpload(event.dress._id);
-        
+        this.nextID = event.nextID;
+        this.dressForm.value.codigo = this.nextID;
+        this.dressForm.controls['codigo'].setValue(this.nextID);
       },
       error: (err: any) => {
         Swal.fire({
           position: "top-end",
           icon: "error",
-          title: "Ocurrio un error al crear vestido, intenta de nuevo!",
+          title: "Ocurrio un error al obtener siguiente codigo, intenta de nuevo!",
           showConfirmButton: false,
-          timer: 1500
+          timer: 2500
         });
-        console.log(err);
+      }
+    });
+  }
+
+  saveItem() {
+
+    this.moviesService.checkCodeAvailable(this.dressForm.value.codigo).subscribe({
+      next: (event: any) => {
+        if (event.codeValid) {
+          this.dressForm.value.categorias = this.categorias;
+          this.dressForm.value.imagenUrl = this.file?.name;
+          this.moviesService.saveMovie(this.dressForm.value).subscribe({
+            next: (event: any) => {
+              
+              // Subimos portada en caso de ser grabada con exito
+              this.onUpload(event.dress._id);
+              
+            },
+            error: (err: any) => {
+              Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: "Ocurrio un error al crear vestido, intenta de nuevo!",
+                showConfirmButton: false,
+                timer: 2500
+              });
+              console.log(err);
+            },
+            complete: () => {
+              // this.currentFile = undefined;
+            },
+          });
+        } else {
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "El codigo ya esta registrado!",
+            showConfirmButton: false,
+            timer: 2500
+          });
+        }
       },
-      complete: () => {
-        // this.currentFile = undefined;
-      },
+      error: (err: any) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Ocurrio un error al validar codigo, intenta de nuevo!",
+          showConfirmButton: false,
+          timer: 2500
+        });
+      }
     });
   }
 
@@ -130,7 +171,7 @@ export class AddItemComponent implements OnInit {
             icon: "error",
             title: "Ocurrio un error al grabar imagen, intenta de nuevo!",
             showConfirmButton: false,
-            timer: 1500
+            timer: 2500
           });
           console.log(err);
         },
