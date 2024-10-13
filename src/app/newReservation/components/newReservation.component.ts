@@ -66,9 +66,7 @@ export class NewReservationComponent implements OnInit {
   tipoComprobante: string = "";
   anticipo: number = 0;
   cantRestante: number = 0;
-  id: string = "";
-  vestido: any = null;
-  vestidoStock: any = null;
+  dress: any = null;
   baseUrl: string = environment.appBaseUrlMedia;
   imagenUrl: string = "";
   totalDisponible: number = 0;
@@ -78,12 +76,9 @@ export class NewReservationComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.route.snapshot.params['id']) {
-      this.id = this.route.snapshot.params['id'];
-      this.moviesService.getMovie(this.id).subscribe({
+      this.moviesService.getMovie(this.route.snapshot.params['id']).subscribe({
         next: (event: any) => {
-          this.vestidoStock = event.dressExistente;
-          this.id = event.dressExistente._id;
-          this.imagenUrl = event.dressExistente.imagenUrl
+          this.dress = event.dressExistente;
           this.movieForm.patchValue({
             codigo: event.dressExistente.idDress
           });
@@ -107,7 +102,7 @@ export class NewReservationComponent implements OnInit {
       setTimeout(() => this.txtFechaEvento.nativeElement.focus(), 0);
       return;
     }
-    this.moviesService.checkDateEvent(this.movieForm.value.fechaEvento, this.id, this.movieForm.value.talla).subscribe({
+    this.moviesService.checkDateEvent(this.movieForm.value.fechaEvento, this.dress.idDress, this.movieForm.value.talla).subscribe({
       next: (data: any) => {
         this.totalDisponible = data.totalStock;
         if (data.totalStock == 0) {
@@ -155,9 +150,7 @@ export class NewReservationComponent implements OnInit {
     // this.idDress = this.movieForm.value.codigo;
     this.moviesService.getMovie(this.movieForm.value.codigo).subscribe({
       next: (event: any) => {
-        this.vestidoStock = event.dressExistente;
-        this.id = event.dressExistente._id;
-        this.imagenUrl = event.dressExistente.imagenUrl;
+        this.dress = event.dressExistente;
         this.movieForm.patchValue({
           codigo: event.dressExistente.idDress,
           // id: event.dressExistente._id

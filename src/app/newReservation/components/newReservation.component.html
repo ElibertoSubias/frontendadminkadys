@@ -17,10 +17,10 @@
                     <label for="txtTalla" class="form-label">Talla:</label>
                     <select (change)="checkDateEvent()" #txtTalla formControlName="talla" class="form-select" aria-label="Selecciona una talla">
                         <option value=""></option>
-                        <option value="S">S</option>
-                        <option value="M">M</option>
-                        <option value="L">L</option>
-                        <option value="XL">XL</option>
+                        <option *ngIf="dress.stockS > 0" value="S">S</option>
+                        <option *ngIf="dress.stockL > 0" value="M">M</option>
+                        <option *ngIf="dress.stockM > 0" value="L">L</option>
+                        <option *ngIf="dress.stockXL > 0" value="XL">XL</option>
                     </select>
                     <div *ngIf="movieForm.controls['talla'].errors" class="form-text text-danger">* Campo requerido</div>
                 </div>
@@ -94,7 +94,7 @@
         </form>
         <div class="col-6">
             <div class="justify-content-center cont-image">
-                <img *ngIf="imagenUrl" src="{{baseUrl+'/'+imagenUrl}}" class="card-img-top" alt="...">        </div>
+                <img *ngIf="dress" src="{{baseUrl+'/'+dress.imagenUrl}}" class="card-img-top" alt="...">        </div>
         </div>
     </div>
 </div>
