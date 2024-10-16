@@ -1,0 +1,20 @@
+<div class="col-md-12 cont-body p-4 mt-3" style="padding-top: 78px !important;max-width: 85%;">
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link {{opcion == 1 ? 'active' : ''}}" [routerLink]="['/reports/out-for-today']" routerLinkActive="active">Salidas del Dia</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {{opcion == 2 ? 'active' : ''}}" [routerLink]="['/reports/entries-for-today']" routerLinkActive="active">Entradas del Dia</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {{opcion == 3 ? 'active' : ''}}" aria-current="page" [routerLink]="['/reports/future-outs']" routerLinkActive="active">Proximos a Salir</a>
+      </li>
+      <!-- <li class="nav-item">
+        <a class="nav-link " aria-current="page" [routerLink]="['/reports/next-entries']" routerLinkActive="active">Proximos a Entrar</a>
+      </li> -->
+    </ul>
+    <out-for-today *ngIf="opcion == 1"></out-for-today>
+    <entries-for-today *ngIf="opcion == 2"></entries-for-today>
+    <future-outs *ngIf="opcion == 3"></future-outs>
+    <div *ngIf="opcion == 0">Selecciona un reporte</div>
+</div>

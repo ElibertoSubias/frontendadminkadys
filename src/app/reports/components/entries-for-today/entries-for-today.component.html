@@ -1,0 +1,28 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Fecha Evento</th>
+            <th>Fecha Recoleccion</th>
+            <th>Codigo Vestido</th>
+            <th>Nombre</th>
+            <th>Talla Vestido</th>
+            <th>Telefono</th>
+            <th>Tipo de Comprobante</th>
+            <th>Anticipo</th>
+            <th>Cat. Restante</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of listItems; index as i; first as isFirst">
+            <td>{{item.fechaEvento}}</td>
+            <td>{{item.fechaRecoleccion}}</td>
+            <td>{{item.vestidos.idDress}}</td>
+            <td>{{item.nombre}} {{item.apPaterno}} {{item.apMaterno}}</td>
+            <td>{{item.talla}}</td>
+            <td>{{item.telefono}}</td>
+            <td>{{item.tipoComprobante}}</td>
+            <td>{{item.anticipo}}</td>
+            <td>{{item['cat.Restante']}}</td>
+        </tr>
+    </tbody>
+  </table>

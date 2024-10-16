@@ -1,11 +1,28 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ReportsComponent } from './components/reports.component';
+import { ReportsComponent } from './reports.component';
+import { OutForTodayComponent } from './components/out-for-today/out-for-today.component';
+import { EntriesForTodayComponent } from './components/entries-for-today/entries-for-today.component';
+import { FutureOutsComponent } from './components/future-outs/future-outs.component';
 
 const routes: Routes = [
   {
     path:'',
-    component: ReportsComponent
+    component: ReportsComponent,
+    children: [
+      {
+        path:'entries-for-today',
+        component: EntriesForTodayComponent
+      },
+      {
+        path:'out-for-today',
+        component: OutForTodayComponent
+      },
+      {
+        path:'future-outs',
+        component: FutureOutsComponent
+      }
+    ]
   }
 ];
 

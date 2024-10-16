@@ -77,6 +77,24 @@ export class MoviesService {
         return this.http.get<any>(`${environment.appBaseUrl}/dresses/${id}`, {headers});
     }
 
+    public getOutForToday(): Observable<any> {
+        const token = this.getToken();
+        const headers = { 'x-auth-token': `${token}` };
+        return this.http.get<any>(`${environment.appBaseUrl}/reservation/outs/by-date`, { headers });
+    }
+
+    public getEntriesForToday(): Observable<any> {
+        const token = this.getToken();
+        const headers = { 'x-auth-token': `${token}` };
+        return this.http.get<any>(`${environment.appBaseUrl}/reservation/entries/by-date`, { headers });
+    }
+
+    public getFutureOuts(): Observable<any> {
+        const token = this.getToken();
+        const headers = { 'x-auth-token': `${token}` };
+        return this.http.get<any>(`${environment.appBaseUrl}/reservation/future-outs/by-date`, { headers });
+    }
+
     setToken(token: any) {
         return this.cookies.set("token", token);
     }
