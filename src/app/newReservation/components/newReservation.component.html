@@ -62,9 +62,14 @@
             </div>
             <div class="row">
                 <div class="col-4 mb-3">
-                    <label for="txtFechaRecoleccion" class="form-label">Fecha de recoleccion:</label>
-                    <input type="date" formControlName="fechaRecoleccion" class="form-control" #txtFechaRecoleccion/>
-                    <div *ngIf="movieForm.controls['fechaRecoleccion'].errors" class="form-text text-danger">* Campo requerido</div>
+                    <label for="txtAnticipo" class="form-label">Anticipo:</label>
+                    <input type="text" formControlName="anticipo" class="form-control" #txtAnticipo>
+                    <div *ngIf="movieForm.controls['anticipo'].errors" class="form-text text-danger">* Campo requerido</div>
+                </div>
+                <div class="col-4 mb-3">
+                    <label for="txtCantRestante" class="form-label">Cant. Restante:</label>
+                    <input type="text" formControlName="cantRestante" class="form-control" #txtCantRestante>
+                    <div *ngIf="movieForm.controls['cantRestante'].errors" class="form-text text-danger">* Campo requerido</div>
                 </div>
                 <div class="col-4 mb-3">
                     <label for="txtTipoComprobante" class="form-label">Tipo de comprobante:</label>
@@ -77,16 +82,17 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-4 mb-3">
-                    <label for="txtAnticipo" class="form-label">Anticipo:</label>
-                    <input type="text" formControlName="anticipo" class="form-control" #txtAnticipo>
-                    <div *ngIf="movieForm.controls['anticipo'].errors" class="form-text text-danger">* Campo requerido</div>
+                <div class="col-8 mb-3">
+                    <label for="txtComentarios" class="form-label">Comentarios:</label>
+                    <textarea id="txtComentarios" #txtComentarios formControlName="comentarios" class="form-select"></textarea>
+                    <div *ngIf="movieForm.controls['comentarios'].errors" class="form-text text-danger">* Campo requerido</div>
                 </div>
                 <div class="col-4 mb-3">
-                    <label for="txtCantRestante" class="form-label">Cant. Restante:</label>
-                    <input type="text" formControlName="cantRestante" class="form-control" #txtCantRestante>
-                    <div *ngIf="movieForm.controls['cantRestante'].errors" class="form-text text-danger">* Campo requerido</div>
+                    <label for="txtFechaRecoleccion" class="form-label">Fecha de recoleccion:</label>
+                    <input type="date" formControlName="fechaRecoleccion" class="form-control" #txtFechaRecoleccion/>
+                    <div *ngIf="movieForm.controls['fechaRecoleccion'].errors" class="form-text text-danger">* Campo requerido</div>
                 </div>
+                
             </div>
             <!-- <div class="col-12"> -->
                 <button type="button" class="btn btn-success col-12" (click)="addReservation()" [disabled]="!movieForm.valid">Reservar</button>

@@ -6,19 +6,21 @@ import { ReportsRoutingModule } from './reports-routing.module';
 import { EntriesForTodayComponent } from './components/entries-for-today/entries-for-today.component';
 import { OutForTodayComponent } from './components/out-for-today/out-for-today.component';
 import { FutureOutsComponent } from './components/future-outs/future-outs.component';
+import { FutureEntriesComponent } from './components/future-entries/future-entries.component';
 
 
 @NgModule({
     declarations: [
         ReportsComponent,
         EntriesForTodayComponent,
-        OutForTodayComponent,
-        FutureOutsComponent
+        FutureOutsComponent,
+        FutureEntriesComponent
     ],
     imports: [
         CommonModule,
         ReportsRoutingModule,
-        SharedModule
+        SharedModule,
+        OutForTodayComponent
     ]
 })
 export class ReportsModule { }

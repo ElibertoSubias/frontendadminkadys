@@ -7,11 +7,11 @@ import { CookieService } from 'ngx-cookie-service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'entries-for-today',
-  templateUrl: './entries-for-today.component.html',
-  styleUrls: ['./entries-for-today.component.scss']
+  selector: 'future-entries',
+  templateUrl: './future-entries.component.html',
+  styleUrls: ['./future-entries.component.scss']
 })
-export class EntriesForTodayComponent implements OnInit {
+export class FutureEntriesComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
@@ -22,10 +22,9 @@ export class EntriesForTodayComponent implements OnInit {
   ){}
 
   listItems: any = [];
-  currentDate: any = new Date();
 
   ngOnInit(): void {
-    this.moviesService.getEntriesForToday().subscribe({
+    this.moviesService.getFutureEntries().subscribe({
       next: (event: any) => {
         this.listItems = event.result;
       },
@@ -39,34 +38,6 @@ export class EntriesForTodayComponent implements OnInit {
         });
       },
     });
-  }
-
-  addDays(date: string, days: number) {
-    var result = new Date(date);
-    result.setDate(result.getDate() + days);
-    return result;
-  }
-
-  formatDate(d: Date) {
-    let month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
-
-    if (month.length < 2) 
-        month = '0' + month;
-    if (day.length < 2) 
-        day = '0' + day;
-
-    return [year, month, day].join('-');
-  }
-
-  diasPendietes(fecha1: string, fecha2: string) {
-    var fechaInicio = new Date(fecha1).getTime();
-    var fechaFin    = new Date(fecha2).getTime();
-
-    var diff = fechaFin - fechaInicio;
-
-    return diff/(1000*60*60*24);
   }
 
 }

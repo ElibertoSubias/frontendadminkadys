@@ -35,8 +35,9 @@ export class NewReservationComponent implements OnInit {
       telefono: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
       fechaRecoleccion: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
       tipoComprobante: ['', [Validators.required, Validators.min(1), Validators.max(2)]],
-      anticipo: ['', [Validators.required, Validators.min(1), Validators.max(1000)]],
-      cantRestante: ['', [Validators.required, Validators.min(1), Validators.max(1000)]],
+      anticipo: ['', [Validators.required, Validators.min(0), Validators.max(1000)]],
+      cantRestante: ['', [Validators.required, Validators.min(0), Validators.max(1000)]],
+      comentarios: ['', [Validators.required, Validators.minLength(0), Validators.maxLength(300)]],
     })
   }
 
@@ -53,6 +54,7 @@ export class NewReservationComponent implements OnInit {
   @ViewChild('txtTipoComprobante') txtTipoComprobante!:ElementRef;
   @ViewChild('txtAnticipo') txtAnticipo!:ElementRef;
   @ViewChild('txtCantRestante') txtCantRestante!:ElementRef;
+  @ViewChild('txtComentarios') txtComentarios!:ElementRef;
 
   codigo: string = "";
   fechaEvento: string = "";
@@ -66,6 +68,7 @@ export class NewReservationComponent implements OnInit {
   tipoComprobante: string = "";
   anticipo: number = 0;
   cantRestante: number = 0;
+  comentarios: string = "";
   dress: any = null;
   baseUrl: string = environment.appBaseUrlMedia;
   imagenUrl: string = "";
@@ -84,6 +87,9 @@ export class NewReservationComponent implements OnInit {
           });
         },
         error: (err: any) => {
+          if (err.status == 401) {
+            this.router.navigate([`/login`]);
+          }
           console.log(err);
           Swal.fire({
             position: "top-end",
@@ -111,6 +117,9 @@ export class NewReservationComponent implements OnInit {
         }
       },
       error: (err: any) => {
+        if (err.status == 401) {
+          this.router.navigate([`/login`]);
+        }
         Swal.fire({
           position: "top-end",
           icon: "error",
@@ -157,7 +166,9 @@ export class NewReservationComponent implements OnInit {
         });
       },
       error: (err: any) => {
-        console.log(err);
+        if (err.status == 401) {
+          this.router.navigate([`/login`]);
+        }
         Swal.fire({
           position: "top-end",
           icon: "error",

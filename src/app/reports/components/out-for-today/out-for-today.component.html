@@ -10,9 +10,11 @@
             <th>Tipo de Comprobante</th>
             <th>Anticipo</th>
             <th>Cat. Restante</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
+        <!-- <button mat-button (click)="openDialog()">Open dialog</button> -->
         <tr *ngFor="let item of listItems; index as i; first as isFirst">
             <td>{{item.fechaRecoleccion}}</td>
             <td>{{item.fechaEvento}}</td>
@@ -22,7 +24,13 @@
             <td>{{item.telefono}}</td>
             <td>{{item.tipoComprobante}}</td>
             <td>{{item.anticipo}}</td>
-            <td>{{item['cat.Restante']}}</td>
+            <td>{{item.cantRestante}}</td>
+            <td>
+                <button 
+                    class="btn btn-success"
+                    (click)="openDialog(item)">
+                    Dar Salida</button>
+            </td>
         </tr>
     </tbody>
-  </table>
+</table>

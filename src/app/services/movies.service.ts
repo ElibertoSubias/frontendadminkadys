@@ -95,6 +95,18 @@ export class MoviesService {
         return this.http.get<any>(`${environment.appBaseUrl}/reservation/future-outs/by-date`, { headers });
     }
 
+    public darSalida(id: string): Observable<any> {
+        const token = this.getToken();
+        const headers = { 'x-auth-token': `${token}` };
+        return this.http.put<any>(`${environment.appBaseUrl}/reservation/dar-salida/${id}`, {}, { headers });
+    }
+
+    public getFutureEntries(): Observable<any> {
+        const token = this.getToken();
+        const headers = { 'x-auth-token': `${token}` };
+        return this.http.get<any>(`${environment.appBaseUrl}/reservation/future-entries/by-date`, { headers });
+    }
+
     setToken(token: any) {
         return this.cookies.set("token", token);
     }

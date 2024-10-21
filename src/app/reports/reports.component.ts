@@ -28,6 +28,8 @@ export class ReportsComponent implements OnInit {
         this.opcion = 2;
       } else if (this.router.url.indexOf('/reports/future-outs') > -1) {
         this.opcion = 3;
+      }else if (this.router.url.indexOf('/reports/future-entries') > -1) {
+        this.opcion = 4;
       }
     });
   }
