@@ -10,7 +10,13 @@
                 </div>
                 <div class="col-4 mb-3">
                     <label for="txtFechaEvento" class="form-label">Fecha:</label>
-                    <input (change)="movieForm.controls['talla'].reset()" id="txtFechaEvento" type="date" formControlName="fechaEvento" class="form-control" #txtFechaEvento/>
+                    <input
+                        (change)="movieForm.controls['talla'].reset()"
+                        id="txtFechaEvento"
+                        type="date"
+                        formControlName="fechaEvento"
+                        class="form-control"
+                        #txtFechaEvento/>
                     <div *ngIf="movieForm.controls['fechaEvento'].errors" class="form-text text-danger">* Campo requerido</div>
                 </div>
                 <div class="col-2 mb-3">
@@ -89,10 +95,10 @@
                 </div>
                 <div class="col-4 mb-3">
                     <label for="txtFechaRecoleccion" class="form-label">Fecha de recoleccion:</label>
-                    <input type="date" formControlName="fechaRecoleccion" class="form-control" #txtFechaRecoleccion/>
+                    <input type="date" id="txtFechaRecoleccion" formControlName="fechaRecoleccion" class="form-control" #txtFechaRecoleccion/>
                     <div *ngIf="movieForm.controls['fechaRecoleccion'].errors" class="form-text text-danger">* Campo requerido</div>
                 </div>
-                
+
             </div>
             <!-- <div class="col-12"> -->
                 <button type="button" class="btn btn-success col-12" (click)="addReservation()" [disabled]="!movieForm.valid">Reservar</button>

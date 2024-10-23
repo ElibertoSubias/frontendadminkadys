@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import { Genre } from '../../interfaces/Genre';
 import { HttpClient, HttpResponse } from "@angular/common/http";
@@ -13,13 +13,13 @@ import { environment } from '../../../environments/environment';
   templateUrl: './newReservation.component.html',
   styleUrls: ['./newReservation.component.scss']
 })
-export class NewReservationComponent implements OnInit {
+export class NewReservationComponent implements OnInit, AfterViewInit {
 
   movieForm: FormGroup;
 
   constructor(
     private route: ActivatedRoute,
-    private http: HttpClient, 
+    private http: HttpClient,
     private fb: FormBuilder,
     private moviesService : MoviesService,
     private router: Router
@@ -41,6 +41,10 @@ export class NewReservationComponent implements OnInit {
     })
   }
 
+  ngAfterViewInit(): void {
+    document.getElementById("txtFechaEvento")?.setAttribute("min", this.formatDate(this.currentDate));
+    document.getElementById("txtFechaRecoleccion")?.setAttribute("min", this.formatDate(this.currentDate));
+  }
 
   @ViewChild('txtCodigo') txtCodigo!:ElementRef;
   @ViewChild('txtFechaEvento') txtFechaEvento!:ElementRef;
@@ -73,6 +77,7 @@ export class NewReservationComponent implements OnInit {
   baseUrl: string = environment.appBaseUrlMedia;
   imagenUrl: string = "";
   totalDisponible: number = 0;
+  currentDate: any = new Date();
 
   status: "initial" | "uploading" | "success" | "fail" = "initial"; // Variable to store file status
   file?: File;
@@ -101,6 +106,19 @@ export class NewReservationComponent implements OnInit {
         },
       });
     }
+  }
+
+  formatDate(d: Date) {
+    let month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
   }
 
   checkDateEvent() {

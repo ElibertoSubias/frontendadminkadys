@@ -10,6 +10,7 @@
             <th>Talla Vestido</th>
             <th>Telefono</th>
             <th>Tipo de Comprobante</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -27,6 +28,10 @@
                 <td>{{item.talla}}</td>
                 <td>{{item.telefono}}</td>
                 <td>{{item.tipoComprobante}}</td>
+                <td>
+                    <button class="btn btn-warning" (click)="openDialog(item)">
+                        Dar Entrada</button>
+                </td>
             </tr>
         </ng-container>
     </tbody>

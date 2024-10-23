@@ -7,11 +7,13 @@ import { CookieService } from 'ngx-cookie-service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'future-entries',
-  templateUrl: './future-entries.component.html',
-  styleUrls: ['./future-entries.component.scss']
+  selector: 'all-reservations',
+  templateUrl: './all-reservations.component.html',
+  styleUrls: ['./all-reservations.component.scss']
 })
-export class FutureEntriesComponent implements OnInit {
+export class AllReservationsComponent implements OnInit {
+
+  currentDate: any = new Date();
 
   constructor(
     private route: ActivatedRoute,
@@ -24,7 +26,7 @@ export class FutureEntriesComponent implements OnInit {
   listItems: any = [];
 
   ngOnInit(): void {
-    this.moviesService.getFutureEntries().subscribe({
+    this.moviesService.getAllReservatios().subscribe({
       next: (event: any) => {
         this.listItems = event.result;
       },
@@ -38,6 +40,19 @@ export class FutureEntriesComponent implements OnInit {
         });
       },
     });
+  }
+
+  formatDate(d: Date) {
+    let month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
   }
 
 }

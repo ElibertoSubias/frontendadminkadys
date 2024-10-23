@@ -13,6 +13,8 @@ import Swal from 'sweetalert2';
 })
 export class FutureOutsComponent implements OnInit {
 
+  currentDate: any = new Date();
+
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -24,7 +26,7 @@ export class FutureOutsComponent implements OnInit {
   listItems: any = [];
 
   ngOnInit(): void {
-    this.moviesService.getFutureOuts().subscribe({
+    this.moviesService.getFutureOuts(this.formatDate(this.currentDate)).subscribe({
       next: (event: any) => {
         this.listItems = event.result;
       },
@@ -38,6 +40,19 @@ export class FutureOutsComponent implements OnInit {
         });
       },
     });
+  }
+
+  formatDate(d: Date) {
+    let month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
   }
 
 }

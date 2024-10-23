@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MoviesService } from '../../../services/movies.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 import Swal from 'sweetalert2';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogDataExampleDialog } from '../modalDetall/modalDetalle.component';
 
 @Component({
   selector: 'entries-for-today',
@@ -23,9 +25,10 @@ export class EntriesForTodayComponent implements OnInit {
 
   listItems: any = [];
   currentDate: any = new Date();
+  dialog = inject(MatDialog);
 
   ngOnInit(): void {
-    this.moviesService.getEntriesForToday().subscribe({
+    this.moviesService.getEntriesForToday(this.formatDate(this.currentDate)).subscribe({
       next: (event: any) => {
         this.listItems = event.result;
       },
@@ -52,9 +55,9 @@ export class EntriesForTodayComponent implements OnInit {
         day = '' + d.getDate(),
         year = d.getFullYear();
 
-    if (month.length < 2) 
+    if (month.length < 2)
         month = '0' + month;
-    if (day.length < 2) 
+    if (day.length < 2)
         day = '0' + day;
 
     return [year, month, day].join('-');
@@ -67,6 +70,14 @@ export class EntriesForTodayComponent implements OnInit {
     var diff = fechaFin - fechaInicio;
 
     return diff/(1000*60*60*24);
+  }
+
+  openDialog(item: any) {
+    item.tipoLlamado = 1;
+    this.dialog.open(DialogDataExampleDialog, {
+      data: item,
+      width: '600px',
+    });
   }
 
 }

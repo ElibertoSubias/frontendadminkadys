@@ -4,7 +4,7 @@ import { ReportsComponent } from './reports.component';
 import { OutForTodayComponent } from './components/out-for-today/out-for-today.component';
 import { EntriesForTodayComponent } from './components/entries-for-today/entries-for-today.component';
 import { FutureOutsComponent } from './components/future-outs/future-outs.component';
-import { FutureEntriesComponent } from './components/future-entries/future-entries.component';
+import { AllReservationsComponent } from './components/all-reservations/all-reservations.component';
 
 const routes: Routes = [
   {
@@ -24,8 +24,8 @@ const routes: Routes = [
         component: FutureOutsComponent
       },
       {
-        path:'future-entries',
-        component: FutureEntriesComponent
+        path:'all',
+        component: AllReservationsComponent
       }
     ]
   }

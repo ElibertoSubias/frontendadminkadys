@@ -11,6 +11,7 @@
             <th>Anticipo</th>
             <th>Cat. Restante</th>
             <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -26,8 +27,14 @@
             <td>{{item.anticipo}}</td>
             <td>{{item.cantRestante}}</td>
             <td>
-                <button 
+                <button
                     class="btn btn-success"
+                    (click)="openDialog(item)">
+                    <i class="fa-solid fa-user"></i></button>
+            </td>
+            <td>
+                <button
+                    class="btn btn-warning"
                     (click)="openDialog(item)">
                     Dar Salida</button>
             </td>

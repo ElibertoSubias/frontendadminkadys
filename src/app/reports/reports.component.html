@@ -11,12 +11,12 @@
         <a class="nav-link {{opcion == 3 ? 'active' : ''}}" aria-current="page" [routerLink]="['/reports/future-outs']" routerLinkActive="active">Proximos a Salir</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link " aria-current="page" [routerLink]="['/reports/future-entries']" routerLinkActive="active">Todas las reservaciones</a>
+        <a class="nav-link " aria-current="page" [routerLink]="['/reports/all']" routerLinkActive="active">Todas las reservaciones</a>
       </li>
     </ul>
-    <out-for-today *ngIf="opcion == 1"></out-for-today>
+    <out-for-today *ngIf="opcion == 1 || opcion == 0"></out-for-today>
     <entries-for-today *ngIf="opcion == 2"></entries-for-today>
     <future-outs *ngIf="opcion == 3"></future-outs>
-    <future-entries *ngIf="opcion == 4"></future-entries>
-    <div *ngIf="opcion == 0">Selecciona un reporte</div>
+    <all-reservations *ngIf="opcion == 4"></all-reservations>
+    <!-- <div *ngIf="opcion == 0">Selecciona un reporte</div> -->
 </div>

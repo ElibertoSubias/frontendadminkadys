@@ -77,22 +77,22 @@ export class MoviesService {
         return this.http.get<any>(`${environment.appBaseUrl}/dresses/${id}`, {headers});
     }
 
-    public getOutForToday(): Observable<any> {
+    public getOutForToday(fecha: string): Observable<any> {
         const token = this.getToken();
         const headers = { 'x-auth-token': `${token}` };
-        return this.http.get<any>(`${environment.appBaseUrl}/reservation/outs/by-date`, { headers });
+        return this.http.get<any>(`${environment.appBaseUrl}/reservation/outs/by-date?date=${fecha}`, { headers });
     }
 
-    public getEntriesForToday(): Observable<any> {
+    public getEntriesForToday(fecha: string): Observable<any> {
         const token = this.getToken();
         const headers = { 'x-auth-token': `${token}` };
-        return this.http.get<any>(`${environment.appBaseUrl}/reservation/entries/by-date`, { headers });
+        return this.http.get<any>(`${environment.appBaseUrl}/reservation/entries/by-date?date=${fecha}`, { headers });
     }
 
-    public getFutureOuts(): Observable<any> {
+    public getFutureOuts(fecha: string): Observable<any> {
         const token = this.getToken();
         const headers = { 'x-auth-token': `${token}` };
-        return this.http.get<any>(`${environment.appBaseUrl}/reservation/future-outs/by-date`, { headers });
+        return this.http.get<any>(`${environment.appBaseUrl}/reservation/future-outs/by-date?date=${fecha}`, { headers });
     }
 
     public darSalida(id: string): Observable<any> {
@@ -101,10 +101,16 @@ export class MoviesService {
         return this.http.put<any>(`${environment.appBaseUrl}/reservation/dar-salida/${id}`, {}, { headers });
     }
 
-    public getFutureEntries(): Observable<any> {
+    public darEntrada(id: string): Observable<any> {
         const token = this.getToken();
         const headers = { 'x-auth-token': `${token}` };
-        return this.http.get<any>(`${environment.appBaseUrl}/reservation/future-entries/by-date`, { headers });
+        return this.http.put<any>(`${environment.appBaseUrl}/reservation/dar-entrada/${id}`, {}, { headers });
+    }
+
+    public getAllReservatios(): Observable<any> {
+        const token = this.getToken();
+        const headers = { 'x-auth-token': `${token}` };
+        return this.http.get<any>(`${environment.appBaseUrl}/reservation/all`, { headers });
     }
 
     setToken(token: any) {

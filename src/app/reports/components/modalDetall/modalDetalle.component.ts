@@ -17,6 +17,7 @@ import {MatInputModule} from '@angular/material/input';
 import { environment } from '../../../../environments/environment';
 import { MoviesService } from '../../../services/movies.service';
 import Swal from 'sweetalert2';
+import { NgIf } from '@angular/common';
 
 
 export interface DialogData {
@@ -36,7 +37,8 @@ export interface DialogData {
     MatDialogContent,
     MatDialogActions,
     MatDialogClose,
-    MatCardModule
+    MatCardModule,
+    NgIf
   ]
 })
 export class DialogDataExampleDialog {
@@ -54,12 +56,34 @@ export class DialogDataExampleDialog {
     this.dialogRef.close();
   }
 
+  darEntrada(): void {
+    this.moviesService.darEntrada(this.data._id).subscribe({
+      next: (event: any) => {
+        if (event.status) {
+          this.dialogRef.close();
+          const currentUrl = this.router.url;
+          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+            this.router.navigate([currentUrl]);
+          });
+        }
+      },
+      error: (err: any) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Ocurrio un error al cargar reporte!",
+          showConfirmButton: false,
+          timer: 2500
+        });
+      },
+    });
+  }
+
   darSalida(): void {
     this.moviesService.darSalida(this.data._id).subscribe({
       next: (event: any) => {
         if (event.status) {
           this.dialogRef.close();
-          // this.router.navigate([`/reports/out-for-today`]);
           const currentUrl = this.router.url;
           this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
             this.router.navigate([currentUrl]);

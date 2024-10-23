@@ -10,6 +10,7 @@
             <th>Tipo de Comprobante</th>
             <th>Anticipo</th>
             <th>Cat. Restante</th>
+            <th>Status</th>
         </tr>
     </thead>
     <tbody>
@@ -23,6 +24,7 @@
             <td>{{item.tipoComprobante}}</td>
             <td>{{item.anticipo}}</td>
             <td>{{item.cantRestante}}</td>
+            <td>{{item.statusSalida ? "Rentado" : item.statusEntrada ? "Entregado" : 'Sin Estatus'}}</td>
         </tr>
     </tbody>
   </table>

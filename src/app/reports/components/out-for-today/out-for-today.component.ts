@@ -30,10 +30,12 @@ export class OutForTodayComponent implements OnInit {
   ){}
 
   listItems: any = [];
+  currentDate: any = new Date();
+  dialog = inject(MatDialog);
 
   ngOnInit(): void {
 
-    this.moviesService.getOutForToday().subscribe({
+    this.moviesService.getOutForToday(this.formatDate(this.currentDate)).subscribe({
       next: (event: any) => {
         this.listItems = event.result;
       },
@@ -50,14 +52,24 @@ export class OutForTodayComponent implements OnInit {
 
   }
 
-  dialog = inject(MatDialog);
+  formatDate(d: Date) {
+    let month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+  }
 
   openDialog(item: any) {
     console.log(item);
-    
+
     this.dialog.open(DialogDataExampleDialog, {
       data: item,
-      height: '700px',
       width: '600px',
     });
   }
