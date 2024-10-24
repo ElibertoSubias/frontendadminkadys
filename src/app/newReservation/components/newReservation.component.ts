@@ -7,6 +7,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MoviesService } from '../../services/movies.service';
 import Swal from 'sweetalert2';
 import { environment } from '../../../environments/environment';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-workspace',
@@ -22,7 +23,8 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
     private http: HttpClient,
     private fb: FormBuilder,
     private moviesService : MoviesService,
-    private router: Router
+    private router: Router,
+    private location: Location
   ){
     this.movieForm = this.fb.group({
       codigo: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
@@ -37,6 +39,7 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
       tipoComprobante: ['', [Validators.required, Validators.min(1), Validators.max(2)]],
       anticipo: ['', [Validators.required, Validators.min(0), Validators.max(1000)]],
       cantRestante: ['', [Validators.required, Validators.min(0), Validators.max(1000)]],
+      cantGarantia: ['', []],
       comentarios: ['', [Validators.required, Validators.minLength(0), Validators.maxLength(300)]],
     })
   }
@@ -57,7 +60,8 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
   @ViewChild('txtFechaRecoleccion') txtFechaRecoleccion!:ElementRef;
   @ViewChild('txtTipoComprobante') txtTipoComprobante!:ElementRef;
   @ViewChild('txtAnticipo') txtAnticipo!:ElementRef;
-  @ViewChild('txtCantRestante') txtCantRestante!:ElementRef;
+  @ViewChild('txtCantRestante') txtCantRestante!: ElementRef;
+  @ViewChild('txtCantGarantia') txtCantGarantia!:ElementRef;
   @ViewChild('txtComentarios') txtComentarios!:ElementRef;
 
   codigo: string = "";
@@ -72,12 +76,14 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
   tipoComprobante: string = "";
   anticipo: number = 0;
   cantRestante: number = 0;
+  cantGarantia: number = 0;
   comentarios: string = "";
   dress: any = null;
   baseUrl: string = environment.appBaseUrlMedia;
   imagenUrl: string = "";
   totalDisponible: number = 0;
   currentDate: any = new Date();
+  reservation: any = null;
 
   status: "initial" | "uploading" | "success" | "fail" = "initial"; // Variable to store file status
   file?: File;
@@ -101,7 +107,42 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
             icon: "error",
             title: "Ocurrio un error al obtener vestido!",
             showConfirmButton: false,
-            timer: 1500
+            timer: 2500
+          });
+        },
+      });
+    } else if (this.route.snapshot.params['_id']) {
+      this.moviesService.getReservation(this.route.snapshot.params['_id']).subscribe({
+        next: (event: any) => {
+          this.reservation = event.reservation;
+          this.movieForm.patchValue({
+            codigo: this.reservation.vestidos.idDress,
+            fechaEvento: this.reservation.fechaEvento,
+            talla: this.reservation.talla,
+            nombre: this.reservation.nombre,
+            apPaterno: this.reservation.apPaterno,
+            apMaterno: this.reservation.apMaterno,
+            direccion: this.reservation.direccion,
+            telefono: this.reservation.telefono,
+            anticipo: this.reservation.anticipo,
+            cantRestante: this.reservation.cantRestante,
+            cantGarantia: this.reservation.cantGarantia,
+            tipoComprobante: this.reservation.tipoComprobante,
+            comentarios: this.reservation.comentarios,
+            fechaRecoleccion: this.reservation.fechaRecoleccion
+          });
+        },
+        error: (err: any) => {
+          if (err.status == 401) {
+            this.router.navigate([`/login`]);
+          }
+          console.log(err);
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Ocurrio un error la reservacion!",
+            showConfirmButton: false,
+            timer: 2500
           });
         },
       });
@@ -119,6 +160,10 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
         day = '0' + day;
 
     return [year, month, day].join('-');
+  }
+
+  goBack() {
+    this.location.back();
   }
 
   checkDateEvent() {
@@ -166,7 +211,27 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
           icon: "error",
           title: "Ocurrio un error al crear la reservacion, intenta de nuevo!",
           showConfirmButton: false,
-          timer: 1500
+          timer: 2500
+        });
+        console.log(err);
+      }
+    });
+  }
+
+  editReservation() {
+    this.moviesService.editReservation(this.route.snapshot.params['_id'], this.movieForm.value).subscribe({
+      next: (event: any) => {
+        Swal.fire("Reservacion actualizada con exito!");
+        this.movieForm.reset();
+        this.router.navigate([`/reports`]);
+      },
+      error: (err: any) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Ocurrio un error al crear la reservacion, intenta de nuevo!",
+          showConfirmButton: false,
+          timer: 2500
         });
         console.log(err);
       }

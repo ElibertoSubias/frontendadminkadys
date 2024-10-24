@@ -9,13 +9,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogDataExampleDialog } from '../modalDetall/modalDetalle.component';
 
 @Component({
-  selector: 'future-outs',
-  templateUrl: './future-outs.component.html',
-  styleUrls: ['./future-outs.component.scss']
+  selector: 'entries-for-today',
+  templateUrl: './entries-for-today.component.html',
+  styleUrls: ['./entries-for-today.component.scss']
 })
-export class FutureOutsComponent implements OnInit {
-
-  currentDate: any = new Date();
+export class EntriesForTodayComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
@@ -26,10 +24,11 @@ export class FutureOutsComponent implements OnInit {
   ){}
 
   listItems: any = [];
+  currentDate: any = new Date();
   dialog = inject(MatDialog);
 
   ngOnInit(): void {
-    this.moviesService.getFutureOuts(this.formatDate(this.currentDate)).subscribe({
+    this.moviesService.getEntriesForToday(this.formatDate(this.currentDate)).subscribe({
       next: (event: any) => {
         this.listItems = event.result;
       },
@@ -41,9 +40,14 @@ export class FutureOutsComponent implements OnInit {
           showConfirmButton: false,
           timer: 2500
         });
-        this.router.navigate([`/login`]);
       },
     });
+  }
+
+  addDays(date: string, days: number) {
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
   }
 
   formatDate(d: Date) {
@@ -57,6 +61,15 @@ export class FutureOutsComponent implements OnInit {
         day = '0' + day;
 
     return [year, month, day].join('-');
+  }
+
+  diasPendietes(fecha1: string, fecha2: string) {
+    var fechaInicio = new Date(fecha1).getTime();
+    var fechaFin    = new Date(fecha2).getTime();
+
+    var diff = fechaFin - fechaInicio;
+
+    return diff/(1000*60*60*24);
   }
 
   openDialog(item: any, tipoLlamado: number) {

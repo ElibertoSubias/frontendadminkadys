@@ -8,12 +8,12 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-workspace',
-  templateUrl: './reports.component.html',
-  styleUrls: ['./reports.component.scss']
+  templateUrl: './corte-caja.component.html',
+  styleUrls: ['./corte-caja.component.scss']
 })
-export class ReportsComponent implements OnInit {
+export class CorteCajaComponent implements OnInit {
 
-  opcion: number = 0;
+  opcion: number = 1;
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -22,16 +22,12 @@ export class ReportsComponent implements OnInit {
     private cookies : CookieService
   ){
     router.events.subscribe((val) => {
-      if (this.router.url == '/reports') {
+      if (this.router.url == '/corte') {
         this.opcion = 1;
-      } else if (this.router.url == '/reports/entries-for-today') {
+      } else if (this.router.url == '/corte/entries-for-today') {
         this.opcion = 2;
-      } else if (this.router.url == '/reports/future-outs') {
+      } else if (this.router.url == '/corte/future-outs') {
         this.opcion = 3;
-      } else if (this.router.url == '/reports/all') {
-        this.opcion = 4;
-      } else if (this.router.url == '/reports/today') {
-        this.opcion = 5
       }
     });
   }

@@ -9,11 +9,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogDataExampleDialog } from '../modalDetall/modalDetalle.component';
 
 @Component({
-  selector: 'future-outs',
-  templateUrl: './future-outs.component.html',
-  styleUrls: ['./future-outs.component.scss']
+  selector: 'today-reservations',
+  templateUrl: './today-reservations.component.html',
+  styleUrls: ['./today-reservations.component.scss']
 })
-export class FutureOutsComponent implements OnInit {
+export class TodayReservationsComponent implements OnInit {
 
   currentDate: any = new Date();
 
@@ -29,7 +29,7 @@ export class FutureOutsComponent implements OnInit {
   dialog = inject(MatDialog);
 
   ngOnInit(): void {
-    this.moviesService.getFutureOuts(this.formatDate(this.currentDate)).subscribe({
+    this.moviesService.getTodayReservatios(this.formatDate(this.currentDate)).subscribe({
       next: (event: any) => {
         this.listItems = event.result;
       },

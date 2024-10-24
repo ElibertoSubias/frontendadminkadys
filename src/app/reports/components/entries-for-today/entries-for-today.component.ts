@@ -40,6 +40,7 @@ export class EntriesForTodayComponent implements OnInit {
           showConfirmButton: false,
           timer: 2500
         });
+        this.router.navigate([`/login`]);
       },
     });
   }
@@ -72,8 +73,8 @@ export class EntriesForTodayComponent implements OnInit {
     return diff/(1000*60*60*24);
   }
 
-  openDialog(item: any) {
-    item.tipoLlamado = 1;
+  openDialog(item: any, tipoLlamado: number) {
+    item.tipoLlamado = tipoLlamado;
     this.dialog.open(DialogDataExampleDialog, {
       data: item,
       width: '600px',

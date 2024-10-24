@@ -11,13 +11,14 @@ import { MatDialog, MAT_DIALOG_DATA,
 import {MatButtonModule} from '@angular/material/button';
 import { NgFor } from '@angular/common';
 import { DialogDataExampleDialog } from '../modalDetall/modalDetalle.component';
+import {RouterModule} from '@angular/router';
 
 @Component({
   selector: 'out-for-today',
   templateUrl: './out-for-today.component.html',
   styleUrls: ['./out-for-today.component.scss'],
   standalone: true,
-  imports: [MatButtonModule, NgFor],
+  imports: [MatButtonModule, NgFor, RouterModule],
 })
 export class OutForTodayComponent implements OnInit {
 
@@ -47,6 +48,7 @@ export class OutForTodayComponent implements OnInit {
           showConfirmButton: false,
           timer: 2500
         });
+        this.router.navigate([`/login`]);
       },
     });
 
@@ -65,9 +67,8 @@ export class OutForTodayComponent implements OnInit {
     return [year, month, day].join('-');
   }
 
-  openDialog(item: any) {
-    console.log(item);
-
+  openDialog(item: any, tipoLlamado: number) {
+    item.tipoLlamado = tipoLlamado;
     this.dialog.open(DialogDataExampleDialog, {
       data: item,
       width: '600px',

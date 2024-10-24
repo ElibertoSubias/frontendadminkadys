@@ -10,3 +10,17 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     position: absolute;
     left: 15%;
 }
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 991px) {
+    .cont-body {
+        left: 0px;
+    }
+    .nav-left {
+        display: none;
+    }
+    .nav-top {
+        left: 0px !important;
+        width: 100% !important;
+    }
+}

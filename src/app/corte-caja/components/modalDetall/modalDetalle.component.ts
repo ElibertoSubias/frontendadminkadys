@@ -98,7 +98,6 @@ export class DialogDataExampleDialog {
           showConfirmButton: false,
           timer: 2500
         });
-        this.router.navigate([`/login`]);
       },
     });
   }

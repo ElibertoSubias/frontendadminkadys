@@ -7,12 +7,12 @@
     <div class="cont-nav">
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a 
-                    style="cursor: pointer;" 
-                    routerLink="/home" 
-                    routerLinkActive="active" 
-                    ariaCurrentWhenActive="page" 
-                    class="nav-link text-decoration-none"
+                <a
+                    style="cursor: pointer;"
+                    routerLink="/home"
+                    routerLinkActive="active"
+                    ariaCurrentWhenActive="page"
+                    class="nav-link text-decoration-none item-menu"
                     [ngClass]="{'active': pathActive === '/home'}"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 24 24">
@@ -22,15 +22,15 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a 
-                    style="cursor: pointer;" 
-                    routerLink="/new-reservation" 
-                    routerLinkActive="active" 
-                    ariaCurrentWhenActive="page" 
-                    class="nav-link text-decoration-none"
+                <a
+                    style="cursor: pointer;"
+                    routerLink="/new-reservation"
+                    routerLinkActive="active"
+                    ariaCurrentWhenActive="page"
+                    class="nav-link text-decoration-none item-menu"
                     [ngClass]="{'active': pathActive === '/new-reservation'}"
                 >
-                    <svg fill="#000000" height="30px" width="30px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                    <svg fill="#000000" height="30px" width="30px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                     viewBox="0 0 511 511" xml:space="preserve">
                         <g>
                         <path d="M503.5,440H479V207.433c13.842-3.487,24-16.502,24-31.933v-104c0-8.547-6.953-15.5-15.5-15.5h-464
@@ -56,17 +56,17 @@
                         <path d="M262.5,248h-174c-4.687,0-8.5,3.813-8.5,8.5v142c0,4.687,3.813,8.5,8.5,8.5h174c4.687,0,8.5-3.813,8.5-8.5v-142
                             C271,251.813,267.187,248,262.5,248z M256,392H95V263h161V392z"/>
                     </g>
-                    </svg>    
+                    </svg>
                     <span class="items-nav">Rentar Vestido</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a 
-                    style="cursor: pointer;" 
-                    routerLink="/new-dress" 
-                    routerLinkActive="active" 
-                    ariaCurrentWhenActive="page" 
-                    class="nav-link text-decoration-none"
+                <a
+                    style="cursor: pointer;"
+                    routerLink="/new-dress"
+                    routerLinkActive="active"
+                    ariaCurrentWhenActive="page"
+                    class="nav-link text-decoration-none item-menu"
                     [ngClass]="{'active': pathActive === '/new-dress'}"
                 >
                     <svg fill="#000000" width="30px" height="30px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -79,28 +79,37 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a 
-                    style="cursor: pointer;" 
-                    routerLink="/reports" 
-                    routerLinkActive="active" 
-                    ariaCurrentWhenActive="page" 
-                    class="nav-link text-decoration-none"
+                <a
+                    style="cursor: pointer;"
+                    routerLink="/reports"
+                    routerLinkActive="active"
+                    ariaCurrentWhenActive="page"
+                    class="nav-link text-decoration-none item-menu"
                     [ngClass]="{'active': pathActive === '/reports'}"
                 >
-                <svg fill="#000000" height="30px" width="30px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-                viewBox="0 0 512 512" xml:space="preserve">
-               <path d="M447.168,134.56c-0.535-1.288-1.318-2.459-2.304-3.445l-128-128c-2.003-1.988-4.709-3.107-7.531-3.115H74.667
-                   C68.776,0,64,4.776,64,10.667v490.667C64,507.224,68.776,512,74.667,512h362.667c5.891,0,10.667-4.776,10.667-10.667V138.667
-                   C447.997,137.256,447.714,135.86,447.168,134.56z M320,36.416L411.584,128H320V36.416z M426.667,490.667H85.333V21.333h213.333
-                   v117.333c0,5.891,4.776,10.667,10.667,10.667h117.333V490.667z"/>
-               <path d="M128,181.333v256c0,5.891,4.776,10.667,10.667,10.667h234.667c5.891,0,10.667-4.776,10.667-10.667v-256
-                   c0-5.891-4.776-10.667-10.667-10.667H138.667C132.776,170.667,128,175.442,128,181.333z M320,192h42.667v42.667H320V192z
-                       M320,256h42.667v42.667H320V256z M320,320h42.667v42.667H320V320z M320,384h42.667v42.667H320V384z M213.333,192h85.333v42.667
-                   h-85.333V192z M213.333,256h85.333v42.667h-85.333V256z M213.333,320h85.333v42.667h-85.333V320z M213.333,384h85.333v42.667
-                   h-85.333V384z M149.333,192H192v42.667h-42.667V192z M149.333,256H192v42.667h-42.667V256z M149.333,320H192v42.667h-42.667V320z
-                       M149.333,384H192v42.667h-42.667V384z"/>
-           </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-file-earmark-bar-graph"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M10 13.5a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-6a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zm-2.5.5a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5zm-3 0a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5z" />
+                    <path
+                        d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z" />
+                </svg>
                     <span class="items-nav">Reportes</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a style="cursor: pointer;" routerLink="/corte" routerLinkActive="active" ariaCurrentWhenActive="page"
+                    class="nav-link text-decoration-none item-menu" [ngClass]="{'active': pathActive === '/corte'}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-cash-coin"
+                        viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8m5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0" />
+                        <path
+                            d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195z" />
+                        <path
+                            d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083q.088-.517.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1z" />
+                        <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 6 6 0 0 1 3.13-1.567" />
+                    </svg>
+                    <span class="items-nav">Corte de Caja</span>
                 </a>
             </li>
             <li class="nav-item">

@@ -24,9 +24,18 @@
 
 .active {
     background: #ffffff;
+    color: blue !important;
+}
+
+.active svg {
+    fill: blue;
 }
 
 .items-nav {
     color: black;
     margin-left: 10px;
+}
+
+.item-menu {
+    color: black;
 }

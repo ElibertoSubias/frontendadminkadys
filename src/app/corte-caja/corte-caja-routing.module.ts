@@ -1,16 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ReportsComponent } from './reports.component';
-import { OutForTodayComponent } from './components/out-for-today/out-for-today.component';
+import { CorteCajaComponent } from './corte-caja.component';
+import { CorteDiarioComponent } from './components/corte-diario/corte-diario.component';
 import { EntriesForTodayComponent } from './components/entries-for-today/entries-for-today.component';
 import { FutureOutsComponent } from './components/future-outs/future-outs.component';
 import { AllReservationsComponent } from './components/all-reservations/all-reservations.component';
-import { TodayReservationsComponent } from './components/today-reservations/today-reservations.component';
 
 const routes: Routes = [
   {
     path:'',
-    component: ReportsComponent,
+    component: CorteCajaComponent,
     children: [
       {
         path:'entries-for-today',
@@ -18,15 +17,11 @@ const routes: Routes = [
       },
       {
         path:'out-for-today',
-        component: OutForTodayComponent
+        component: CorteDiarioComponent
       },
       {
         path:'future-outs',
         component: FutureOutsComponent
-      },
-      {
-        path:'today',
-        component: TodayReservationsComponent
       },
       {
         path:'all',
@@ -44,4 +39,4 @@ const routes: Routes = [
     RouterModule
   ]
 })
-export class ReportsRoutingModule {}
+export class CorteCajaRoutingModule {}

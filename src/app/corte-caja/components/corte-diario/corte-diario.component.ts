@@ -5,17 +5,22 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 import Swal from 'sweetalert2';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA,
+  MatDialogTitle,
+  MatDialogContent } from '@angular/material/dialog';
+import {MatButtonModule} from '@angular/material/button';
+import { NgFor } from '@angular/common';
 import { DialogDataExampleDialog } from '../modalDetall/modalDetalle.component';
+import {RouterModule} from '@angular/router';
 
 @Component({
-  selector: 'future-outs',
-  templateUrl: './future-outs.component.html',
-  styleUrls: ['./future-outs.component.scss']
+  selector: 'corte-diario',
+  templateUrl: './corte-diario.component.html',
+  styleUrls: ['./corte-diario.component.scss'],
+  standalone: true,
+  imports: [MatButtonModule, NgFor, RouterModule],
 })
-export class FutureOutsComponent implements OnInit {
-
-  currentDate: any = new Date();
+export class CorteDiarioComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
@@ -26,10 +31,12 @@ export class FutureOutsComponent implements OnInit {
   ){}
 
   listItems: any = [];
+  currentDate: any = new Date();
   dialog = inject(MatDialog);
 
   ngOnInit(): void {
-    this.moviesService.getFutureOuts(this.formatDate(this.currentDate)).subscribe({
+
+    this.moviesService.getOutForToday(this.formatDate(this.currentDate)).subscribe({
       next: (event: any) => {
         this.listItems = event.result;
       },
@@ -41,9 +48,9 @@ export class FutureOutsComponent implements OnInit {
           showConfirmButton: false,
           timer: 2500
         });
-        this.router.navigate([`/login`]);
       },
     });
+
   }
 
   formatDate(d: Date) {

@@ -61,6 +61,16 @@ export const APP_ROUTES: Routes = [
         loadChildren: () => import('./newReservation/newReservation.module').then(m => m.NewReservationModule)
       },
       {
+        path: 'edit-reservation/:_id',
+        canActivate: [AppGuard],
+        loadChildren: () => import('./newReservation/newReservation.module').then(m => m.NewReservationModule)
+      },
+      {
+        path: 'corte',
+        canActivate: [AppGuard],
+        loadChildren: () => import('./corte-caja/corte-caja.module').then(m => m.CorteCajaModule)
+      },
+      {
           path: '**',
           redirectTo: 'home',
           pathMatch: 'full',

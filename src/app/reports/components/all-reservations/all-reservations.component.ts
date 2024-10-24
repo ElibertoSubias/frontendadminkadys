@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MoviesService } from '../../../services/movies.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 import Swal from 'sweetalert2';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogDataExampleDialog } from '../modalDetall/modalDetalle.component';
 
 @Component({
   selector: 'all-reservations',
@@ -24,6 +26,7 @@ export class AllReservationsComponent implements OnInit {
   ){}
 
   listItems: any = [];
+  dialog = inject(MatDialog);
 
   ngOnInit(): void {
     this.moviesService.getAllReservatios().subscribe({
@@ -38,6 +41,7 @@ export class AllReservationsComponent implements OnInit {
           showConfirmButton: false,
           timer: 2500
         });
+        this.router.navigate([`/login`]);
       },
     });
   }
@@ -53,6 +57,14 @@ export class AllReservationsComponent implements OnInit {
         day = '0' + day;
 
     return [year, month, day].join('-');
+  }
+
+  openDialog(item: any, tipoLlamado: number) {
+    item.tipoLlamado = tipoLlamado;
+    this.dialog.open(DialogDataExampleDialog, {
+      data: item,
+      width: '600px',
+    });
   }
 
 }
