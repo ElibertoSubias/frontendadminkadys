@@ -36,7 +36,7 @@ export class CorteDiarioComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.moviesService.getOutForToday(this.formatDate(this.currentDate)).subscribe({
+    this.moviesService.getCorteDiario(this.formatDate(this.currentDate)).subscribe({
       next: (event: any) => {
         this.listItems = event.result;
       },

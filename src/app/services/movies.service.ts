@@ -132,6 +132,12 @@ export class MoviesService {
         return this.http.get<any>(`${environment.appBaseUrl}/reservation/${id}`, { headers });
     }
 
+    public getCorteDiario(fecha: string): Observable<any> {
+        const token = this.getToken();
+        const headers = { 'x-auth-token': `${token}` };
+        return this.http.get<any>(`${environment.appBaseUrl}/reservation/cortediario?date=${fecha}`, { headers });
+    }
+
     setToken(token: any) {
         return this.cookies.set("token", token);
     }
