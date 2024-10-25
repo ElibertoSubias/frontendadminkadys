@@ -14,6 +14,8 @@ import Swal from 'sweetalert2';
 export class CorteCajaComponent implements OnInit {
 
   opcion: number = 1;
+  currentDate: any = new Date();
+
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -34,6 +36,19 @@ export class CorteCajaComponent implements OnInit {
 
   ngOnInit(): void {
 
+  }
+
+  formatDate(d: Date) {
+    let month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
   }
 
 }
