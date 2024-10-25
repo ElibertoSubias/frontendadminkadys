@@ -35,6 +35,12 @@ export class MoviesService {
         return this.http.post<any>(`${environment.appBaseUrl}/reservation`, JSON.stringify(data), {headers});
     }
 
+    public savePortada(data: any): Observable<any> {
+        const token = this.getToken();
+        const headers = { 'Content-Type': 'application/json', 'x-auth-token': `${token}` };
+        return this.http.post<any>(`${environment.appBaseUrl}/portadas`, JSON.stringify(data), {headers});
+    }
+
     public editReservation(id: string, data: any): Observable<any> {
         data.id = id;
         const token = this.getToken();
@@ -54,6 +60,12 @@ export class MoviesService {
         return this.http.put<any>(`${environment.appBaseUrl}/dresses/${id}`, JSON.stringify(data), {headers});
     }
 
+    public updatePortada(data: any, id: string): Observable<any> {
+        const token = this.getToken();
+        const headers = { 'Content-Type': 'application/json', 'x-auth-token': `${token}` };
+        return this.http.put<any>(`${environment.appBaseUrl}/portadas/${id}`, JSON.stringify(data), {headers});
+    }
+
     public changeStatusReservation(id: string, status: boolean): Observable<any> {
         const token = this.getToken();
         const headers = { 'x-auth-token': `${token}` };
@@ -66,10 +78,22 @@ export class MoviesService {
         return this.http.delete<any>(`${environment.appBaseUrl}/dresses/${id}`, {headers});
     }
 
+    public removePortada(id: string, file: string): Observable<any> {
+        const token = this.getToken();
+        const headers = { 'Content-Type': 'application/json', 'x-auth-token': `${token}` };
+        return this.http.delete<any>(`${environment.appBaseUrl}/files/portada/${id}/archivo/${file}`, {headers});
+    }
+
     public uploadImage(file: any, id: string): Observable<any> {
         const token = this.getToken();
         const headers = { 'x-auth-token': `${token}` };
         return this.http.post<any>(`${environment.appBaseUrl}/files/${id}`, file, {headers});
+    }
+
+    public uploadPortada(file: any, id: string): Observable<any> {
+        const token = this.getToken();
+        const headers = { 'x-auth-token': `${token}` };
+        return this.http.post<any>(`${environment.appBaseUrl}/files/${id}?tipo=portada`, file, {headers});
     }
 
     public getAllMovies(): Observable<any> {
@@ -142,6 +166,12 @@ export class MoviesService {
         const token = this.getToken();
         const headers = { 'x-auth-token': `${token}` };
         return this.http.get<any>(`${environment.appBaseUrl}/reservation/cortediario?date=${fecha}`, { headers });
+    }
+
+    public getTopPortadas(): Observable<any> {
+        const token = this.getToken();
+        const headers = { 'x-auth-token': `${token}` };
+        return this.http.get<any>(`${environment.appBaseUrl}/portadas/top?limit=10`, { headers });
     }
 
     setToken(token: any) {

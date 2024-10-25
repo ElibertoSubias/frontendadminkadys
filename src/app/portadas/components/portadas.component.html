@@ -1,0 +1,47 @@
+<div class="col-md-12 cont-body p-4 mt-3" style="padding-top: 78px !important;max-width: 85%;">
+    <h3>Actualizar Portadas Pagina Web</h3>
+    <form [formGroup]="portadaForm">
+        <div class="row">
+            <div *ngFor="let item of portadas; index as i; first as isFirst" style="width: 8rem;margin-right: 5px;">
+                <p>{{item.position}}</p>
+                <img style="width: 100px; height: 100px;" src="{{baseUrl+'/'+item.imagenUrl}}" class="card-img-top card-img-bottom" alt="...">
+                <div class="row">
+                    <input (click)="editar(item)" class="btn btn-warning" type="button" value="Editar">
+                    <input (click)="eliminar(item)" class="btn btn-danger mt-1" type="button" value="Eliminar">
+                </div>
+            </div>
+        </div>
+        <h3 class="mt-4">Nueva Portada Pagina Web</h3>
+        <div class="row">
+            <div *ngIf="!idPortada" class="col-3 mb-3">
+                <!-- Crear -->
+                <label for="fileImagenUrl" class="form-label">Foto de portada2:</label><br>
+                <input name="imagenUrl" type="button" id="fileImagenUrl" class="btn btn-primary mt-0 m-2" style="margin-left: 0px !important;" (click)="addPortada()" value="Seleccionar portada" />
+                <input id="txtImagenUrl" formControlName="imagenUrl" (change)="onChange($event)" #fileImagenUrl type="file" style='display: none;'>
+                <div *ngIf="!portadaForm.value.imagenUrl" class="form-text text-danger">* Campo requerido</div>
+            </div>
+            <div *ngIf="idPortada" class="col-3 mb-3">
+                <!-- Actualizar -->
+                <label for="fileImagenUrl" class="form-label">Foto de portada3:</label><br>
+                <input type="text" formControlName="imagenUrl" name="imagenUrl" hidden>
+                <input type="button" id="fileImagenUrl" class="btn btn-primary mt-0 m-2"
+                    style="margin-left: 0px !important;" (click)="addPortada()" value="Seleccionar portada" />
+                <input id="txtImagenUrl" (change)="onChange($event)" #fileImagenUrl type="file" style='display: none;'>
+                <div *ngIf="!portadaForm.value.imagenUrl" class="form-text text-danger">* Campo requerido</div>
+            </div>
+            <div class="col-2 mb-3">
+                <label for="txtPosition" class="form-label">Posicion:</label>
+                <input 
+                    name="position"
+                    type="number" 
+                    formControlName="position" 
+                    class="form-control" 
+                    id="txtPosition"
+                    min="0"
+                    max="100">
+                <div *ngIf="!portadaForm.value.position" class="form-text text-danger">* Campo requerido</div>
+            </div>
+        </div>
+        <button type="button" class="btn btn-success" (click)="saveItem()" [disabled]="!portadaForm.valid">Guardar</button>
+    </form>
+</div>

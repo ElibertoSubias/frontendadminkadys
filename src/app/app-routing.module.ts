@@ -71,6 +71,11 @@ export const APP_ROUTES: Routes = [
         loadChildren: () => import('./corte-caja/corte-caja.module').then(m => m.CorteCajaModule)
       },
       {
+        path: 'portadas',
+        canActivate: [AppGuard],
+        loadChildren: () => import('./portadas/portadas.module').then(m => m.PortadasModule)
+      },
+      {
           path: '**',
           redirectTo: 'home',
           pathMatch: 'full',
