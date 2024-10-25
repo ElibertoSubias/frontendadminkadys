@@ -10,16 +10,17 @@ import { MatDialog, MAT_DIALOG_DATA,
   MatDialogContent } from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import { NgFor } from '@angular/common';
+import { DialogDataExampleDialog } from '../modalDetall/modalDetalle.component';
 import {RouterModule} from '@angular/router';
 
 @Component({
-  selector: 'corte-diario',
-  templateUrl: './corte-diario.component.html',
-  styleUrls: ['./corte-diario.component.scss'],
+  selector: 'canceled-reservations',
+  templateUrl: './canceled-reservations.component.html',
+  styleUrls: ['./canceled-reservations.component.scss'],
   standalone: true,
   imports: [MatButtonModule, NgFor, RouterModule],
 })
-export class CorteDiarioComponent implements OnInit {
+export class CanceledReservationsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
@@ -35,7 +36,7 @@ export class CorteDiarioComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.moviesService.getCorteDiario(this.formatDate(this.currentDate)).subscribe({
+    this.moviesService.getOutForToday(this.formatDate(this.currentDate), false).subscribe({
       next: (event: any) => {
         this.listItems = event.result;
       },
@@ -47,6 +48,7 @@ export class CorteDiarioComponent implements OnInit {
           showConfirmButton: false,
           timer: 2500
         });
+        this.router.navigate([`/login`]);
       },
     });
 
@@ -65,11 +67,43 @@ export class CorteDiarioComponent implements OnInit {
     return [year, month, day].join('-');
   }
 
-  formatoMoneda(texto: any) {
-    if (!texto || texto == "") {
-      texto = "0";
-    }
-    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(texto,);
+  openDialog(item: any, tipoLlamado: number) {
+    item.tipoLlamado = tipoLlamado;
+    this.dialog.open(DialogDataExampleDialog, {
+      data: item,
+      width: '600px',
+    });
   }
 
+  activeReservation(id: string, nombre: string) {
+    Swal.fire({
+      title: `¿Desea reactivar la reservación de ${nombre}?`,
+      showDenyButton: true,
+      showConfirmButton: false,
+      showCancelButton: true,
+      denyButtonText: `Aceptar`,
+      cancelButtonText: "Salir"
+    }).then((result) => {
+      if (result.isDenied) {
+        this.moviesService.changeStatusReservation(id, true).subscribe({
+          next: (event: any) => {
+            const currentUrl = this.router.url;
+            this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+              this.router.navigate([currentUrl]);
+            });
+          },
+          error: (err: any) => {
+            console.log(err);
+            Swal.fire({
+              position: "top-end",
+              icon: "error",
+              title: "Ocurrio un error al cancelar la reservacion, intenta de nuevo!",
+              showConfirmButton: false,
+              timer: 2500
+            });
+          },
+        });
+      }
+    });
+  }
 }

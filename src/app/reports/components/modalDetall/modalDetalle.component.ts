@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, inject, model, signal} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, inject, model, signal, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
@@ -41,23 +41,49 @@ export interface DialogData {
     NgIf
   ]
 })
-export class DialogDataExampleDialog {
+export class DialogDataExampleDialog implements AfterViewInit{
 
   constructor(
     private moviesService : MoviesService,
     private router: Router
-  ){}
+  ) { }
+
+  @ViewChild('txtDias') txtDias!: ElementRef;
+  @ViewChild('txtCostoExtra') txtCostoExtra!: ElementRef;
+  @ViewChild('txtTipoComprobante') txtTipoComprobante!: ElementRef;
+  @ViewChild('txtCantGarantia') txtCantGarantia!:ElementRef;
 
   readonly dialogRef = inject(MatDialogRef<DialogDataExampleDialog>);
   data = inject(MAT_DIALOG_DATA);
+
   baseUrl: string = environment.appBaseUrlMedia;
+  diasCobrados: number = 0;
+  costoExtra: number = 0;
+  tipoComprobante: number = 0;
+  cantGarantia: number = 0;
+
+  ngAfterViewInit(): void {
+    if (this.data.tipoLlamado == 2) {
+      this.diasCobrados = this.txtDias.nativeElement.value = this.data.diasConRetrazo;
+      this.costoExtra = this.txtCostoExtra.nativeElement.value = this.data.totalPorRetrazo;
+    }
+  }
+
+  cambiarTipoComprobante() {
+    this.tipoComprobante = this.txtTipoComprobante.nativeElement.value;
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
+  calcularCosto() {
+    this.diasCobrados = this.txtDias.nativeElement.value >= 0 ? this.txtDias.nativeElement.value : 0;
+    this.txtCostoExtra.nativeElement.value = this.costoExtra = this.diasCobrados * 50;
+  }
+
   darEntrada(): void {
-    this.moviesService.darEntrada(this.data._id).subscribe({
+    this.moviesService.darEntrada(this.data._id, this.diasCobrados, this.costoExtra).subscribe({
       next: (event: any) => {
         if (event.status) {
           this.dialogRef.close();
@@ -80,7 +106,18 @@ export class DialogDataExampleDialog {
   }
 
   darSalida(): void {
-    this.moviesService.darSalida(this.data._id).subscribe({
+    if (this.tipoComprobante == 0) {
+      Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Favor de capturar Tipo de Comprobante!",
+          showConfirmButton: false,
+          timer: 2500
+      });
+      return;
+    }
+    this.cantGarantia = this.tipoComprobante == 2 ? this.txtCantGarantia.nativeElement.value : 0;
+    this.moviesService.darSalida(this.data._id, this.tipoComprobante, this.cantGarantia).subscribe({
       next: (event: any) => {
         if (event.status) {
           this.dialogRef.close();

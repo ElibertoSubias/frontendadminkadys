@@ -1,16 +1,24 @@
 <table class="table table-striped">
     <tbody>
         <tr>
-            <th>Total Anticipo</th>
-            <td>${{listItems.totalAnticipos}}</td>
+            <th>Total Anticipos por Rentas</th>
+            <td>{{formatoMoneda(listItems.TotalDeAnticiPorRentas)}}</td>
         </tr>
         <tr>
-            <th>Total Restante</th>
-            <td>${{listItems.totalRestante}}</td>
+            <th>Total por Restantes de Salidas</th>
+            <td>{{formatoMoneda(listItems.TotalDeRestantesPorSalidas)}}</td>
         </tr>
         <tr>
-            <th>SubTotal</th>
-            <td>${{listItems.subTotal}}</td>
+            <th>Total por Cobro de Dias Extras</th>
+            <td>{{formatoMoneda(listItems.TotalPorCobrosExtras)}}</td>
+        </tr>
+        <tr>
+            <th>Total por Pago de Garantias</th>
+            <td>{{formatoMoneda(listItems.TotalPorGarantias)}}</td>
+        </tr>
+        <tr>
+            <th>Total</th>
+            <td>{{formatoMoneda(listItems.subTotal)}}</td>
         </tr>
     </tbody>
 </table>

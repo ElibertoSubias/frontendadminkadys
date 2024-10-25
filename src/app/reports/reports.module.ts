@@ -8,6 +8,7 @@ import { OutForTodayComponent } from './components/out-for-today/out-for-today.c
 import { FutureOutsComponent } from './components/future-outs/future-outs.component';
 import { AllReservationsComponent } from './components/all-reservations/all-reservations.component';
 import { TodayReservationsComponent } from './components/today-reservations/today-reservations.component';
+import { CanceledReservationsComponent } from './components/canceled-reservations/canceled-reservations.component';
 
 
 @NgModule({
@@ -17,12 +18,14 @@ import { TodayReservationsComponent } from './components/today-reservations/toda
         FutureOutsComponent,
         AllReservationsComponent,
         TodayReservationsComponent
+
     ],
     imports: [
         CommonModule,
         ReportsRoutingModule,
         SharedModule,
-        OutForTodayComponent
+        OutForTodayComponent,
+        CanceledReservationsComponent
     ]
 })
 export class ReportsModule { }

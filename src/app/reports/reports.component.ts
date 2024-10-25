@@ -32,6 +32,8 @@ export class ReportsComponent implements OnInit {
         this.opcion = 4;
       } else if (this.router.url == '/reports/today') {
         this.opcion = 5
+      } else if (this.router.url == '/reports/canceled') {
+        this.opcion = 6
       }
     });
   }

@@ -5,16 +5,19 @@
       </li>
       <li class="nav-item">
         <a class="nav-link {{opcion == 2 ? 'active' : ''}}" [routerLink]="['/reports/entries-for-today']" >
-          Entradas Pendientes y del Dia</a>
+          Entradas del Dia y Pendientes</a>
       </li>
       <li class="nav-item">
         <a class="nav-link {{opcion == 3 ? 'active' : ''}}" aria-current="page" [routerLink]="['/reports/future-outs']" >Proximos a Salir</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link " aria-current="page" [routerLink]="['/reports/all']" >Todas las reservaciones</a>
+        <a class="nav-link {{opcion == 4 ? 'active' : ''}}" aria-current="page" [routerLink]="['/reports/all']" >Todas las reservaciones</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link " aria-current="page" [routerLink]="['/reports/today']">Ventas del Dia</a>
+        <a class="nav-link {{opcion == 5 ? 'active' : ''}}" aria-current="page" [routerLink]="['/reports/today']">Ventas del Dia</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {{opcion == 6 ? 'active' : ''}}" aria-current="page" [routerLink]="['/reports/canceled']">Canceladas</a>
       </li>
     </ul>
     <out-for-today *ngIf="opcion == 1 || opcion == 0"></out-for-today>
@@ -22,5 +25,6 @@
     <future-outs *ngIf="opcion == 3"></future-outs>
     <all-reservations *ngIf="opcion == 4"></all-reservations>
     <today-reservations *ngIf="opcion == 5"></today-reservations>
+    <canceled-reservations *ngIf="opcion == 6"></canceled-reservations>
     <!-- <div *ngIf="opcion == 0">Selecciona un reporte</div> -->
 </div>

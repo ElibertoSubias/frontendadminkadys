@@ -78,6 +78,12 @@
                     <div *ngIf="movieForm.controls['cantRestante'].errors" class="form-text text-danger">* Campo requerido</div>
                 </div>
                 <div class="col-4 mb-3">
+                    <label for="txtFechaRecoleccion" class="form-label">Fecha de recoleccion:</label>
+                    <input type="date" id="txtFechaRecoleccion" formControlName="fechaRecoleccion" class="form-control"
+                        #txtFechaRecoleccion />
+                    <div *ngIf="movieForm.controls['fechaRecoleccion'].errors" class="form-text text-danger">* Campo requerido</div>
+                </div>
+                <!-- <div class="col-4 mb-3">
                     <label for="txtTipoComprobante" class="form-label">Tipo de comprobante:</label>
                     <select id="txtTipoComprobante" #txtTipoComprobante formControlName="tipoComprobante" class="form-select">
                         <option value=""></option>
@@ -85,7 +91,7 @@
                         <option value="2">Efectivo</option>
                     </select>
                     <div *ngIf="movieForm.controls['tipoComprobante'].errors" class="form-text text-danger">* Campo requerido</div>
-                </div>
+                </div> -->
             </div>
             <div *ngIf="movieForm.value.tipoComprobante == 2" class="row">
                 <div class="col-4 mb-3">
@@ -100,12 +106,24 @@
                     <textarea id="txtComentarios" #txtComentarios formControlName="comentarios" class="form-select"></textarea>
                     <div *ngIf="movieForm.controls['comentarios'].errors" class="form-text text-danger">* Campo requerido</div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-4 mb-3">
-                    <label for="txtFechaRecoleccion" class="form-label">Fecha de recoleccion:</label>
-                    <input type="date" id="txtFechaRecoleccion" formControlName="fechaRecoleccion" class="form-control" #txtFechaRecoleccion/>
-                    <div *ngIf="movieForm.controls['fechaRecoleccion'].errors" class="form-text text-danger">* Campo requerido</div>
+                    <div class="form-check">
+                        <input (change)="diasExtras()" type="checkbox" id="cbDiasExtras" class="form-check-input" #cbDiasExtras />
+                        <label class="form-check-label" for="cbDiasExtras">
+                            Agregar dias extras
+                        </label>
+                    </div>
                 </div>
-
+                <div *ngIf="aggDiasExtras" class="row" class="col-4 mb-3">
+                    <label for="txtDias" class="form-label">Dias:</label>
+                    <input (keyup)="calcularCosto()" type="number" class="form-control" #txtDias>
+                </div>
+                <div *ngIf="aggDiasExtras" class="row" class="col-4 mb-3">
+                    <label for="txtCostoExtra" class="form-label">Total:</label>
+                    <input type="number" class="form-control" #txtCostoExtra [disabled]="true" />
+                </div>
             </div>
             <button *ngIf="!reservation" type="button" class="btn btn-success col-12" (click)="addReservation()" [disabled]="!movieForm.valid">Reservar</button>
             <button *ngIf="reservation" type="button" class="btn btn-success col-12" (click)="editReservation()" [disabled]="!movieForm.valid">Actualizar</button>

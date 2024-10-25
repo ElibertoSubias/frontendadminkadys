@@ -6,6 +6,7 @@ import { EntriesForTodayComponent } from './components/entries-for-today/entries
 import { FutureOutsComponent } from './components/future-outs/future-outs.component';
 import { AllReservationsComponent } from './components/all-reservations/all-reservations.component';
 import { TodayReservationsComponent } from './components/today-reservations/today-reservations.component';
+import { CanceledReservationsComponent } from './components/canceled-reservations/canceled-reservations.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
       {
         path:'all',
         component: AllReservationsComponent
+      },
+      {
+        path:'canceled',
+        component: CanceledReservationsComponent
       }
     ]
   }

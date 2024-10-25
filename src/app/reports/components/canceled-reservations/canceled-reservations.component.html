@@ -1,34 +1,36 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Fecha Recoleccion</th>
             <th>Fecha Evento</th>
             <th>Codigo Vestido</th>
             <th>Nombre</th>
             <th>Talla Vestido</th>
             <th>Telefono</th>
-            <th>Tipo de Comprobante</th>
             <th>Anticipo</th>
             <th>Cat. Restante</th>
-            <th>Status</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
+        <!-- <button mat-button (click)="openDialog()">Open dialog</button> -->
         <tr *ngFor="let item of listItems; index as i; first as isFirst">
-            <td>{{item.fechaRecoleccion}}</td>
             <td>{{item.fechaEvento}}</td>
             <td>{{item.vestidos.idDress}}</td>
             <td>{{item.nombre}} {{item.apPaterno}} {{item.apMaterno}}</td>
             <td>{{item.talla}}</td>
             <td>{{item.telefono}}</td>
-            <td>{{item.tipoComprobante}}</td>
             <td>{{item.anticipo}}</td>
             <td>{{item.cantRestante}}</td>
-            <td>{{item.statusSalida ? "Rentado" : item.statusEntrada ? "Entregado" : 'Sin Estatus'}}</td>
             <td>
-                <svg (click)="openDialog(item, 0)" role="button" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                    fill="currentColor" class="bi bi-pencil-square m-2" viewBox="0 0 16 16">
+                <svg (click)="activeReservation(item._id, item.nombre)" role="button" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-check m-2"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0" />
+                    <path
+                        d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
+                </svg>
+                <svg (click)="openDialog(item, 0)" role="button" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square m-2"
+                    viewBox="0 0 16 16">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye"
                         viewBox="0 0 16 16">
                         <path
@@ -36,8 +38,8 @@
                         <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" />
                     </svg>
                 </svg>
-                <a [routerLink]="['/edit-reservation/',item._id]" routerLinkActive="active" ariaCurrentWhenActive="page"
-                    class="text-decoration-none m-2" style="color: black;">
+                <a [routerLink]="['/edit-reservation/',item._id]" routerLinkActive="active"
+                    ariaCurrentWhenActive="page" class="text-decoration-none m-2" style="color: black;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square"
                         viewBox="0 0 16 16">
                         <path
@@ -49,4 +51,4 @@
             </td>
         </tr>
     </tbody>
-  </table>
+</table>

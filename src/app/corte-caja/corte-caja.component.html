@@ -3,15 +3,6 @@
       <li class="nav-item">
         <a class="nav-link {{opcion == 1 ? 'active' : ''}}" [routerLink]="['/corte']">Corte Del Dia</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link {{opcion == 2 ? 'active' : ''}}" [routerLink]="['/corte/entries-for-today']">
-          Corte por Semana</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link {{opcion == 3 ? 'active' : ''}}" aria-current="page" [routerLink]="['/corte/future-outs']">Corte del Mes</a>
-      </li>
     </ul>
-    <corte-diario *ngIf="opcion == 1 || opcion == 0"></corte-diario>
-    <entries-for-today *ngIf="opcion == 2"></entries-for-today>
-    <future-outs *ngIf="opcion == 3"></future-outs>
+    <corte-diario class="col-md-6 offset-md-3" *ngIf="opcion == 1 || opcion == 0"></corte-diario>
 </div>

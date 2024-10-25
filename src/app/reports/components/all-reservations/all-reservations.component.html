@@ -25,7 +25,7 @@
             <td>{{item.tipoComprobante}}</td>
             <td>{{item.anticipo}}</td>
             <td>{{item.cantRestante}}</td>
-            <td>{{item.statusSalida ? "Rentado" : item.statusEntrada ? "Entregado" : 'Sin Estatus'}}</td>
+            <td>{{item.status ? item.statusSalida ? "Rentado" : item.statusEntrada ? "Entregado" : 'Apartado' : 'Cancelado'}}</td>
             <td>
                 <svg (click)="openDialog(item, 0)" role="button" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                     fill="currentColor" class="bi bi-pencil-square m-2" viewBox="0 0 16 16">

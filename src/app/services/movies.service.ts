@@ -54,6 +54,12 @@ export class MoviesService {
         return this.http.put<any>(`${environment.appBaseUrl}/dresses/${id}`, JSON.stringify(data), {headers});
     }
 
+    public changeStatusReservation(id: string, status: boolean): Observable<any> {
+        const token = this.getToken();
+        const headers = { 'x-auth-token': `${token}` };
+        return this.http.put<any>(`${environment.appBaseUrl}/reservation/change-status/${id}`, {"status": status}, { headers });
+    }
+
     public removeMovie(id: string): Observable<any> {
         const token = this.getToken();
         const headers = { 'Content-Type': 'application/json', 'x-auth-token': `${token}` };
@@ -84,10 +90,10 @@ export class MoviesService {
         return this.http.get<any>(`${environment.appBaseUrl}/dresses/${id}`, {headers});
     }
 
-    public getOutForToday(fecha: string): Observable<any> {
+    public getOutForToday(fecha: string, type: boolean = true): Observable<any> {
         const token = this.getToken();
         const headers = { 'x-auth-token': `${token}` };
-        return this.http.get<any>(`${environment.appBaseUrl}/reservation/outs/by-date?date=${fecha}`, { headers });
+        return this.http.get<any>(`${environment.appBaseUrl}/reservation/outs/by-date?date=${fecha}&type=${type}`, { headers });
     }
 
     public getEntriesForToday(fecha: string): Observable<any> {
@@ -102,16 +108,16 @@ export class MoviesService {
         return this.http.get<any>(`${environment.appBaseUrl}/reservation/future-outs/by-date?date=${fecha}`, { headers });
     }
 
-    public darSalida(id: string): Observable<any> {
+    public darSalida(id: string, tipoComprobante: number, cantGarantia: number): Observable<any> {
         const token = this.getToken();
         const headers = { 'x-auth-token': `${token}` };
-        return this.http.put<any>(`${environment.appBaseUrl}/reservation/dar-salida/${id}`, {}, { headers });
+        return this.http.put<any>(`${environment.appBaseUrl}/reservation/dar-salida/${id}`, {tipoComprobante: tipoComprobante, cantGarantia: cantGarantia}, { headers });
     }
 
-    public darEntrada(id: string): Observable<any> {
+    public darEntrada(id: string, dias: number, costoExtra: number): Observable<any> {
         const token = this.getToken();
         const headers = { 'x-auth-token': `${token}` };
-        return this.http.put<any>(`${environment.appBaseUrl}/reservation/dar-entrada/${id}`, {}, { headers });
+        return this.http.put<any>(`${environment.appBaseUrl}/reservation/dar-entrada/${id}/dias/${dias}/costo/${costoExtra}`, {}, { headers });
     }
 
     public getAllReservatios(): Observable<any> {

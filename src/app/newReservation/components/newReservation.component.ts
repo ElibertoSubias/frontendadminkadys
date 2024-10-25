@@ -36,10 +36,8 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
       direccion: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(50)]],
       telefono: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
       fechaRecoleccion: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
-      tipoComprobante: ['', [Validators.required, Validators.min(1), Validators.max(2)]],
       anticipo: ['', [Validators.required, Validators.min(0), Validators.max(1000)]],
       cantRestante: ['', [Validators.required, Validators.min(0), Validators.max(1000)]],
-      cantGarantia: ['', []],
       comentarios: ['', [Validators.required, Validators.minLength(0), Validators.maxLength(300)]],
     })
   }
@@ -62,7 +60,10 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
   @ViewChild('txtAnticipo') txtAnticipo!:ElementRef;
   @ViewChild('txtCantRestante') txtCantRestante!: ElementRef;
   @ViewChild('txtCantGarantia') txtCantGarantia!:ElementRef;
-  @ViewChild('txtComentarios') txtComentarios!:ElementRef;
+  @ViewChild('txtComentarios') txtComentarios!: ElementRef;
+  @ViewChild('cbDiasExtras') cbDiasExtras!: ElementRef;
+  @ViewChild('txtDias') txtDias!: ElementRef;
+  @ViewChild('txtCostoExtra') txtCostoExtra!:ElementRef;
 
   codigo: string = "";
   fechaEvento: string = "";
@@ -84,6 +85,9 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
   totalDisponible: number = 0;
   currentDate: any = new Date();
   reservation: any = null;
+  aggDiasExtras: boolean = false;
+  diasCobrados: number = 0;
+  costoExtra: number = 0;
 
   status: "initial" | "uploading" | "success" | "fail" = "initial"; // Variable to store file status
   file?: File;
@@ -115,6 +119,7 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
       this.moviesService.getReservation(this.route.snapshot.params['_id']).subscribe({
         next: (event: any) => {
           this.reservation = event.reservation;
+          this.dress = this.reservation.vestidos;
           this.movieForm.patchValue({
             codigo: this.reservation.vestidos.idDress,
             fechaEvento: this.reservation.fechaEvento,
@@ -147,6 +152,15 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
         },
       });
     }
+  }
+
+  diasExtras() {
+    this.aggDiasExtras = this.cbDiasExtras.nativeElement.checked;
+  }
+
+  calcularCosto() {
+    this.diasCobrados = this.txtDias.nativeElement.value >= 0 ? this.txtDias.nativeElement.value : 0;
+    this.txtCostoExtra.nativeElement.value = this.costoExtra = this.diasCobrados * 50;
   }
 
   formatDate(d: Date) {

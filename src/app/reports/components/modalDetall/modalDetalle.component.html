@@ -10,6 +10,34 @@
       <strong>{{data.tipoComprobante == 1 ? 'Identificacion' : 'Efectivo: $' + data.cantGarantia }}</strong>
     </p>
   </div>
+  <div *ngIf="data.tipoLlamado && data.tipoLlamado == 1" class="row">
+    <div class="col-6 mb-3">
+      <label for="txtTipoComprobante" class="form-label">Tipo de comprobante:</label>
+      <select (change)="cambiarTipoComprobante()" id="txtTipoComprobante" #txtTipoComprobante class="form-select">
+        <option value="">Seleccione...</option>
+        <option value="1">INE</option>
+        <option value="2">Efectivo</option>
+      </select>
+    </div>
+    <div *ngIf="tipoComprobante == 2" class="col-4 mb-3">
+      <label for="txtCantGarantia" class="form-label">Cant. Garantia:</label>
+      <input type="number" class="form-control" #txtCantGarantia>
+    </div>
+  </div>
+  <div *ngIf="data.tipoLlamado && data.tipoLlamado == 2 && data.diasConRetrazo > 0" class="row">
+    <div class="col-auto">
+      <label for="txtDias" class="col-form-label">Dias cobrados</label>
+    </div>
+    <div class="col-auto col-2 mb-2">
+      <input (keyup)="calcularCosto()" type="number" #txtDias id="txtDias" class="form-control">
+    </div>
+    <div class="col-auto">
+      <label for="txtCostoExtra" class="col-form-label">Costo Extra</label>
+    </div>
+    <div class="col-auto col-2 mb-2">
+      <input type="number" #txtCostoExtra id="txtCostoExtra" class="form-control">
+    </div>
+  </div>
   <div class="col-md-12 d-flex justify-content-center">
     <div class="col-9 cont-image">
       <img src="{{baseUrl+'/'+data.vestidos.imagenUrl}}" class="card-img-top card-img-bottom" alt="...">
