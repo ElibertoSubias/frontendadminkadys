@@ -217,7 +217,7 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
   }
 
   addReservation() {
-    this.movieForm.value.fecha = Date.now();
+    this.movieForm.value.fecha = this.formatDate(this.currentDate);
     this.moviesService.saveReservation(this.movieForm.value).subscribe({
       next: (event: any) => {
         Swal.fire("Reservacion creada con exito!");
