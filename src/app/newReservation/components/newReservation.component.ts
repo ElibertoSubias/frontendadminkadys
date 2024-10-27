@@ -8,6 +8,7 @@ import { MoviesService } from '../../services/movies.service';
 import Swal from 'sweetalert2';
 import { environment } from '../../../environments/environment';
 import { Location } from '@angular/common';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-workspace',
@@ -24,7 +25,8 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
     private fb: FormBuilder,
     private moviesService : MoviesService,
     private router: Router,
-    private location: Location
+    private location: Location,
+    private cookies : CookieService
   ){
     this.movieForm = this.fb.group({
       codigo: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
@@ -38,7 +40,7 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
       fechaRecoleccion: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
       anticipo: ['', [Validators.required, Validators.min(0), Validators.max(1000)]],
       cantRestante: ['', [Validators.required, Validators.min(0), Validators.max(1000)]],
-      comentarios: ['', [Validators.required, Validators.minLength(0), Validators.maxLength(300)]],
+      comentarios: ['', [Validators.required, Validators.minLength(0), Validators.maxLength(300)]]
     })
   }
 
@@ -103,16 +105,17 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
         },
         error: (err: any) => {
           if (err.status == 401) {
+            this.cookies.delete("token");
             this.router.navigate([`/login`]);
+          } else {
+            Swal.fire({
+              position: "top-end",
+              icon: "error",
+              title: "Ocurrio un error al obtener vestido!",
+              showConfirmButton: false,
+              timer: 2500
+            });
           }
-          console.log(err);
-          Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: "Ocurrio un error al obtener vestido!",
-            showConfirmButton: false,
-            timer: 2500
-          });
         },
       });
     } else if (this.route.snapshot.params['_id']) {
@@ -214,6 +217,7 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
   }
 
   addReservation() {
+    this.movieForm.value.fecha = Date.now();
     this.moviesService.saveReservation(this.movieForm.value).subscribe({
       next: (event: any) => {
         Swal.fire("Reservacion creada con exito!");

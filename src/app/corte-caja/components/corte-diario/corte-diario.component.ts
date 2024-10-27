@@ -40,13 +40,18 @@ export class CorteDiarioComponent implements OnInit {
         this.listItems = event.result;
       },
       error: (err: any) => {
-        Swal.fire({
-          position: "top-end",
-          icon: "error",
-          title: "Ocurrio un error al cargar reporte!",
-          showConfirmButton: false,
-          timer: 2500
-        });
+        if (err.status == 401) {
+          this.cookies.delete("token");
+          this.router.navigate([`/login`]);
+        } else {
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Ocurrio un error al cargar reporte!",
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
       },
     });
 

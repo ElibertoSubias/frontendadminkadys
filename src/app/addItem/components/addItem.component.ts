@@ -6,6 +6,7 @@ import { throwError } from "rxjs";
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MoviesService } from '../../services/movies.service';
 import Swal from 'sweetalert2';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-workspace',
@@ -20,7 +21,8 @@ export class AddItemComponent implements OnInit {
     private http: HttpClient, 
     private fb: FormBuilder,
     private moviesService : MoviesService,
-    private router: Router
+    private router: Router,
+    private cookies : CookieService
   ){
     this.dressForm = this.fb.group({
       codigo: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
@@ -72,13 +74,18 @@ export class AddItemComponent implements OnInit {
         this.dressForm.controls['codigo'].setValue(this.nextID);
       },
       error: (err: any) => {
-        Swal.fire({
-          position: "top-end",
-          icon: "error",
-          title: "Ocurrio un error al obtener siguiente codigo, intenta de nuevo!",
-          showConfirmButton: false,
-          timer: 2500
-        });
+        if (err.status == 401) {
+          this.cookies.delete("token");
+          this.router.navigate([`/login`]);
+        } else {
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Ocurrio un error al obtener siguiente codigo!",
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
       }
     });
   }

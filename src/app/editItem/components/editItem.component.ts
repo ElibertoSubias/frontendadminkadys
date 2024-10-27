@@ -6,6 +6,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MoviesService } from '../../services/movies.service';
 import { environment } from '../../../environments/environment';
 import Swal from 'sweetalert2';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-workspace',
@@ -24,7 +25,8 @@ export class EditItemComponent implements OnInit {
     private http: HttpClient,
     private fb: FormBuilder,
     private moviesService : MoviesService,
-    private router: Router
+    private router: Router,
+    private cookies : CookieService
   ){
     this.dressForm = this.fb.group({
       codigo: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
@@ -90,14 +92,18 @@ export class EditItemComponent implements OnInit {
         });
       },
       error: (err: any) => {
-        console.log(err);
-        Swal.fire({
-          position: "top-end",
-          icon: "error",
-          title: "Ocurrio un error al obtener vestido!",
-          showConfirmButton: false,
-          timer: 1500
-        });
+        if (err.status == 401) {
+          this.cookies.delete("token");
+          this.router.navigate([`/login`]);
+        } else {
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Ocurrio un error al cargar informacion!",
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
       },
     });
   }
