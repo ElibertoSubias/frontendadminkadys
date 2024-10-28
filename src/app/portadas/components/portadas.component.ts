@@ -125,18 +125,9 @@ export class PortadasComponent implements OnInit {
   
       this.moviesService.uploadPortada(formData, id).subscribe({
         next: (event: any) => {
-          
-          // Correcto
-          Swal.fire({
-            title: "Portada creada con exito!",
-            showDenyButton: false,
-            showCancelButton: false,
-            confirmButtonText: "Ok"
-          }).then((result) => {
-            const currentUrl = this.router.url;
-            this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-              this.router.navigate([currentUrl]);
-            });
+          const currentUrl = this.router.url;
+          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+            this.router.navigate([currentUrl]);
           });
         },
         error: (err: any) => {
@@ -147,7 +138,6 @@ export class PortadasComponent implements OnInit {
             showConfirmButton: false,
             timer: 2500
           });
-          console.log(err);
         },
         complete: () => {
           // this.currentFile = undefined;

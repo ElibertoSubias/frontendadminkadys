@@ -28,10 +28,10 @@ export class AddItemComponent implements OnInit {
       codigo: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
       descripcion: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(400)]],
       color: ['', [Validators.required, Validators.min(0), Validators.max(100)]],
-      stockS: ['', [Validators.required, Validators.min(0), Validators.max(100)]],
-      stockM: ['', [Validators.required, Validators.min(0), Validators.max(100)]],
-      stockL: ['', [Validators.required, Validators.min(0), Validators.max(100)]],
-      stockXL: ['', [Validators.required, Validators.min(0), Validators.max(100)]],
+      stockS: ['', [Validators.required, Validators.min(0), Validators.max(1000)]],
+      stockM: ['', [Validators.required, Validators.min(0), Validators.max(1000)]],
+      stockL: ['', [Validators.required, Validators.min(0), Validators.max(1000)]],
+      stockXL: ['', [Validators.required, Validators.min(0), Validators.max(1000)]],
       categorias: ['', [Validators.required]],
       precio: ['', [Validators.required]],
       imagenUrl: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]]
@@ -53,10 +53,10 @@ export class AddItemComponent implements OnInit {
   codigo: string = "";
   descripcion: string = "";
   color: string = "";
-  stockS: string = "";
-  stockM: string = "";
-  stockL: string = "";
-  stockXL: string = "";
+  stockS: number = 0;
+  stockM: number = 0;
+  stockL: number = 0;
+  stockXL: number = 0;
   categoria: string = "";
   categorias: String[] = [];
   imagenUrl: string = "";

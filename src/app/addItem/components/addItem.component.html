@@ -28,7 +28,7 @@
                     id="txtStockS"
                     min="0"
                     max="100">
-                <div *ngIf="!dressForm.value.stockS" class="form-text text-danger">* Campo requerido</div>
+                <div *ngIf="dressForm.controls['stockS'].errors" class="form-text text-danger">* Campo requerido</div>
             </div>
             <div class="col-2 mb-3">
                 <label for="txtStockM" class="form-label">Talla "M":</label>
@@ -39,7 +39,7 @@
                     id="txtStockM"
                     min="0"
                     max="100">
-                <div *ngIf="!dressForm.value.stockM" class="form-text text-danger">* Campo requerido</div>
+                <div *ngIf="dressForm.controls['stockM'].errors" class="form-text text-danger">* Campo requerido</div>
             </div>
             <div class="col-2 mb-3">
                 <label for="txtStockL" class="form-label">Talla "L":</label>
@@ -50,7 +50,7 @@
                     id="txtStockL"
                     min="0"
                     max="100">
-                <div *ngIf="!dressForm.value.stockL" class="form-text text-danger">* Campo requerido</div>
+                <div *ngIf="dressForm.controls['stockL'].errors" class="form-text text-danger">* Campo requerido</div>
             </div>
             <div class="col-2 mb-3">
                 <label for="txtStockXL" class="form-label">Talla "XL":</label>
@@ -61,7 +61,7 @@
                     id="txtStockXL"
                     min="0"
                     max="100">
-                <div *ngIf="!dressForm.value.stockXL" class="form-text text-danger">* Campo requerido</div>
+                <div *ngIf="dressForm.controls['stockXL'].errors" class="form-text text-danger">* Campo requerido</div>
             </div>
             <div class="col-2 mb-3">
                 <label for="txtPrecio" class="form-label">Precio:</label>
@@ -72,7 +72,7 @@
                     id="txtPrecio"
                     min="0"
                     max="5000">
-                <div *ngIf="!dressForm.value.precio" class="form-text text-danger">* Campo requerido</div>
+                <div *ngIf="dressForm.controls['precio'].errors" class="form-text text-danger">* Campo requerido</div>
             </div>
         </div>
 
