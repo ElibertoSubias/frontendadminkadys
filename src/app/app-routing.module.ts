@@ -1,3 +1,4 @@
+import { UsersComponent } from './users/components/users.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { ContentLayoutComponent } from './layout/components/content-layout/content-layout.component';
@@ -74,6 +75,11 @@ export const APP_ROUTES: Routes = [
         path: 'portadas',
         canActivate: [AppGuard],
         loadChildren: () => import('./portadas/portadas.module').then(m => m.PortadasModule)
+      },
+      {
+        path: 'usuarios',
+        canActivate: [AppGuard],
+        loadChildren: () => import('./users/users.module').then(m => m.UsersModule)
       },
       {
           path: '**',

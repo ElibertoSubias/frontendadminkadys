@@ -67,4 +67,68 @@ export class AllReservationsComponent implements OnInit {
     });
   }
 
+  activeReservation(id: string, nombre: string) {
+    Swal.fire({
+      title: `¿Desea reactivar la reservación de ${nombre}?`,
+      showDenyButton: true,
+      showConfirmButton: false,
+      showCancelButton: true,
+      denyButtonText: `Aceptar`,
+      cancelButtonText: "Salir"
+    }).then((result) => {
+      if (result.isDenied) {
+        this.moviesService.changeStatusReservation(id, true).subscribe({
+          next: (event: any) => {
+            const currentUrl = this.router.url;
+            this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+              this.router.navigate([currentUrl]);
+            });
+          },
+          error: (err: any) => {
+            console.log(err);
+            Swal.fire({
+              position: "top-end",
+              icon: "error",
+              title: "Ocurrio un error al cancelar la reservacion, intenta de nuevo!",
+              showConfirmButton: false,
+              timer: 2500
+            });
+          },
+        });
+      }
+    });
+  }
+
+  cancelReservation(id: string, nombre: string) {
+    Swal.fire({
+      title: `¿Desea cancelar la reservación de ${nombre}?`,
+      showDenyButton: true,
+      showConfirmButton: false,
+      showCancelButton: true,
+      denyButtonText: `Aceptar`,
+      cancelButtonText: "Salir"
+    }).then((result) => {
+      if (result.isDenied) {
+        this.moviesService.changeStatusReservation(id, false).subscribe({
+          next: (event: any) => {
+            const currentUrl = this.router.url;
+            this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+              this.router.navigate([currentUrl]);
+            });
+          },
+          error: (err: any) => {
+            console.log(err);
+            Swal.fire({
+              position: "top-end",
+              icon: "error",
+              title: "Ocurrio un error al cancelar la reservacion, intenta de nuevo!",
+              showConfirmButton: false,
+              timer: 2500
+            });
+          },
+        });
+      }
+    });
+  }
+
 }

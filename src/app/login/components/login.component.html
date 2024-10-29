@@ -1,11 +1,10 @@
-<div class="col-8 offset-2 col-lg-6 offset-lg-3 div-wrapper d-flex justify-content-center align-items-center">
-
+<div class="col-10 offset-1 col-lg-4 offset-lg-4 div-wrapper d-flex justify-content-center align-items-center">
     <div class="div-to-align">
         <p class="text-center">Inicio de sesion</p>
         <form [formGroup]="loginForm">
             <div class="mb-3">
               <label for="txtUsuario" class="form-label">Usuario</label>
-              <input type="text" formControlName="usuario" name="usuario" class="form-control" id="txtUsuario">
+              <input type="number" formControlName="usuario" name="usuario" class="form-control" id="txtUsuario">
               <div *ngIf="!loginForm.value.usuario" id="usuarioHelp" class="form-text text-danger">* Campo requerido</div>
             </div>
             <div class="mb-3">
@@ -16,5 +15,4 @@
             <button type="submit" class="btn btn-primary" (click)="login()" [disabled]="!loginForm.valid">Ingresar</button>
           </form>
     </div>
-
 </div>

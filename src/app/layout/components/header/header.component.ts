@@ -11,7 +11,7 @@ import { ApiService } from '../../../services/api.service';
 export class HeaderComponent implements OnInit, AfterViewInit {
 
   @ViewChild('txtFiltro') txtFiltro:ElementRef | undefined;
-  
+  nombreUser: string = "";
 
   showFilter: boolean = true;
 
@@ -20,7 +20,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     private moviesService : MoviesService,
     private route: ActivatedRoute,
     private apiService : ApiService
-  ) { 
+  ) {
     router.events.subscribe((val) => {
       if (this.router.url.indexOf('/home') > -1) {
         this.showFilter = true;
@@ -36,7 +36,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    
+    this.nombreUser = this.apiService.getUser("userName");
   }
 
   filterMovies() {

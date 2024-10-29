@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private router:Router,
-    private http: HttpClient, 
+    private http: HttpClient,
     private fb: FormBuilder,
     private moviesService : MoviesService,
     private apiService: ApiService
@@ -40,6 +40,7 @@ export class LoginComponent implements OnInit {
     this.apiService.login(user).subscribe({
       next: (event: any) => {
         this.apiService.setToken(event.token);
+        this.apiService.setUser(event.user);
         this.router.navigateByUrl("/home");
       },
       error: (err: any) => {

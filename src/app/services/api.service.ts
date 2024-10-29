@@ -20,7 +20,11 @@ export class ApiService {
     }
 
     logout() {
-        return this.cookies.delete("token", "/");
+        this.cookies.delete("token", "/");
+        this.cookies.delete("userName", "/");
+        this.cookies.delete("userNumber", "/");
+        this.cookies.delete("userType", "/");
+        return true;
     }
 
     setToken(token: any) {
@@ -29,5 +33,16 @@ export class ApiService {
 
     getToken() {
         return this.cookies.get("token");
+    }
+
+    setUser(user: any) {
+        this.cookies.set("userName", user.nombre);
+        this.cookies.set("userNumber", user.numEmpleado);
+        this.cookies.set("userType", user.type);
+        return true;
+    }
+
+    getUser(atributo: string) {
+        return this.cookies.get(atributo);
     }
 }

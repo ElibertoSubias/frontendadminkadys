@@ -1,0 +1,86 @@
+<div class="col-md-12 cont-body p-4 mt-3" style="padding-top: 78px !important;max-width: 85%;">
+    <h3>Usuarios</h3>
+    <div class="row p-2">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Num. Empleado</th>
+                    <th>Nombre</th>
+                    <th>Apellido Paterno</th>
+                    <th>Apellido Materno</th>
+                    <th>Tipo Empleado</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of users; index as i; first as isFirst">
+                    <td>{{item.numEmpleado}}</td>
+                    <td>{{item.nombre}}</td>
+                    <td>{{item.apPaterno}}</td>
+                    <td>{{item.apMaterno}}</td>
+                    <td>{{item.tipoEmpleado == 1 ? 'Admin' : 'Apoyo'}}</td>
+                    <td>
+                        <svg xmlns="http://www.w3.org/2000/svg" (click)="editar(item)" role="button" width="16" height="16" fill="currentColor" class="bi bi-pencil-square ms-2 me-2"
+                            viewBox="0 0 16 16">
+                            <path
+                                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                            <path fill-rule="evenodd"
+                                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" (click)="delete(item)" role="button" width="16" height="16" fill="currentColor" class="bi bi-trash3 ms-2 me-2"
+                            viewBox="0 0 16 16">
+                            <path
+                                d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5" />
+                        </svg>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <form [formGroup]="userForm">
+            <div class="row">
+                <div class="col-3 mb-3">
+                    <label for="txtNombre" class="form-label">Nombre:</label>
+                    <input id="txtNombre" type="text" formControlName="nombre" name="nombre" class="form-control">
+                    <div *ngIf="!userForm.value.nombre" class="form-text text-danger">* Campo requerido</div>
+                </div>
+                <div class="col-3 mb-3">
+                    <label for="txtApPaterno" class="form-label">Apellido Paterno:</label>
+                    <input id="txtApPaterno" type="text" formControlName="apPaterno"
+                        name="apPaterno" class="form-control">
+                    <div *ngIf="!userForm.value.apPaterno" class="form-text text-danger">* Campo requerido</div>
+                </div>
+                <div class="col-3 mb-3">
+                    <label for="txtApMaterno" class="form-label">Apellido Materno:</label>
+                    <input id="txtApMaterno" type="text" formControlName="apMaterno"
+                        name="apMaterno" class="form-control">
+                    <div *ngIf="!userForm.value.apMaterno" class="form-text text-danger">* Campo requerido</div>
+                </div>
+                <div class="col-2 mb-3">
+                    <label for="txtTipoEmpleado" class="form-label">Tipo empleado:</label>
+                    <select id="txtTipoEmpleado" #txtTipoEmpleado formControlName="tipoEmpleado" class="form-select">
+                        <option value="">Seleccionar</option>
+                        <option value="1">Administrador</option>
+                        <option value="2">Apoyo</option>
+                    </select>
+                    <div *ngIf="userForm.controls['tipoEmpleado'].errors" class="form-text text-danger">* Campo requerido</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3 mb-3">
+                    <label for="txtContrasenia" class="form-label">Contraseña:</label>
+                    <input id="txtContrasenia" type="password" formControlName="contrasenia" #txtContrasenia name="contrasenia" class="form-control">
+                    <div *ngIf="!userForm.value.contrasenia" class="form-text text-danger">* Campo requerido</div>
+                </div>
+                <div class="col-3 mb-3">
+                    <label for="txtContraseniaConfirm" class="form-label">Confirmar contraseña:</label>
+                    <input id="txtContraseniaConfirm" type="password" formControlName="contraseniaConfirm" name="contraseniaConfirm" class="form-control">
+                    <div *ngIf="!userForm.value.contraseniaConfirm" class="form-text text-danger">* Campo requerido</div>
+                </div>
+            </div>
+            <button *ngIf="!userSelected" type="button" class="btn btn-success col-12" (click)="addUser()" [disabled]="!userForm.valid">Crear</button>
+            <button *ngIf="userSelected" type="button" class="btn btn-success col-12" (click)="editUser()" [disabled]="!userForm.valid">Actualizar</button>
+        </form>
+    </div>
+</div>
