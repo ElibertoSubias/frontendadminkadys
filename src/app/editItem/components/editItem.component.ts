@@ -32,10 +32,7 @@ export class EditItemComponent implements OnInit {
       codigo: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
       descripcion: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(400)]],
       color: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(400)]],
-      stockS: ['', [Validators.required]],
-      stockM: ['', [Validators.required]],
-      stockL: ['', [Validators.required]],
-      stockXL: ['', [Validators.required]],
+      talla: ['', [Validators.required]],
       categorias: ['', [Validators.required]],
       precio: ['', [Validators.required]],
       imagenUrl: ['', [Validators.required]]
@@ -46,10 +43,7 @@ export class EditItemComponent implements OnInit {
   @ViewChild('txtCodigo') txtCodigo!:ElementRef;
   @ViewChild('txtDescripcion') txtDescripcion!:ElementRef;
   @ViewChild('txtColor') txtColor!:ElementRef;
-  @ViewChild('txtStockS') txtStockS!:ElementRef;
-  @ViewChild('txtStockM') txtStockM!:ElementRef;
-  @ViewChild('txtStockL') txtStockL!:ElementRef;
-  @ViewChild('txtStockXL') txtStockXL!:ElementRef;
+  @ViewChild('txtTalla') txtTalla!:ElementRef;
   @ViewChild('txtCategoria') txtCategoria!:ElementRef;
   @ViewChild('fileImagenUrl') fileImagenUrl!:ElementRef;
   @ViewChild('txtPrecio') txtPrecio!:ElementRef;
@@ -57,10 +51,7 @@ export class EditItemComponent implements OnInit {
   codigo: string = "";
   descripcion: string = "";
   color: string = "";
-  stockS: string = "";
-  stockM: string = "";
-  stockL: string = "";
-  stockXL: string = "";
+  talla: string = "";
   categoria: string = "";
   categorias: String[] = [];
   imagenUrl: string = "";
@@ -82,10 +73,7 @@ export class EditItemComponent implements OnInit {
           codigo: this.dress.idDress,
           descripcion: this.dress.descripcion,
           color: this.dress.color,
-          stockS: this.dress.stockS,
-          stockM: this.dress.stockM,
-          stockL: this.dress.stockL,
-          stockXL: this.dress.stockXL,
+          talla: this.dress.talla,
           imagenUrl: this.dress.imagenUrl,
           precio: this.dress.precio,
           categorias: this.dress.categorias

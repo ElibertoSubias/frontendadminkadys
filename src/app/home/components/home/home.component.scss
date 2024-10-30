@@ -13,7 +13,7 @@
     overflow:hidden;
 }
 
-.cont-image img {    
+.cont-image img {
     flex-shrink:0;
     -webkit-flex-shrink: 0;
     // max-width:70%;
@@ -33,4 +33,14 @@
 .color-fondo-info h2 {
     text-align: center;
     font-size: 18px;
+}
+
+.cont-filtro {
+    padding: 5px;
+    border: 3px solid #848484;
+    border-radius: 15px;
+}
+
+.filtro-activo {
+    border: 3px solid blue;
 }

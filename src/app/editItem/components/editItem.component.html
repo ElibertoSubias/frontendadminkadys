@@ -7,7 +7,7 @@
                     <div class="row">
                         <div class="col-4 mb-3">
                             <label for="txtCodigo" class="form-label">Codigo:</label>
-                            <input type="number" formControlName="codigo" name="codigo" class="form-control" id="txtCodigo">
+                            <input type="text" formControlName="codigo" name="codigo" class="form-control" id="txtCodigo">
                             <div *ngIf="!dressForm.value.codigo" class="form-text text-danger">* Campo requerido</div>
                         </div>
                         <div class="col-6 mb-3">
@@ -23,62 +23,27 @@
                     </div>
                     <div class="row">
                         <div class="col-2 mb-3">
-                            <label for="txtStockS" class="form-label">Stock "S":</label>
-                            <input 
-                                type="text" 
-                                formControlName="stockS" 
-                                class="form-control" 
-                                id="txtStockS"
+                            <label for="txtTalla" class="form-label">Talla:</label>
+                            <input
+                                type="text"
+                                formControlName="talla"
+                                class="form-control"
+                                id="txtTalla"
                                 min="0"
                                 max="100">
-                            <div *ngIf="!dressForm.value.stockS" class="form-text text-danger">* Campo requerido</div>
+                            <div *ngIf="!dressForm.value.talla" class="form-text text-danger">* Campo requerido</div>
                         </div>
                         <div class="col-2 mb-3">
-                            <label for="txtStockM" class="form-label">Stock "M":</label>
-                            <input 
-                                type="text" 
-                                formControlName="stockM" 
-                                class="form-control" 
-                                id="txtStockM"
+                            <label for="txtPrecio" class="form-label">Precio:</label>
+                            <input
+                                type="number"
+                                formControlName="precio"
+                                class="form-control"
+                                id="txtPrecio"
                                 min="0"
-                                max="100">
-                            <div *ngIf="!dressForm.value.stockM" class="form-text text-danger">* Campo requerido</div>
+                                max="5000">
+                            <div *ngIf="!dressForm.value.precio" class="form-text text-danger">* Campo requerido</div>
                         </div>
-                        <div class="col-2 mb-3">
-                            <label for="txtStockL" class="form-label">Stock "L":</label>
-                            <input 
-                                type="text" 
-                                formControlName="stockL" 
-                                class="form-control" 
-                                id="txtStockL"
-                                min="0"
-                                max="100">
-                            <div *ngIf="!dressForm.value.stockL" class="form-text text-danger">* Campo requerido</div>
-                        </div>
-                        <div class="col-2 mb-3">
-                            <label for="txtStockXL" class="form-label">Stock "XL":</label>
-                            <input 
-                                type="text" 
-                                formControlName="stockXL" 
-                                class="form-control" 
-                                id="txtStockXL"
-                                min="0"
-                                max="100">
-                            <div *ngIf="!dressForm.value.stockXL" class="form-text text-danger">* Campo requerido</div>
-                        </div>
-                    </div>
-                    <div class="col-2 mb-3">
-                        <label for="txtPrecio" class="form-label">Precio:</label>
-                        <input 
-                            type="number" 
-                            formControlName="precio" 
-                            class="form-control" 
-                            id="txtPrecio"
-                            min="0"
-                            max="5000">
-                        <div *ngIf="!dressForm.value.precio" class="form-text text-danger">* Campo requerido</div>
-                    </div>
-                    <div class="row">
                         <div class="col-3 mb-3">
                             <label for="txtCategoria" class="form-label">Categorias:</label>
                             <div class="row m-0">
@@ -95,20 +60,10 @@
                         <div class="col-3 mb-3">
                             <label for="fileImagenUrl" class="form-label">Foto de portada:</label><br>
                             <input type="text" formControlName="imagenUrl" name="imagenUrl" hidden>
-                            <input type="button" id="fileImagenUrl" class="btn btn-primary mt-0 m-2"
-                                style="margin-left: 0px !important;" (click)="addPortada()" value="Seleccionar portada" />
+                            <input type="button" id="fileImagenUrl" class="btn btn-primary mt-0 m-2" style="margin-left: 0px !important;"
+                                (click)="addPortada()" value="Seleccionar portada" />
                             <input id="txtImagenUrl" (change)="onChange($event)" #fileImagenUrl type="file" style='display: none;'>
                             <div *ngIf="!dressForm.value.imagenUrl" class="form-text text-danger">* Campo requerido</div>
-                            <!-- <div *ngIf="file">
-                                <section class="file-info">
-                                    Detalles de la imagen:
-                                    <ul>
-                                        <li>Name: {{file.name}}</li>
-                                        <li>Type: {{file.type}}</li>
-                                        <li>Size: {{file.size}} bytes</li>
-                                    </ul>
-                                </section>
-                            </div> -->
                         </div>
                     </div>
                     <div class="mb-3">

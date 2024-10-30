@@ -4,8 +4,8 @@
         <div class="row">
             <div class="col-2 mb-3">
                 <label for="txtCodigo" class="form-label">Codigo:</label>
-                <input type="number" formControlName="codigo" name="codigo" class="form-control" id="txtCodigo">
-                <div *ngIf="!dressForm.value.codigo" class="form-text text-danger">* Campo requerido</div>
+                <input type="text" formControlName="codigo" name="codigo" class="form-control" id="txtCodigo">
+                <div *ngIf="dressForm.controls['codigo'].errors" class="form-text text-danger">* Campo requerido</div>
             </div>
             <div class="col-4 mb-3">
                 <label for="txtDescripcion" class="form-label">Descripcion:</label>
@@ -20,68 +20,20 @@
         </div>
         <div class="row">
             <div class="col-2 mb-3">
-                <label for="txtStockS" class="form-label">Talla "S":</label>
-                <input 
-                    type="number" 
-                    formControlName="stockS" 
-                    class="form-control" 
-                    id="txtStockS"
-                    min="0"
-                    max="100">
-                <div *ngIf="dressForm.controls['stockS'].errors" class="form-text text-danger">* Campo requerido</div>
+                <label for="txtTalla" class="form-label">Talla:</label>
+                <input
+                    type="text"
+                    formControlName="talla"
+                    class="form-control"
+                    id="txtTalla">
+                <div *ngIf="dressForm.controls['talla'].errors" class="form-text text-danger">* Campo requerido</div>
             </div>
-            <div class="col-2 mb-3">
-                <label for="txtStockM" class="form-label">Talla "M":</label>
-                <input 
-                    type="number" 
-                    formControlName="stockM" 
-                    class="form-control" 
-                    id="txtStockM"
-                    min="0"
-                    max="100">
-                <div *ngIf="dressForm.controls['stockM'].errors" class="form-text text-danger">* Campo requerido</div>
-            </div>
-            <div class="col-2 mb-3">
-                <label for="txtStockL" class="form-label">Talla "L":</label>
-                <input 
-                    type="number" 
-                    formControlName="stockL" 
-                    class="form-control" 
-                    id="txtStockL"
-                    min="0"
-                    max="100">
-                <div *ngIf="dressForm.controls['stockL'].errors" class="form-text text-danger">* Campo requerido</div>
-            </div>
-            <div class="col-2 mb-3">
-                <label for="txtStockXL" class="form-label">Talla "XL":</label>
-                <input 
-                    type="number" 
-                    formControlName="stockXL" 
-                    class="form-control" 
-                    id="txtStockXL"
-                    min="0"
-                    max="100">
-                <div *ngIf="dressForm.controls['stockXL'].errors" class="form-text text-danger">* Campo requerido</div>
-            </div>
-            <div class="col-2 mb-3">
-                <label for="txtPrecio" class="form-label">Precio:</label>
-                <input 
-                    type="number" 
-                    formControlName="precio" 
-                    class="form-control" 
-                    id="txtPrecio"
-                    min="0"
-                    max="5000">
-                <div *ngIf="dressForm.controls['precio'].errors" class="form-text text-danger">* Campo requerido</div>
-            </div>
-        </div>
-
-        <div class="row">
             <div class="col-3 mb-3">
                 <label for="txtCategoria" class="form-label">Categorias:</label>
                 <div class="row m-0">
                     <div class="col-md-8 p-0">
-                        <input type="text" formControlName="categorias" (keyup.enter)="addGenre()" #txtCategoria class="form-control" id="txtCategoria">
+                        <input type="text" formControlName="categorias" (keyup.enter)="addGenre()" #txtCategoria
+                            class="form-control" id="txtCategoria">
                         <div *ngIf="!categorias.length" class="form-text text-danger">* Campo requerido</div>
                     </div>
                     <div class="col-md-4 p-0">
@@ -91,19 +43,18 @@
             </div>
             <div class="col-3 mb-3">
                 <label for="fileImagenUrl" class="form-label">Foto de portada:</label><br>
-                <input type="button" id="fileImagenUrl" class="btn btn-primary mt-0 m-2" style="margin-left: 0px !important;" (click)="addPortada()" value="Seleccionar portada" />
-                <input id="txtImagenUrl" formControlName="imagenUrl" (change)="onChange($event)" #fileImagenUrl type="file" style='display: none;'>
+                <input type="button" id="fileImagenUrl" class="btn btn-primary mt-0 m-2" style="margin-left: 0px !important;"
+                    (click)="addPortada()" value="Seleccionar portada" />
+                <input id="txtImagenUrl" formControlName="imagenUrl" (change)="onChange($event)" #fileImagenUrl type="file"
+                    style='display: none;'>
                 <div *ngIf="!dressForm.value.imagenUrl" class="form-text text-danger">* Campo requerido</div>
-                <!-- <div *ngIf="file">
-                    <section class="file-info">
-                        Detalles de la imagen:
-                        <ul>
-                        <li>Name: {{file.name}}</li>
-                        <li>Type: {{file.type}}</li>
-                        <li>Size: {{file.size}} bytes</li>
-                        </ul>
-                    </section>
-                </div> -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 mb-3">
+                <label for="txtPrecio" class="form-label">Precio:</label>
+                <input type="number" formControlName="precio" class="form-control" id="txtPrecio" min="0" max="5000">
+                <div *ngIf="dressForm.controls['precio'].errors" class="form-text text-danger">* Campo requerido</div>
             </div>
         </div>
         <div class="mb-3">

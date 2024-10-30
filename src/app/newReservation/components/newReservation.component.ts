@@ -29,9 +29,9 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
     private cookies : CookieService
   ){
     this.movieForm = this.fb.group({
-      codigo: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
+      codigo: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(15)]],
       fechaEvento: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
-      talla: ['', [Validators.required]],
+      talla: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       nombre: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       apPaterno: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       apMaterno: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
@@ -184,16 +184,17 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
   }
 
   checkDateEvent() {
-    if (this.txtFechaEvento.nativeElement.value == "") {
-      setTimeout(() => this.txtFechaEvento.nativeElement.focus(), 0);
+    if (this.txtCodigo.nativeElement.value == "") {
+      setTimeout(() => this.txtCodigo.nativeElement.focus(), 0);
       return;
     }
     this.moviesService.checkDateEvent(this.movieForm.value.fechaEvento, this.dress.idDress, this.movieForm.value.talla).subscribe({
       next: (data: any) => {
-        this.totalDisponible = data.totalStock;
-        if (data.totalStock == 0) {
-          this.movieForm.controls['talla'].reset();
+        if (data.reservations.length > 0) {
+          this.movieForm.controls['fechaEvento'].reset();
           Swal.fire("Vestido no disponible para esta fecha!");
+        } else {
+          this.totalDisponible = 1;
         }
       },
       error: (err: any) => {
@@ -258,12 +259,15 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
 
   searchDress() {
     // this.idDress = this.movieForm.value.codigo;
+    if (this.movieForm.value.codigo.length == 0) {
+      return;
+    }
     this.moviesService.getMovie(this.movieForm.value.codigo).subscribe({
       next: (event: any) => {
         this.dress = event.dressExistente;
         this.movieForm.patchValue({
           codigo: event.dressExistente.idDress,
-          // id: event.dressExistente._id
+          talla: event.dressExistente.talla
         });
       },
       error: (err: any) => {
@@ -276,6 +280,9 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
           title: "Ocurrio un error al obtener vestido",
           showConfirmButton: false,
           timer: 1500
+        });
+        this.movieForm.patchValue({
+          codigo: ''
         });
       },
     });

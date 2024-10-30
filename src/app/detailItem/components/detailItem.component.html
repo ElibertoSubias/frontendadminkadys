@@ -12,14 +12,9 @@
                 <p>{{dress.color}}</p>
               </div>
               <div class="col-6">
-                <h2 class="card-title text-start m-0">Stocks:</h2>
+                <h2 class="card-title text-start m-0">Talla:</h2>
                 <div class="row">
-                  <p class="col-3 card-title text-start">S: {{dress.stockS}}</p>
-                  <p class="col-3 card-title text-start">M: {{dress.stockM}}</p>
-                  <p class="col-3 card-title text-start">L: {{dress.stockL}}</p>
-                  <p class="col-3 card-title text-start">XL: {{dress.stockXL}}</p>
-                  <p class="col-3 card-title text-start">XXL: {{dress.stockXXL}}</p>
-                  <p class="col-4 card-title text-start">XXXL: {{dress.stockXXXL}}</p>
+                  <p class="col-5 card-title text-start">{{dress.talla}}</p>
                 </div>
               </div>
             </div>
@@ -44,17 +39,17 @@
       </div>
     </div>
     <div class="d-flex justify-content-end">
-      <a 
-        style="margin-right: 10px !important;" 
-        class="btn btn-success" 
-        [routerLink]="['/new-reservation/',dress.idDress]" 
-        routerLinkActive="active" 
+      <a
+        style="margin-right: 10px !important;"
+        class="btn btn-success"
+        [routerLink]="['/new-reservation/',dress.idDress]"
+        routerLinkActive="active"
         ariaCurrentWhenActive="page">Reservar</a>
-      <a 
-        style="margin-right: 10px !important;" 
-        class="btn btn-primary" 
-        [routerLink]="['/edit-dress/',dress.idDress]" 
-        routerLinkActive="active" 
+      <a
+        style="margin-right: 10px !important;"
+        class="btn btn-primary"
+        [routerLink]="['/edit-dress/',dress.idDress]"
+        routerLinkActive="active"
         ariaCurrentWhenActive="page">Editar</a>
       <button type="button" class="btn btn-danger" (click)="removeItem()">Eliminar</button>
     </div>

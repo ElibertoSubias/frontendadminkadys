@@ -14,4 +14,9 @@ export class ContentLayoutComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  addItem(newItem: string) {
+    console.log(newItem);
+
+  }
+
 }

@@ -45,4 +45,12 @@ export class ApiService {
     getUser(atributo: string) {
         return this.cookies.get(atributo);
     }
+
+    setTipoFiltro(tipo: number) {
+        return this.cookies.set("tipoFiltro", tipo.toString());
+    }
+
+    getTipoFiltro() {
+        return this.cookies.get("tipoFiltro");
+    }
 }

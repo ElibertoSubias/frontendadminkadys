@@ -18,7 +18,7 @@ export class AddItemComponent implements OnInit {
   dressForm: FormGroup;
 
   constructor(
-    private http: HttpClient, 
+    private http: HttpClient,
     private fb: FormBuilder,
     private moviesService : MoviesService,
     private router: Router,
@@ -28,10 +28,7 @@ export class AddItemComponent implements OnInit {
       codigo: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
       descripcion: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(400)]],
       color: ['', [Validators.required, Validators.min(0), Validators.max(100)]],
-      stockS: ['', [Validators.required, Validators.min(0), Validators.max(1000)]],
-      stockM: ['', [Validators.required, Validators.min(0), Validators.max(1000)]],
-      stockL: ['', [Validators.required, Validators.min(0), Validators.max(1000)]],
-      stockXL: ['', [Validators.required, Validators.min(0), Validators.max(1000)]],
+      talla: ['', [Validators.required, Validators.min(0), Validators.max(1000)]],
       categorias: ['', [Validators.required]],
       precio: ['', [Validators.required]],
       imagenUrl: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]]
@@ -42,10 +39,7 @@ export class AddItemComponent implements OnInit {
   @ViewChild('txtCodigo') txtCodigo!:ElementRef;
   @ViewChild('txtDescripcion') txtDescripcion!:ElementRef;
   @ViewChild('txtColor') txtColor!:ElementRef;
-  @ViewChild('txtStockS') txtStockS!:ElementRef;
-  @ViewChild('txtStockM') txtStockM!:ElementRef;
-  @ViewChild('txtStockL') txtStockL!:ElementRef;
-  @ViewChild('txtStockXL') txtStockXL!:ElementRef;
+  @ViewChild('txtTalla') txtTalla!:ElementRef;
   @ViewChild('txtCategoria') txtCategoria!:ElementRef;
   @ViewChild('fileImagenUrl') fileImagenUrl!:ElementRef;
   @ViewChild('txtPrecio') txtPrecio!:ElementRef;
@@ -53,10 +47,7 @@ export class AddItemComponent implements OnInit {
   codigo: string = "";
   descripcion: string = "";
   color: string = "";
-  stockS: number = 0;
-  stockM: number = 0;
-  stockL: number = 0;
-  stockXL: number = 0;
+  talla: number = 0;
   categoria: string = "";
   categorias: String[] = [];
   imagenUrl: string = "";
@@ -70,8 +61,8 @@ export class AddItemComponent implements OnInit {
     this.moviesService.getNextID().subscribe({
       next: (event: any) => {
         this.nextID = event.nextID;
-        this.dressForm.value.codigo = this.nextID;
         this.dressForm.controls['codigo'].setValue(this.nextID);
+        this.dressForm.controls['codigo'].disable();
       },
       error: (err: any) => {
         if (err.status == 401) {
@@ -91,7 +82,7 @@ export class AddItemComponent implements OnInit {
   }
 
   saveItem() {
-
+    this.dressForm.controls['codigo'].enable();
     this.moviesService.checkCodeAvailable(this.dressForm.value.codigo).subscribe({
       next: (event: any) => {
         if (event.codeValid) {
@@ -99,10 +90,10 @@ export class AddItemComponent implements OnInit {
           this.dressForm.value.imagenUrl = this.file?.name;
           this.moviesService.saveMovie(this.dressForm.value).subscribe({
             next: (event: any) => {
-              
+
               // Subimos portada en caso de ser grabada con exito
               this.onUpload(event.dress._id);
-              
+
             },
             error: (err: any) => {
               Swal.fire({
@@ -156,12 +147,12 @@ export class AddItemComponent implements OnInit {
   onUpload(id: string) {
     if (this.file) {
       const formData = new FormData();
-  
+
       formData.append('archivo', this.file, this.file.name);
-  
+
       this.moviesService.uploadImage(formData, id).subscribe({
         next: (event: any) => {
-          
+
           // Correcto
           Swal.fire({
             title: "Vestido creado con exito!",
