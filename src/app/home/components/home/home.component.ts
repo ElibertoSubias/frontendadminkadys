@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import Swal from 'sweetalert2';
 import { ApiService } from '../../../services/api.service';
+import { fromEvent, reduce, scan, tap } from 'rxjs';
 
 @Component({
   selector: 'app-workspace',
@@ -20,6 +21,8 @@ export class HomeComponent implements OnInit {
   baseUrl: string = environment.appBaseUrlMedia;
   defaultOrder: boolean = true;
   tipoFiltro: number = 1;
+  paginaActual: number = 0;
+  totalBloqueEncontrado: number = 0;
 
   constructor(
     private http: HttpClient,
@@ -33,12 +36,38 @@ export class HomeComponent implements OnInit {
    }
 
   ngOnInit(): void {
+
+    this.getData();
+
+    fromEvent(document, 'scroll').pipe(
+      tap(() => {
+        let fullDocumentHeight = Math.max(
+          document.body.scrollHeight,
+          document.documentElement.scrollHeight,
+          document.body.offsetHeight,
+          document.documentElement.offsetHeight,
+          document.body.clientHeight,
+          document.documentElement.clientHeight
+        );
+
+        const haveIReachedBottom = (fullDocumentHeight) === Math.round(window.scrollY + document.documentElement.clientHeight);
+        if (haveIReachedBottom && this.router.url.includes("/home") && this.totalBloqueEncontrado > 0) {
+          this.paginaActual++;
+          this.getData();
+        }
+      })
+    ).subscribe();
+
     this.route.snapshot.queryParams['filter'];
     this.tipoFiltro = this.apiService.getTipoFiltro() ? parseInt(this.apiService.getTipoFiltro()) : 1;
 
-    this.moviesService.getMoviesByFilter(this.apiService.getTipoFiltro() ? parseInt(this.apiService.getTipoFiltro()) : 1, this.route.snapshot.queryParams['filter']).subscribe({
+  }
+
+  getData() {
+    this.moviesService.getMoviesByFilter(this.tipoFiltro, this.route.snapshot.queryParams['filter'], 10, this.paginaActual).subscribe({
       next: (event: any) => {
-        this.movies = event.dresses;
+        this.totalBloqueEncontrado = event.dresses.length;
+        this.movies = [...this.movies,...event.dresses];
       },
       error: (err: any) => {
         console.log(err);

@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import { MoviesService } from '../../services/movies.service';
 import { ApiService } from '../../services/api.service';
 import Swal from 'sweetalert2';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-workspace',
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
     private http: HttpClient,
     private fb: FormBuilder,
     private moviesService : MoviesService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private cookies: CookieService,
   ){
     this.loginForm = this.fb.group({
       usuario: ['', [Validators.required]],
@@ -32,6 +34,11 @@ export class LoginComponent implements OnInit {
     const token = this.apiService.getToken();
     if (token) {
       this.router.navigateByUrl("/home");
+    } else {
+      this.cookies.delete("userName");
+      this.cookies.delete("userNumber");
+      this.cookies.delete("userType");
+      this.cookies.delete("tipoFiltro");
     }
   }
 
