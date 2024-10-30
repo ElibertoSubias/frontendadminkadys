@@ -33,6 +33,7 @@ export class EditItemComponent implements OnInit {
       descripcion: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(400)]],
       color: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(400)]],
       talla: ['', [Validators.required]],
+      status: ['', [Validators.required]],
       categorias: ['', [Validators.required]],
       precio: ['', [Validators.required]],
       imagenUrl: ['', [Validators.required]]
@@ -57,8 +58,7 @@ export class EditItemComponent implements OnInit {
   imagenUrl: string = "";
   imageUrlActualizar: any = null;
   precio: string = "";
-
-  status: "initial" | "uploading" | "success" | "fail" = "initial"; // Variable to store file status
+  status: number = -1;
   file?: File;
 
   ngOnInit(): void {
@@ -74,10 +74,12 @@ export class EditItemComponent implements OnInit {
           descripcion: this.dress.descripcion,
           color: this.dress.color,
           talla: this.dress.talla,
+          status: this.dress.status,
           imagenUrl: this.dress.imagenUrl,
           precio: this.dress.precio,
           categorias: this.dress.categorias
         });
+        this.dressForm.controls['codigo'].disable();
       },
       error: (err: any) => {
         if (err.status == 401) {
@@ -99,6 +101,7 @@ export class EditItemComponent implements OnInit {
   saveItem() {
     this.dressForm.value.categorias = this.categorias;
     this.dressForm.value.imagenUrl = this.file ? this.file.name : this.dressForm.value.imagenUrl;
+    this.dressForm.controls['codigo'].enable();
     this.moviesService.updateMovie(this.dressForm.value, this.dress._id).subscribe({
       next: (event: any) => {
 
@@ -134,7 +137,6 @@ export class EditItemComponent implements OnInit {
     const file: File = event.target.files[0];
     this.imageUrlActualizar = URL.createObjectURL(file)
     if (file) {
-      this.status = "initial";
       this.file = file;
     }
   }

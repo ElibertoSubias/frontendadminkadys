@@ -18,8 +18,8 @@
             <td>{{item.creado}}</td>
             <td>{{item.nombre}} {{item.apPaterno}} {{item.apMaterno}}</td>
             <td>{{(!item.statusSalida && !item.statusEntrada) || (item.statusSalida && item.modificado == formatDate(currentDate)) ? item.anticipo : 0}}</td>
-            <td>{{item.statusSalida ? item.cantRestante : 0}}</td>
-            <td>{{item.statusEntrada ? item.costoExtra : 0}}</td>
+            <td>{{item.cantRestante}}</td>
+            <td>{{item.costoExtra}}</td>
             <td>{{item.statusSalida && item.tipoComprobante == 2 ? item.cantGarantia : 0}}</td>
             <td>{{item.statusSalida ? "Rentado" : item.statusEntrada ? "Entregado" : 'Apartado'}}</td>
             <td>

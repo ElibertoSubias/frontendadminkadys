@@ -107,11 +107,11 @@ export class MoviesService {
         const token = this.apiService.getToken();
         const headers = { 'x-auth-token': `${token}` };
         let filtros = "";
-        if (tipoFiltro > 0 && filtro.length == 0) {
+        if (tipoFiltro >= 0 && filtro.length == 0) {
             filtros = `?tipoFiltro=${tipoFiltro}`;
-        } else if (tipoFiltro == 0 && filtro.length > 0) {
-            filtros = `?filtro=${tipoFiltro}`;
-        } else if (tipoFiltro > 0 && filtro.length > 0) {
+        } else if (tipoFiltro < 0 && filtro.length > 0) {
+            filtros = `?filtro=${filtro}`;
+        } else if (tipoFiltro >= 0 && filtro.length > 0) {
             filtros = `?tipoFiltro=${tipoFiltro}&filtro=${filtro}`;
         }
         return this.http.get<any>(`${environment.appBaseUrl}/dresses${filtros}`, { headers });

@@ -4,12 +4,21 @@
       <div class="row col-12 ">
         <div class="col-6 p-0">
           <div class="card-body color-fondo-info" style="width: 100%;">
-            <h2 class="card-title text-start">{{dress.descripcion}}</h2>
-            <p class="card-text">Codigo: {{dress.idDress}}</p>
+            <h2 class="card-title text-start">Codigo: {{dress.idDress}}</h2>
             <div class="row">
+              <div class="col-12">
+                <h2 class="card-title text-start m-0">Descripcion:</h2>
+                <div class="row">
+                  <p class="col-5 card-title text-start">{{dress.descripcion}}</p>
+                </div>
+              </div>
               <div class="col-6">
-                <h2 class="card-title text-start m-0">Color:</h2><br>
+                <h2 class="card-title text-start m-0">Color:</h2>
                 <p>{{dress.color}}</p>
+              </div>
+              <div class="col-6">
+                <h2 class="card-title text-start m-0">Status:</h2>
+                <p class="status-dress">{{dress.status == 0 ? 'INACTIVO' : dress.status == 1 ? 'ACTIVO' : dress.status == 2 ? 'PARA VENTA' : dress.status == 3 ? 'DONADO' : dress.status == 4 ? 'VENDIDO' : ''}}</p>
               </div>
               <div class="col-6">
                 <h2 class="card-title text-start m-0">Talla:</h2>
@@ -40,6 +49,7 @@
     </div>
     <div class="d-flex justify-content-end">
       <a
+        *ngIf="dress.status == 1"
         style="margin-right: 10px !important;"
         class="btn btn-success"
         [routerLink]="['/new-reservation/',dress.idDress]"

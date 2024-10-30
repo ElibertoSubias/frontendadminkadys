@@ -100,7 +100,8 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
         next: (event: any) => {
           this.dress = event.dressExistente;
           this.movieForm.patchValue({
-            codigo: event.dressExistente.idDress
+            codigo: event.dressExistente.idDress,
+            talla: event.dressExistente.talla
           });
         },
         error: (err: any) => {
@@ -139,6 +140,13 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
             comentarios: this.reservation.comentarios,
             fechaRecoleccion: this.reservation.fechaRecoleccion
           });
+          if (this.reservation.diasCobrados > 0) {
+            this.aggDiasExtras = true;
+            setTimeout(() => {
+              this.txtDias.nativeElement.value = this.reservation.diasCobrados;
+              this.txtCostoExtra.nativeElement.value = this.reservation.costoExtra;
+            }, 500);
+          }
         },
         error: (err: any) => {
           if (err.status == 401) {
@@ -219,6 +227,10 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
 
   addReservation() {
     this.movieForm.value.fecha = this.formatDate(this.currentDate);
+    if (this.txtDias.nativeElement.value && this.txtDias.nativeElement.value > 0) {
+      this.movieForm.value.dias = this.txtDias.nativeElement.value;
+      this.movieForm.value.costoExtra = this.txtCostoExtra.nativeElement.value;
+    }
     this.moviesService.saveReservation(this.movieForm.value).subscribe({
       next: (event: any) => {
         Swal.fire("Reservacion creada con exito!");
@@ -238,6 +250,10 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
   }
 
   editReservation() {
+    if (this.txtDias.nativeElement.value && this.txtDias.nativeElement.value > 0) {
+      this.movieForm.value.dias = this.txtDias.nativeElement.value;
+      this.movieForm.value.costoExtra = this.txtCostoExtra.nativeElement.value;
+    }
     this.moviesService.editReservation(this.route.snapshot.params['_id'], this.movieForm.value).subscribe({
       next: (event: any) => {
         Swal.fire("Reservacion actualizada con exito!");

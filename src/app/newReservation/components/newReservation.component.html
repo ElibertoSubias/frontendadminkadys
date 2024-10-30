@@ -19,7 +19,7 @@
                         #txtFechaEvento/>
                     <div *ngIf="movieForm.controls['fechaEvento'].errors" class="form-text text-danger">* Campo requerido</div>
                 </div>
-                <div class="col-2 mb-3">
+                <div class="col-4 mb-3">
                     <label for="txtTalla" class="form-label">Talla:</label>
                     <select id="txtTalla" #txtTalla formControlName="talla" class="form-select" aria-label="Selecciona una talla">
                         <option *ngIf="(dress) || reservation" value="{{dress.talla}}">{{dress.talla}}</option>
@@ -27,12 +27,12 @@
                     </select>
                     <div *ngIf="movieForm.controls['talla'].errors" class="form-text text-danger">* Campo requerido</div>
                 </div>
-                <div class="col-2 mb-3">
+                <!-- <div class="col-2 mb-3">
                     <label for="txtDisponible" class="form-label">Disponibles:</label>
                     <label class="form-label">
                         <strong class="p-2">{{totalDisponible}}</strong>
                     </label>
-                </div>
+                </div> -->
             </div>
             <div class="row">
                 <div class="col-4 mb-3">
@@ -98,7 +98,7 @@
             <div class="row">
                 <div class="col-4 mb-3">
                     <div class="form-check">
-                        <input (change)="diasExtras()" type="checkbox" id="cbDiasExtras" class="form-check-input" #cbDiasExtras />
+                        <input [checked]="aggDiasExtras" (change)="diasExtras()" type="checkbox" id="cbDiasExtras" class="form-check-input" #cbDiasExtras />
                         <label class="form-check-label" for="cbDiasExtras">
                             Agregar dias extras
                         </label>

@@ -10,17 +10,20 @@
                 <div class="ms-4 cont-filtro {{tipoFiltro == 1 ? 'filtro-activo' : ''}}" style="cursor: pointer;" (click)="cambiarFiltro(1)">
                     <strong>Activos</strong>
                 </div>
-                <div class="ms-2 cont-filtro {{tipoFiltro == 2 ? 'filtro-activo' : ''}}" style="cursor: pointer;" (click)="cambiarFiltro(2)">
+                <div class="ms-2 cont-filtro {{tipoFiltro == 0 ? 'filtro-activo' : ''}}" style="cursor: pointer;" (click)="cambiarFiltro(0)">
                     <strong>Inactivos</strong>
                 </div>
                 <div class="ms-2 cont-filtro {{tipoFiltro == 3 ? 'filtro-activo' : ''}}" style="cursor: pointer;" (click)="cambiarFiltro(3)">
                     <strong>Donados</strong>
                 </div>
-                <div class="ms-2 cont-filtro {{tipoFiltro == 4 ? 'filtro-activo' : ''}}" style="cursor: pointer;" (click)="cambiarFiltro(4)">
+                <div class="ms-2 cont-filtro {{tipoFiltro == 2 ? 'filtro-activo' : ''}}" style="cursor: pointer;" (click)="cambiarFiltro(2)">
                     <strong>Para venta</strong>
                 </div>
-                <div class="ms-2 cont-filtro {{tipoFiltro == 5 ? 'filtro-activo' : ''}}" style="cursor: pointer;" (click)="cambiarFiltro(5)">
+                <div class="ms-2 cont-filtro {{tipoFiltro == 4 ? 'filtro-activo' : ''}}" style="cursor: pointer;" (click)="cambiarFiltro(4)">
                     <strong>Vendidos</strong>
+                </div>
+                <div class="ms-2 cont-filtro {{tipoFiltro == -1 ? 'filtro-activo' : ''}}" style="cursor: pointer;" (click)="cambiarFiltro(-1)">
+                    <strong>Todos</strong>
                 </div>
             </div>
         </div>
@@ -59,6 +62,7 @@
                             </div>
                         </div>
                         <a
+                            *ngIf="movie.status == 1"
                             [routerLink]="['/new-reservation/',movie.idDress]"
                             routerLinkActive="active"
                             ariaCurrentWhenActive="page"

@@ -8,20 +8,20 @@
                         <div class="col-4 mb-3">
                             <label for="txtCodigo" class="form-label">Codigo:</label>
                             <input type="text" formControlName="codigo" name="codigo" class="form-control" id="txtCodigo">
-                            <div *ngIf="!dressForm.value.codigo" class="form-text text-danger">* Campo requerido</div>
+                            <div *ngIf="dressForm.controls['codigo'].errors" class="form-text text-danger">* Campo requerido</div>
                         </div>
                         <div class="col-6 mb-3">
                             <label for="txtDescripcion" class="form-label">Descripcion:</label>
                             <input type="text" formControlName="descripcion" class="form-control" id="txtDescripcion" />
                             <div *ngIf="!dressForm.value.descripcion" class="form-text text-danger">* Campo requerido</div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-2 mb-3">
                             <label for="txtColor" class="form-label">Color:</label>
                             <input type="text" formControlName="color" class="form-control" id="txtColor" />
                             <div *ngIf="!dressForm.value.color" class="form-text text-danger">* Campo requerido</div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-2 mb-3">
                             <label for="txtTalla" class="form-label">Talla:</label>
                             <input
@@ -45,6 +45,16 @@
                             <div *ngIf="!dressForm.value.precio" class="form-text text-danger">* Campo requerido</div>
                         </div>
                         <div class="col-3 mb-3">
+                            <label for="fileImagenUrl" class="form-label">Foto de portada:</label><br>
+                            <input type="text" formControlName="imagenUrl" name="imagenUrl" hidden>
+                            <input type="button" id="fileImagenUrl" class="btn btn-primary mt-0 m-2" style="margin-left: 0px !important;"
+                                (click)="addPortada()" value="Seleccionar portada" />
+                            <input id="txtImagenUrl" (change)="onChange($event)" #fileImagenUrl type="file" style='display: none;'>
+                            <div *ngIf="!dressForm.value.imagenUrl" class="form-text text-danger">* Campo requerido</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4 mb-3">
                             <label for="txtCategoria" class="form-label">Categorias:</label>
                             <div class="row m-0">
                                 <div class="col-md-8 p-0">
@@ -58,12 +68,16 @@
                             </div>
                         </div>
                         <div class="col-3 mb-3">
-                            <label for="fileImagenUrl" class="form-label">Foto de portada:</label><br>
-                            <input type="text" formControlName="imagenUrl" name="imagenUrl" hidden>
-                            <input type="button" id="fileImagenUrl" class="btn btn-primary mt-0 m-2" style="margin-left: 0px !important;"
-                                (click)="addPortada()" value="Seleccionar portada" />
-                            <input id="txtImagenUrl" (change)="onChange($event)" #fileImagenUrl type="file" style='display: none;'>
-                            <div *ngIf="!dressForm.value.imagenUrl" class="form-text text-danger">* Campo requerido</div>
+                            <label for="txtStatus" class="form-label">Status:</label>
+                            <select id="txtStatus" #txtStatus formControlName="status" class="form-select">
+                                <option value="">Seleccionar</option>
+                                <option value="1" [selected]="status == 1">ACTIVO</option>
+                                <option value="0" [selected]="status == 0">INACTIVO</option>
+                                <option value="2" [selected]="status == 2">PARA VENTA</option>
+                                <option value="3" [selected]="status == 3">DONADO</option>
+                                <option value="4" [selected]="status == 4">VENDIDO</option>
+                            </select>
+                            <div *ngIf="dressForm.controls['status'].errors" class="form-text text-danger">* Campo requerido</div>
                         </div>
                     </div>
                     <div class="mb-3">
@@ -90,7 +104,7 @@
         <div class="d-flex justify-content-end">
             <button type="button" class="btn btn-success" style="margin-right: 20px;" (click)="saveItem()"
                 [disabled]="!dressForm.valid">Actualizar</button>
-            <a [routerLink]="['/dress/',dressForm.value.codigo]" routerLinkActive="active" ariaCurrentWhenActive="page"
+            <a [routerLink]="['/dress/',id]" routerLinkActive="active" ariaCurrentWhenActive="page"
                 class="btn btn-danger">Cancelar</a>
         </div>
     </div>
