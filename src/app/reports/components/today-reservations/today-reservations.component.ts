@@ -7,6 +7,7 @@ import { CookieService } from 'ngx-cookie-service';
 import Swal from 'sweetalert2';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogDataExampleDialog } from '../modalDetall/modalDetalle.component';
+import { ApiService } from "../../../services/api.service";
 
 @Component({
   selector: 'today-reservations',
@@ -22,7 +23,8 @@ export class TodayReservationsComponent implements OnInit {
     private http: HttpClient,
     private moviesService : MoviesService,
     private router: Router,
-    private cookies : CookieService
+    private cookies : CookieService,
+    private apiService : ApiService
   ){}
 
   listItems: any = [];
@@ -34,14 +36,17 @@ export class TodayReservationsComponent implements OnInit {
         this.listItems = event.result;
       },
       error: (err: any) => {
-        Swal.fire({
-          position: "top-end",
-          icon: "error",
-          title: "Ocurrio un error al cargar reporte!",
-          showConfirmButton: false,
-          timer: 2500
-        });
-        this.router.navigate([`/login`]);
+        if (err.status == 401) {
+          this.apiService.logout();
+        } else {
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Ocurrio un error al obtener reporte!",
+            showConfirmButton: false,
+            timer: 2500
+          });
+        }
       },
     });
   }

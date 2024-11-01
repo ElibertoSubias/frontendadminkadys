@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, inject, ViewChild } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import { Genre } from '../../interfaces/Genre';
 import { HttpClient, HttpResponse } from "@angular/common/http";
@@ -9,6 +9,9 @@ import Swal from 'sweetalert2';
 import { environment } from '../../../environments/environment';
 import { Location } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
+import { ApiService } from '../../services/api.service';
+import { MatDialog } from '@angular/material/dialog';
+import { BuscarClienteDialog } from './modalDetall/buscar-cliente.component';
 
 @Component({
   selector: 'app-workspace',
@@ -18,6 +21,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class NewReservationComponent implements OnInit, AfterViewInit {
 
   movieForm: FormGroup;
+  dialog = inject(MatDialog);
 
   constructor(
     private route: ActivatedRoute,
@@ -26,17 +30,14 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
     private moviesService : MoviesService,
     private router: Router,
     private location: Location,
-    private cookies : CookieService
+    private cookies : CookieService,
+    private apiService : ApiService
   ){
     this.movieForm = this.fb.group({
       codigo: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(15)]],
+      numCliente: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(15)]],
       fechaEvento: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
       talla: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-      nombre: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-      apPaterno: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-      apMaterno: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-      direccion: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(50)]],
-      telefono: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
       fechaRecoleccion: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
       anticipo: ['', [Validators.required, Validators.min(0), Validators.max(1000)]],
       cantRestante: ['', [Validators.required, Validators.min(0), Validators.max(1000)]],
@@ -49,6 +50,7 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
     document.getElementById("txtFechaRecoleccion")?.setAttribute("min", this.formatDate(this.currentDate));
   }
 
+  @ViewChild('txtNumCliente') txtNumCliente!:ElementRef;
   @ViewChild('txtCodigo') txtCodigo!:ElementRef;
   @ViewChild('txtFechaEvento') txtFechaEvento!:ElementRef;
   @ViewChild('txtTalla') txtTalla!:ElementRef;
@@ -67,6 +69,7 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
   @ViewChild('txtDias') txtDias!: ElementRef;
   @ViewChild('txtCostoExtra') txtCostoExtra!:ElementRef;
 
+  numCliente: string = "";
   codigo: string = "";
   fechaEvento: string = "";
   talla: string = "";
@@ -106,8 +109,7 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
         },
         error: (err: any) => {
           if (err.status == 401) {
-            this.cookies.delete("token");
-            this.router.navigate([`/login`]);
+            this.apiService.logout();
           } else {
             Swal.fire({
               position: "top-end",
@@ -126,13 +128,9 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
           this.dress = this.reservation.vestidos;
           this.movieForm.patchValue({
             codigo: this.reservation.vestidos.idDress,
+            numCliente: this.reservation.cliente.numCliente,
             fechaEvento: this.reservation.fechaEvento,
             talla: this.reservation.talla,
-            nombre: this.reservation.nombre,
-            apPaterno: this.reservation.apPaterno,
-            apMaterno: this.reservation.apMaterno,
-            direccion: this.reservation.direccion,
-            telefono: this.reservation.telefono,
             anticipo: this.reservation.anticipo,
             cantRestante: this.reservation.cantRestante,
             cantGarantia: this.reservation.cantGarantia,
@@ -140,6 +138,9 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
             comentarios: this.reservation.comentarios,
             fechaRecoleccion: this.reservation.fechaRecoleccion
           });
+          this.nombre = this.reservation.cliente.nombre;
+          this.direccion = this.reservation.cliente.direccion;
+          this.telefono = this.reservation.cliente.telefono;
           if (this.reservation.diasCobrados > 0) {
             this.aggDiasExtras = true;
             setTimeout(() => {
@@ -150,9 +151,8 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
         },
         error: (err: any) => {
           if (err.status == 401) {
-            this.router.navigate([`/login`]);
+            this.apiService.logout();
           }
-          console.log(err);
           Swal.fire({
             position: "top-end",
             icon: "error",
@@ -163,6 +163,20 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
         },
       });
     }
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(BuscarClienteDialog, {
+      width: '900px',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.movieForm.patchValue({
+        numCliente: result.data.numCliente
+      });
+      this.nombre = result.data.nombre;
+      this.direccion = result.data.direccion;
+      this.telefono = result.data.telefono;
+    });
   }
 
   diasExtras() {
@@ -227,7 +241,7 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
 
   addReservation() {
     this.movieForm.value.fecha = this.formatDate(this.currentDate);
-    if (this.txtDias.nativeElement.value && this.txtDias.nativeElement.value > 0) {
+    if (this.cbDiasExtras.nativeElement.checked && this.txtDias.nativeElement.value && this.txtDias.nativeElement.value > 0) {
       this.movieForm.value.dias = this.txtDias.nativeElement.value;
       this.movieForm.value.costoExtra = this.txtCostoExtra.nativeElement.value;
     }
@@ -250,7 +264,7 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
   }
 
   editReservation() {
-    if (this.txtDias.nativeElement.value && this.txtDias.nativeElement.value > 0) {
+    if (this.cbDiasExtras.nativeElement.checked && this.txtDias.nativeElement.value && this.txtDias.nativeElement.value > 0) {
       this.movieForm.value.dias = this.txtDias.nativeElement.value;
       this.movieForm.value.costoExtra = this.txtCostoExtra.nativeElement.value;
     }

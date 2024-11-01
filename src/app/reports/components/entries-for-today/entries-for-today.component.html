@@ -18,13 +18,12 @@
             <tr [class.alerta-dias]="item.diasConRetrazo > 0">
                 <td>{{item.fechaEvento}}</td>
                 <td>{{item.fechaLimite}}</td>
-                <!-- {{diasPendietes(item.fechaEvento, formatDate(currentDate))}} -->
                 <td>{{item.diasConRetrazo}}
                 </td>
                 <td>${{item.totalPorRetrazo}}
                 </td>
                 <td>{{item.vestidos.idDress}}</td>
-                <td>{{item.nombre}} {{item.apPaterno}} {{item.apMaterno}}</td>
+                <td>{{item.cliente.nombre}} {{item.cliente.apPaterno}} {{item.cliente.apMaterno}}</td>
                 <td>{{item.talla}}</td>
                 <td>{{item.telefono}}</td>
                 <td>

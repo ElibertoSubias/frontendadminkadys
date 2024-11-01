@@ -7,6 +7,7 @@ import { MoviesService } from '../../services/movies.service';
 import { environment } from '../../../environments/environment';
 import Swal from 'sweetalert2';
 import { CookieService } from 'ngx-cookie-service';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-workspace',
@@ -26,7 +27,8 @@ export class EditItemComponent implements OnInit {
     private fb: FormBuilder,
     private moviesService : MoviesService,
     private router: Router,
-    private cookies : CookieService
+    private cookies : CookieService,
+    private apiService : ApiService
   ){
     this.dressForm = this.fb.group({
       codigo: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
@@ -83,8 +85,7 @@ export class EditItemComponent implements OnInit {
       },
       error: (err: any) => {
         if (err.status == 401) {
-          this.cookies.delete("token");
-          this.router.navigate([`/login`]);
+          this.apiService.logout();
         } else {
           Swal.fire({
             position: "top-end",

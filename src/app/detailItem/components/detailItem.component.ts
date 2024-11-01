@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 import Swal from 'sweetalert2';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-workspace',
@@ -18,7 +19,8 @@ export class DetailItemComponent implements OnInit {
     private http: HttpClient,
     private moviesService : MoviesService,
     private router: Router,
-    private cookies : CookieService
+    private cookies : CookieService,
+    private apiService : ApiService
   ){}
 
   id: string = "";
@@ -34,8 +36,7 @@ export class DetailItemComponent implements OnInit {
       },
       error: (err: any) => {
         if (err.status == 401) {
-          this.cookies.delete("token");
-          this.router.navigate([`/login`]);
+          this.apiService.logout();
         } else {
           Swal.fire({
             position: "top-end",

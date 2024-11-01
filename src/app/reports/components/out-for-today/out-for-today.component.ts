@@ -12,6 +12,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { NgFor } from '@angular/common';
 import { DialogDataExampleDialog } from '../modalDetall/modalDetalle.component';
 import {RouterModule} from '@angular/router';
+import { ApiService } from '../../../services/api.service';
 
 @Component({
   selector: 'out-for-today',
@@ -27,7 +28,8 @@ export class OutForTodayComponent implements OnInit {
     private http: HttpClient,
     private moviesService : MoviesService,
     private router: Router,
-    private cookies : CookieService
+    private cookies : CookieService,
+    private apiService : ApiService
   ){}
 
   listItems: any = [];
@@ -41,14 +43,17 @@ export class OutForTodayComponent implements OnInit {
         this.listItems = event.result;
       },
       error: (err: any) => {
-        Swal.fire({
-          position: "top-end",
-          icon: "error",
-          title: "Ocurrio un error al cargar reporte!",
-          showConfirmButton: false,
-          timer: 2500
-        });
-        this.router.navigate([`/login`]);
+        if (err.status == 401) {
+          this.apiService.logout();
+        } else {
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Ocurrio un error al cargar el reporte!",
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
       },
     });
 

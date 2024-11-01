@@ -1,0 +1,62 @@
+<h2 mat-dialog-title>Buscar/Agregar Cliente</h2>
+<mat-dialog-content>
+  <div class="form-inline p-2 d-flex justify-content-end">
+    <input 
+      #txtFiltroNombre
+      class="col form-control mr-sm-2 m" 
+      type="search"
+      placeholder="Maria Fernanda Lopez"
+      (search)="buscarCliente()"
+      (keyup.enter)="buscarCliente()"
+      aria-label="Search">
+    <button (click)="buscarCliente()" class="col-3 btn btn-outline-success my-2 my-sm-0 p-1" type="button">Buscar</button>
+    <button (click)="crearCliente()" class="col-3 btn btn-outline-success my-2 my-sm-0 p-1 ms-5" type="button">Crear</button>
+  </div>
+  <form [formGroup]="clienteForm">
+    <div *ngIf="flagCrearCliente" class="row">
+      
+        <div class="col-4 mb-3">
+          <label for="txtNombre" class="form-label">Nombre:</label>
+          <input type="text" formControlName="nombre" class="form-control" #txtNombre>
+          <div *ngIf="clienteForm.controls['nombre'].errors" class="form-text text-danger">* Campo requerido</div>
+        </div>
+        <div class="col-4 mb-3">
+            <label for="txtDireccion" class="form-label">Dirección:</label>
+            <input type="text" formControlName="direccion" class="form-control" #txtDireccion>
+            <div *ngIf="clienteForm.controls['direccion'].errors" class="form-text text-danger">* Campo requerido</div>
+        </div>
+        <div class="col-4 mb-3">
+            <label for="txtTelefono" class="form-label">Teléfono:</label>
+            <input type="text" formControlName="telefono" class="form-control" #txtTelefono>
+            <div *ngIf="clienteForm.controls['telefono'].errors" class="form-text text-danger">* Campo requerido</div>
+        </div>
+        <button class="btn btn-success" [disabled]="!clienteForm.valid" (click)="grabarCliente()">Guardar</button>
+      
+    </div>
+  </form>
+  <div *ngIf="clientes.length" class="row">
+    <table class="table table-striped">
+      <thead>
+          <tr>
+              <th>Nombre</th>
+              <th>Dirección</th>
+              <th>Teléfono</th>
+          </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let item of clientes; index as i; first as isFirst">
+          <tr role="button" (click)="seleccionarCliente(item)">
+            <td>{{item.nombre}}</td>
+            <td>{{item.direccion}}</td>
+            <td>{{item.telefono}}</td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>  
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions class="d-flex justify-content-end">
+  <!-- <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="animal()" cdkFocusInitial>Ok</button> -->
+  <button mat-button (click)="onNoClick()">Cerrar</button>
+</mat-dialog-actions>

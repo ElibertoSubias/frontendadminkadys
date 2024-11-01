@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { CookieService } from "ngx-cookie-service";
 import { Observable } from "rxjs";
 import { environment } from "../../environments/environment";
+import { Router } from "@angular/router";
 
 @Injectable({
     providedIn: 'root'
@@ -10,7 +11,8 @@ import { environment } from "../../environments/environment";
 export class ApiService {
     constructor(
         private http : HttpClient,
-        private cookies : CookieService
+        private cookies : CookieService,
+        private router : Router,
     ) {
 
     }
@@ -24,6 +26,7 @@ export class ApiService {
         this.cookies.delete("userName", "/");
         this.cookies.delete("userNumber", "/");
         this.cookies.delete("userType", "/");
+        this.router.navigate([`/login`]);
         return true;
     }
 

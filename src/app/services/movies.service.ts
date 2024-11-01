@@ -208,4 +208,16 @@ export class MoviesService {
         return this.http.delete<any>(`${environment.appBaseUrl}/users/user/${id}/auth/${numEmpleado}`, {headers});
     }
 
+    public getBuscarCliente(nombre: string): Observable<any> {
+        const token = this.apiService.getToken();
+        const headers = { 'x-auth-token': `${token}` };
+        return this.http.get<any>(`${environment.appBaseUrl}/client?nombre=${nombre}`, { headers });
+    }
+
+    public grabarClienteNuevo(data: any): Observable<any> {
+        const token = this.apiService.getToken();
+        const headers = { 'Content-Type': 'application/json', 'x-auth-token': `${token}` };
+        return this.http.post<any>(`${environment.appBaseUrl}/client`, JSON.stringify(data), {headers});
+    }
+
 }

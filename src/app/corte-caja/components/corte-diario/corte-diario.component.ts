@@ -11,6 +11,7 @@ import { MatDialog, MAT_DIALOG_DATA,
 import {MatButtonModule} from '@angular/material/button';
 import { NgFor } from '@angular/common';
 import {RouterModule} from '@angular/router';
+import { ApiService } from '../../../services/api.service';
 
 @Component({
   selector: 'corte-diario',
@@ -26,7 +27,8 @@ export class CorteDiarioComponent implements OnInit {
     private http: HttpClient,
     private moviesService : MoviesService,
     private router: Router,
-    private cookies : CookieService
+    private cookies : CookieService,
+    private apiService : ApiService
   ){}
 
   listItems: any = [];
@@ -41,8 +43,7 @@ export class CorteDiarioComponent implements OnInit {
       },
       error: (err: any) => {
         if (err.status == 401) {
-          this.cookies.delete("token");
-          this.router.navigate([`/login`]);
+          this.apiService.logout();
         } else {
           Swal.fire({
             position: "top-end",

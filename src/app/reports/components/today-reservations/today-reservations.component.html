@@ -16,7 +16,7 @@
         <tr *ngFor="let item of listItems; index as i; first as isFirst">
             <td>{{item.modificado}}</td>
             <td>{{item.creado}}</td>
-            <td>{{item.nombre}} {{item.apPaterno}} {{item.apMaterno}}</td>
+            <td>{{item.cliente.nombre}} {{item.cliente.apPaterno}} {{item.cliente.apMaterno}}</td>
             <td>{{(!item.statusSalida && !item.statusEntrada) || (item.statusSalida && item.modificado == formatDate(currentDate)) ? item.anticipo : 0}}</td>
             <td>{{item.cantRestante}}</td>
             <td>{{item.costoExtra}}</td>
