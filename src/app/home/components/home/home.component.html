@@ -47,7 +47,7 @@
                     <div class="card-body color-fondo-info">
                         <!-- <h2 class="card-title">{{movie.titulo}}</h2> -->
                         <a style="display: contents;" [routerLink]="['/dress/',movie.idDress]" routerLinkActive="active" ariaCurrentWhenActive="page" class="text-decoration-none">
-                            <p class="card-text titulo_item">{{movie.descripcion.substring(0, 100)}}</p>
+                            <p class="card-text titulo_item text-truncate">{{movie.descripcion.substring(0, 100)}}</p>
                         </a>
                         <p class="card-text pt-2" style="color: gray;">{{movie.idDress}}</p>
                         <div class="row">

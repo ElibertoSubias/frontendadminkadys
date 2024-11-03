@@ -141,10 +141,16 @@ export class MoviesService {
         return this.http.get<any>(`${environment.appBaseUrl}/reservation/future-outs/by-date?date=${fecha}`, { headers });
     }
 
-    public darSalida(id: string, tipoComprobante: number, cantGarantia: number): Observable<any> {
+    public darSalida(id: string, tipoComprobante: number, cantGarantia: number, dias: number, costoExtra: number): Observable<any> {
         const token = this.apiService.getToken();
         const headers = { 'x-auth-token': `${token}` };
-        return this.http.put<any>(`${environment.appBaseUrl}/reservation/dar-salida/${id}`, {tipoComprobante: tipoComprobante, cantGarantia: cantGarantia}, { headers });
+        return this.http.put<any>(`${environment.appBaseUrl}/reservation/dar-salida/${id}`, 
+            {
+                tipoComprobante: tipoComprobante, 
+                cantGarantia: cantGarantia,
+                dias: dias,
+                costoExtra: costoExtra
+            }, { headers });
     }
 
     public darEntrada(id: string, dias: number, costoExtra: number): Observable<any> {
@@ -215,6 +221,12 @@ export class MoviesService {
     }
 
     public grabarClienteNuevo(data: any): Observable<any> {
+        const token = this.apiService.getToken();
+        const headers = { 'Content-Type': 'application/json', 'x-auth-token': `${token}` };
+        return this.http.post<any>(`${environment.appBaseUrl}/client`, JSON.stringify(data), {headers});
+    }
+
+    public actualizarCliente(data: any): Observable<any> {
         const token = this.apiService.getToken();
         const headers = { 'Content-Type': 'application/json', 'x-auth-token': `${token}` };
         return this.http.post<any>(`${environment.appBaseUrl}/client`, JSON.stringify(data), {headers});

@@ -52,6 +52,7 @@ export class DialogDataExampleDialog implements AfterViewInit{
   @ViewChild('txtCostoExtra') txtCostoExtra!: ElementRef;
   @ViewChild('txtTipoComprobante') txtTipoComprobante!: ElementRef;
   @ViewChild('txtCantGarantia') txtCantGarantia!:ElementRef;
+  @ViewChild('cbDiasExtras') cbDiasExtras!: ElementRef;
 
   readonly dialogRef = inject(MatDialogRef<DialogDataExampleDialog>);
   data = inject(MAT_DIALOG_DATA);
@@ -61,6 +62,7 @@ export class DialogDataExampleDialog implements AfterViewInit{
   costoExtra: number = 0;
   tipoComprobante: number = 0;
   cantGarantia: number = 0;
+  aggDiasExtras: boolean = false;
 
   ngAfterViewInit(): void {
     if (this.data.tipoLlamado == 2) {
@@ -80,6 +82,10 @@ export class DialogDataExampleDialog implements AfterViewInit{
   calcularCosto() {
     this.diasCobrados = this.txtDias.nativeElement.value >= 0 ? this.txtDias.nativeElement.value : 0;
     this.txtCostoExtra.nativeElement.value = this.costoExtra = this.diasCobrados * 50;
+  }
+
+  diasExtras() {
+    this.aggDiasExtras = this.cbDiasExtras.nativeElement.checked;
   }
 
   darEntrada(): void {
@@ -115,9 +121,18 @@ export class DialogDataExampleDialog implements AfterViewInit{
           timer: 2500
       });
       return;
+    } else if (this.cbDiasExtras.nativeElement.checked && (this.txtDias.nativeElement.value == 0 || this.txtDias.nativeElement.value < 0)) {
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Favor de capturar los días extras!",
+        showConfirmButton: false,
+        timer: 2500
+      });
+      return;
     }
     this.cantGarantia = this.tipoComprobante == 2 ? this.txtCantGarantia.nativeElement.value : 0;
-    this.moviesService.darSalida(this.data._id, this.tipoComprobante, this.cantGarantia).subscribe({
+    this.moviesService.darSalida(this.data._id, this.tipoComprobante, this.cantGarantia, this.diasCobrados, this.costoExtra).subscribe({
       next: (event: any) => {
         if (event.status) {
           this.dialogRef.close();

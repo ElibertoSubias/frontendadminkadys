@@ -13,7 +13,7 @@
     <button (click)="crearCliente()" class="col-3 btn btn-outline-success my-2 my-sm-0 p-1 ms-5" type="button">Crear</button>
   </div>
   <form [formGroup]="clienteForm">
-    <div *ngIf="flagCrearCliente" class="row">
+    <div *ngIf="flagCrearCliente || flagModificarCliente" class="row">
       
         <div class="col-4 mb-3">
           <label for="txtNombre" class="form-label">Nombre:</label>
@@ -27,11 +27,11 @@
         </div>
         <div class="col-4 mb-3">
             <label for="txtTelefono" class="form-label">Teléfono:</label>
-            <input type="text" formControlName="telefono" class="form-control" #txtTelefono>
+            <input type="number" formControlName="telefono" class="form-control" #txtTelefono>
             <div *ngIf="clienteForm.controls['telefono'].errors" class="form-text text-danger">* Campo requerido</div>
         </div>
-        <button class="btn btn-success" [disabled]="!clienteForm.valid" (click)="grabarCliente()">Guardar</button>
-      
+        <button *ngIf="flagCrearCliente && !idClienteModificar" class="btn btn-success" [disabled]="!clienteForm.valid" (click)="grabarCliente()">Guardar</button>
+        <button *ngIf="flagModificarCliente && idClienteModificar" class="btn btn-success" [disabled]="!clienteForm.valid" (click)="actualizarCliente()">Actualizar</button>
     </div>
   </form>
   <div *ngIf="clientes.length" class="row">
@@ -41,14 +41,18 @@
               <th>Nombre</th>
               <th>Dirección</th>
               <th>Teléfono</th>
+              <th></th>
           </tr>
       </thead>
       <tbody>
         <ng-container *ngFor="let item of clientes; index as i; first as isFirst">
-          <tr role="button" (click)="seleccionarCliente(item)">
-            <td>{{item.nombre}}</td>
-            <td>{{item.direccion}}</td>
-            <td>{{item.telefono}}</td>
+          <tr role="button">
+            <td (click)="seleccionarCliente(item)">{{item.nombre}}</td>
+            <td (click)="seleccionarCliente(item)">{{item.direccion}}</td>
+            <td (click)="seleccionarCliente(item)">{{item.telefono}}</td>
+            <td>
+              <button class="btn btn-warning" (click)="modificarCliente(item)">Editar</button>
+            </td>
           </tr>
         </ng-container>
       </tbody>

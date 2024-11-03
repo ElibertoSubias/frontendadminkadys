@@ -80,6 +80,8 @@ export class BuscarClienteDialog implements AfterViewInit{
   cantGarantia: number = 0;
   clientes: any = [];
   flagCrearCliente = false;
+  flagModificarCliente = false;
+  idClienteModificar: any = null;
 
   ngAfterViewInit(): void {
     
@@ -90,6 +92,9 @@ export class BuscarClienteDialog implements AfterViewInit{
   }
 
   buscarCliente(): void {
+    this.clienteForm.reset();
+    this.flagCrearCliente = false;
+    this.flagModificarCliente = false;
     if (this.txtFiltroNombre.nativeElement.value.length == 0) {
       this.clientes = [];
       return;
@@ -111,10 +116,24 @@ export class BuscarClienteDialog implements AfterViewInit{
   }
 
   crearCliente() {
+    this.clienteForm.reset();
     this.clientes = [];
     this.txtFiltroNombre.nativeElement.value = "";
     this.flagCrearCliente = true;
+  }
 
+  modificarCliente(clienteData: any) {
+    this.clienteForm.reset();
+    this.idClienteModificar = clienteData._id;
+    this.clientes = [];
+    this.txtFiltroNombre.nativeElement.value = "";
+    this.flagCrearCliente = false;
+    this.flagModificarCliente = true;
+    this.clienteForm.patchValue({
+      nombre: clienteData.nombre,
+      direccion: clienteData.direccion,
+      telefono: clienteData.telefono
+    });
   }
 
   seleccionarCliente(cliente: any) {
@@ -123,6 +142,28 @@ export class BuscarClienteDialog implements AfterViewInit{
 
   grabarCliente() {
     this.moviesService.grabarClienteNuevo(this.clienteForm.value).subscribe({
+      next: (event: any) => {
+        this.clienteSeleccionado = event.result;
+        this.seleccionarCliente(event.result);
+      },
+      error: (err: any) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Error al crear cliente, intenta de nuevo!",
+          showConfirmButton: false,
+          timer: 2500
+        });
+      },
+    });
+  }
+
+  actualizarCliente() {
+    if (!this.idClienteModificar) {
+      return;
+    }
+    this.clienteForm.value.idCliente = this.idClienteModificar; 
+    this.moviesService.actualizarCliente(this.clienteForm.value).subscribe({
       next: (event: any) => {
         this.clienteSeleccionado = event.result;
         this.seleccionarCliente(event.result);

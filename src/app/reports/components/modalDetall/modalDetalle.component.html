@@ -24,18 +24,26 @@
       <input type="number" class="form-control" #txtCantGarantia>
     </div>
   </div>
-  <div *ngIf="data.tipoLlamado && data.tipoLlamado == 2 && data.diasConRetrazo > 0" class="row">
+  <div class="col-4 mb-3">
+    <div class="form-check">
+        <input [checked]="aggDiasExtras" (change)="diasExtras()" type="checkbox" id="cbDiasExtras" class="form-check-input" #cbDiasExtras />
+        <label class="form-check-label" for="cbDiasExtras">
+            Agregar dias extras
+        </label>
+    </div>
+  </div>
+  <div *ngIf="aggDiasExtras && data.tipoLlamado && (data.tipoLlamado == 2 || data.tipoLlamado == 1)" class="row">
     <div class="col-auto">
       <label for="txtDias" class="col-form-label">Dias cobrados</label>
     </div>
     <div class="col-auto col-2 mb-2">
-      <input (keyup)="calcularCosto()" type="number" #txtDias id="txtDias" class="form-control">
+      <input (keyup)="calcularCosto()" type="number" min="1" max="100" #txtDias id="txtDias" class="form-control">
     </div>
     <div class="col-auto">
       <label for="txtCostoExtra" class="col-form-label">Costo Extra</label>
     </div>
     <div class="col-auto col-2 mb-2">
-      <input type="number" #txtCostoExtra id="txtCostoExtra" class="form-control">
+      <input type="number" #txtCostoExtra id="txtCostoExtra" min="1" max="50000"  class="form-control">
     </div>
   </div>
   <div class="col-md-12 d-flex justify-content-center">

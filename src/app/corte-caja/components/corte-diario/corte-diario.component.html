@@ -1,23 +1,31 @@
 <table class="table table-striped">
     <tbody>
         <tr>
-            <th>Total Anticipos por Rentas</th>
+            <th>Total Anticipos:</th>
             <td>{{formatoMoneda(listItems.TotalDeAnticiPorRentas)}}</td>
         </tr>
         <tr>
-            <th>Total por Restantes de Salidas</th>
+            <th>Total Restantes:</th>
             <td>{{formatoMoneda(listItems.TotalDeRestantesPorSalidas)}}</td>
         </tr>
         <tr>
-            <th>Total por Cobro de Dias Extras</th>
+            <th>Total Anticipos - Rentados y con Salida de Hoy:</th>
+            <td>{{formatoMoneda(listItems.TotalDeAnticiPorRentasSalidasHoy)}}</td>
+        </tr>
+        <tr>
+            <th>Total Restantes - Rentados y con Salida Hoy:</th>
+            <td>{{formatoMoneda(listItems.TotalDeRestantesApartadoYSalidasHoy)}}</td>
+        </tr>
+        <tr>
+            <th>Total por Cobro de Dias Extras:</th>
             <td>{{formatoMoneda(listItems.TotalPorCobrosExtras)}}</td>
         </tr>
         <tr>
-            <th>Total por Pago de Garantias</th>
+            <th>Total por Pago de Garantias:</th>
             <td>{{formatoMoneda(listItems.TotalPorGarantias)}}</td>
         </tr>
         <tr>
-            <th>Total</th>
+            <th>Total en Caja:</th>
             <td>{{formatoMoneda(listItems.subTotal)}}</td>
         </tr>
     </tbody>

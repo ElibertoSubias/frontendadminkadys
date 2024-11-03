@@ -42,10 +42,11 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
       anticipo: ['', [Validators.required, Validators.min(0), Validators.max(1000)]],
       cantRestante: ['', [Validators.required, Validators.min(0), Validators.max(1000)]],
       comentarios: ['', [Validators.required, Validators.minLength(0), Validators.maxLength(300)]]
-    })
+    });
   }
 
   ngAfterViewInit(): void {
+    this.movieForm.controls['numCliente'].disable();
     document.getElementById("txtFechaEvento")?.setAttribute("min", this.formatDate(this.currentDate));
     document.getElementById("txtFechaRecoleccion")?.setAttribute("min", this.formatDate(this.currentDate));
   }
@@ -55,19 +56,15 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
   @ViewChild('txtFechaEvento') txtFechaEvento!:ElementRef;
   @ViewChild('txtTalla') txtTalla!:ElementRef;
   @ViewChild('txtNombre') txtNombre!:ElementRef;
-  @ViewChild('txtApPaterno') txtApPaterno!:ElementRef;
-  @ViewChild('txtApMaterno') txtApMaterno!:ElementRef;
-  @ViewChild('txtDireccion') txtDireccion!:ElementRef;
-  @ViewChild('txtTelefono') txtTelefono!:ElementRef;
   @ViewChild('txtFechaRecoleccion') txtFechaRecoleccion!:ElementRef;
   @ViewChild('txtTipoComprobante') txtTipoComprobante!:ElementRef;
   @ViewChild('txtAnticipo') txtAnticipo!:ElementRef;
   @ViewChild('txtCantRestante') txtCantRestante!: ElementRef;
-  @ViewChild('txtCantGarantia') txtCantGarantia!:ElementRef;
+  // @ViewChild('txtCantGarantia') txtCantGarantia!:ElementRef;
   @ViewChild('txtComentarios') txtComentarios!: ElementRef;
-  @ViewChild('cbDiasExtras') cbDiasExtras!: ElementRef;
-  @ViewChild('txtDias') txtDias!: ElementRef;
-  @ViewChild('txtCostoExtra') txtCostoExtra!:ElementRef;
+  // @ViewChild('cbDiasExtras') cbDiasExtras!: ElementRef;
+  // @ViewChild('txtDias') txtDias!: ElementRef;
+  // @ViewChild('txtCostoExtra') txtCostoExtra!:ElementRef;
 
   numCliente: string = "";
   codigo: string = "";
@@ -126,6 +123,7 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
         next: (event: any) => {
           this.reservation = event.reservation;
           this.dress = this.reservation.vestidos;
+          this.numCliente = this.reservation.cliente.numCliente;
           this.movieForm.patchValue({
             codigo: this.reservation.vestidos.idDress,
             numCliente: this.reservation.cliente.numCliente,
@@ -141,13 +139,13 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
           this.nombre = this.reservation.cliente.nombre;
           this.direccion = this.reservation.cliente.direccion;
           this.telefono = this.reservation.cliente.telefono;
-          if (this.reservation.diasCobrados > 0) {
-            this.aggDiasExtras = true;
-            setTimeout(() => {
-              this.txtDias.nativeElement.value = this.reservation.diasCobrados;
-              this.txtCostoExtra.nativeElement.value = this.reservation.costoExtra;
-            }, 500);
-          }
+          // if (this.reservation.diasCobrados > 0) {
+          //   this.aggDiasExtras = true;
+          //   setTimeout(() => {
+          //     this.txtDias.nativeElement.value = this.reservation.diasCobrados;
+          //     this.txtCostoExtra.nativeElement.value = this.reservation.costoExtra;
+          //   }, 500);
+          // }
         },
         error: (err: any) => {
           if (err.status == 401) {
@@ -173,20 +171,21 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
       this.movieForm.patchValue({
         numCliente: result.data.numCliente
       });
+      this.numCliente = result.data.numCliente
       this.nombre = result.data.nombre;
       this.direccion = result.data.direccion;
       this.telefono = result.data.telefono;
     });
   }
 
-  diasExtras() {
-    this.aggDiasExtras = this.cbDiasExtras.nativeElement.checked;
-  }
+  // diasExtras() {
+  //   this.aggDiasExtras = this.cbDiasExtras.nativeElement.checked;
+  // }
 
-  calcularCosto() {
-    this.diasCobrados = this.txtDias.nativeElement.value >= 0 ? this.txtDias.nativeElement.value : 0;
-    this.txtCostoExtra.nativeElement.value = this.costoExtra = this.diasCobrados * 50;
-  }
+  // calcularCosto() {
+  //   this.diasCobrados = this.txtDias.nativeElement.value >= 0 ? this.txtDias.nativeElement.value : 0;
+  //   this.txtCostoExtra.nativeElement.value = this.costoExtra = this.diasCobrados * 50;
+  // }
 
   formatDate(d: Date) {
     let month = '' + (d.getMonth() + 1),
@@ -241,14 +240,16 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
 
   addReservation() {
     this.movieForm.value.fecha = this.formatDate(this.currentDate);
-    if (this.cbDiasExtras.nativeElement.checked && this.txtDias.nativeElement.value && this.txtDias.nativeElement.value > 0) {
-      this.movieForm.value.dias = this.txtDias.nativeElement.value;
-      this.movieForm.value.costoExtra = this.txtCostoExtra.nativeElement.value;
-    }
+    // if (this.cbDiasExtras.nativeElement.checked && this.txtDias.nativeElement.value && this.txtDias.nativeElement.value > 0) {
+    //   this.movieForm.value.dias = this.txtDias.nativeElement.value;
+    //   this.movieForm.value.costoExtra = this.txtCostoExtra.nativeElement.value;
+    // }
+    this.movieForm.controls['numCliente'].enable();
     this.moviesService.saveReservation(this.movieForm.value).subscribe({
       next: (event: any) => {
         Swal.fire("Reservacion creada con exito!");
         this.movieForm.reset();
+        this.movieForm.controls['numCliente'].disable();
       },
       error: (err: any) => {
         Swal.fire({
@@ -264,10 +265,11 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
   }
 
   editReservation() {
-    if (this.cbDiasExtras.nativeElement.checked && this.txtDias.nativeElement.value && this.txtDias.nativeElement.value > 0) {
-      this.movieForm.value.dias = this.txtDias.nativeElement.value;
-      this.movieForm.value.costoExtra = this.txtCostoExtra.nativeElement.value;
-    }
+    // if (this.cbDiasExtras.nativeElement.checked && this.txtDias.nativeElement.value && this.txtDias.nativeElement.value > 0) {
+    //   this.movieForm.value.dias = this.txtDias.nativeElement.value;
+    //   this.movieForm.value.costoExtra = this.txtCostoExtra.nativeElement.value;
+    // }
+    this.movieForm.controls['numCliente'].enable();
     this.moviesService.editReservation(this.route.snapshot.params['_id'], this.movieForm.value).subscribe({
       next: (event: any) => {
         Swal.fire("Reservacion actualizada con exito!");
@@ -275,6 +277,7 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
         this.router.navigate([`/reports`]);
       },
       error: (err: any) => {
+        this.movieForm.controls['numCliente'].disable();
         Swal.fire({
           position: "top-end",
           icon: "error",
@@ -282,7 +285,6 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
           showConfirmButton: false,
           timer: 2500
         });
-        console.log(err);
       }
     });
   }

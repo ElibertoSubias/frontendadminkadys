@@ -137,9 +137,14 @@ export class EditItemComponent implements OnInit {
   onChange(event: any) {
     const file: File = event.target.files[0];
     this.imageUrlActualizar = URL.createObjectURL(file)
+    this.dressForm.patchValue({
+      imagenUrl: this.imageUrlActualizar
+    });
     if (file) {
       this.file = file;
     }
+    console.log(this.dressForm);
+    
   }
 
   addPortada() {
@@ -183,6 +188,9 @@ export class EditItemComponent implements OnInit {
   addGenre() {
     if (this.txtCategoria?.nativeElement.value) {
       this.categorias.push(this.txtCategoria?.nativeElement.value);
+      this.dressForm.patchValue({
+        categorias: this.categorias
+      });
       this.txtCategoria.nativeElement.value = "";
     } else {
       this.txtCategoria?.nativeElement.focus();

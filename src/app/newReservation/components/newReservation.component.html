@@ -12,12 +12,12 @@
                         Agregar Cliente</button>
                 </div>
             </div>
-            <div *ngIf="nombre">
+            <div>
                 <div class="row">
                     <div class="col-3 mb-3">
                         <label for="txtNumCliente" class="form-label">Num. Cliente:</label>
                         <input id="txtNumCliente" #txtNumCliente type="text" formControlName="numCliente" name="numCliente" class="form-control">
-                        <div *ngIf="!movieForm.value.numCliente" class="form-text text-danger">* Campo requerido</div>
+                        <div *ngIf="!numCliente.length" class="form-text text-danger">* Campo requerido</div>
                     </div>
                     <div class="col-3 mb-3">
                         <label for="txtCodigo" class="form-label">Codigo:</label>
@@ -84,14 +84,14 @@
                         <div *ngIf="movieForm.controls['cantGarantia'].errors" class="form-text text-danger">* Campo requerido</div>
                     </div>
                 </div>
-                <div class="row">
+               <div class="row">
                     <div class="col-8 mb-3">
                         <label for="txtComentarios" class="form-label">Observaciones:</label>
                         <textarea id="txtComentarios" #txtComentarios formControlName="comentarios" class="form-select"></textarea>
                         <div *ngIf="movieForm.controls['comentarios'].errors" class="form-text text-danger">* Campo requerido</div>
                     </div>
                 </div>
-                <div class="row">
+                 <!-- <div class="row">
                     <div class="col-4 mb-3">
                         <div class="form-check">
                             <input [checked]="aggDiasExtras" (change)="diasExtras()" type="checkbox" id="cbDiasExtras" class="form-check-input" #cbDiasExtras />
@@ -108,9 +108,9 @@
                         <label for="txtCostoExtra" class="form-label">Total:</label>
                         <input type="number" class="form-control" #txtCostoExtra [disabled]="true" />
                     </div>
-                </div>
+                </div> -->
             </div>
-            <button *ngIf="!reservation" type="button" class="btn btn-success col-12" (click)="addReservation()" [disabled]="!movieForm.valid">Reservar</button>
+            <button *ngIf="!reservation" type="button" class="btn btn-success col-12" (click)="addReservation()" [disabled]="!movieForm.valid || !numCliente.length">Reservar</button>
             <button *ngIf="reservation" type="button" class="btn btn-success col-12" (click)="editReservation()" [disabled]="!movieForm.valid">Actualizar</button>
             <button *ngIf="reservation" type="button" class="btn btn-danger col-12 mt-2" (click)="goBack()">Cancelar</button>
         </form>
