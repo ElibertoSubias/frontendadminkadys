@@ -38,7 +38,8 @@ export class EditItemComponent implements OnInit {
       status: ['', [Validators.required]],
       categorias: ['', [Validators.required]],
       precio: ['', [Validators.required]],
-      imagenUrl: ['', [Validators.required]]
+      imagenUrl: ['', [Validators.required]],
+      esTop: ['', []]
     })
   }
 
@@ -50,6 +51,7 @@ export class EditItemComponent implements OnInit {
   @ViewChild('txtCategoria') txtCategoria!:ElementRef;
   @ViewChild('fileImagenUrl') fileImagenUrl!:ElementRef;
   @ViewChild('txtPrecio') txtPrecio!:ElementRef;
+  @ViewChild('cbEsTop') cbEsTop!:ElementRef;
 
   codigo: string = "";
   descripcion: string = "";
@@ -61,6 +63,7 @@ export class EditItemComponent implements OnInit {
   imageUrlActualizar: any = null;
   precio: string = "";
   status: number = -1;
+  esTop: number = 0;
   file?: File;
 
   ngOnInit(): void {
@@ -79,7 +82,8 @@ export class EditItemComponent implements OnInit {
           status: this.dress.status,
           imagenUrl: this.dress.imagenUrl,
           precio: this.dress.precio,
-          categorias: this.dress.categorias
+          categorias: this.dress.categorias,
+          esTop: this.dress.esTop
         });
         this.dressForm.controls['codigo'].disable();
       },

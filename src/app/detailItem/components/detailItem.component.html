@@ -21,6 +21,10 @@
                 <p class="status-dress">{{dress.status == 0 ? 'INACTIVO' : dress.status == 1 ? 'ACTIVO' : dress.status == 2 ? 'PARA VENTA' : dress.status == 3 ? 'DONADO' : dress.status == 4 ? 'VENDIDO' : ''}}</p>
               </div>
               <div class="col-6">
+                <h2 class="card-title text-start m-0">Es Top:</h2>
+                <p class="status-dress">{{dress.esTop && dress.esTop == 1 ? 'Si' : dress.status && dress.status == 0 ? 'No' : 'N/A'}}</p>
+              </div>
+              <div class="col-6">
                 <h2 class="card-title text-start m-0">Talla:</h2>
                 <div class="row">
                   <p class="col-5 card-title text-start">{{dress.talla}}</p>

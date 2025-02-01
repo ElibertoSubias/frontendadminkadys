@@ -79,6 +79,11 @@
                             </select>
                             <div *ngIf="dressForm.controls['status'].errors" class="form-text text-danger">* Campo requerido</div>
                         </div>
+                        <div class="col-3 mb-3">
+                            <label for="cbEsTop" class="form-label">Es Top:</label>
+                            <input type="checkbox" name="cbEsTop" #cbEsTop formControlName="esTop"/>
+                            <div *ngIf="dressForm.controls['esTop'].errors" class="form-text text-danger">* Campo requerido</div>
+                        </div>
                     </div>
                     <div class="mb-3">
                         <ul class="list-group">
