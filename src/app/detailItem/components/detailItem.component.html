@@ -1,4 +1,4 @@
-<div class="col-md-12 mt-3 cont-body p-4" style="padding-top: 78px !important;max-width: 85%;">
+<div class="col-md-12 mt-3 cont-body p-4 contenedor-padding-width">
     <a routerLink="..">Volver</a>
     <div *ngIf="dress" class="card mb-3 p-0 align-items-center">
       <div class="row col-12 ">
@@ -8,8 +8,8 @@
             <div class="row">
               <div class="col-12">
                 <h2 class="card-title text-start m-0">Descripcion:</h2>
-                <div class="row">
-                  <p class="col-5 card-title text-start">{{dress.descripcion}}</p>
+                <div class="">
+                  <p class="col card-title text-start">{{dress.descripcion}}</p>
                 </div>
               </div>
               <div class="col-6">
@@ -26,8 +26,8 @@
               </div>
               <div class="col-6">
                 <h2 class="card-title text-start m-0">Talla:</h2>
-                <div class="row">
-                  <p class="col-5 card-title text-start">{{dress.talla}}</p>
+                <div class="">
+                  <p class="col card-title text-start">{{dress.talla}}</p>
                 </div>
               </div>
             </div>

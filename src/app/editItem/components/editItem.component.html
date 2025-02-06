@@ -1,4 +1,4 @@
-<div class="col-md-12 mt-3 cont-body p-4" style="padding-top: 78px !important;max-width: 85%;">
+<div class="col-md-12 mt-3 cont-body p-4 contenedor-padding-width">
     <h3>Modificar Vestido</h3>
     <div *ngIf="dress">
         <div class="d-flex">
@@ -10,19 +10,19 @@
                             <input type="text" formControlName="codigo" name="codigo" class="form-control" id="txtCodigo">
                             <div *ngIf="dressForm.controls['codigo'].errors" class="form-text text-danger">* Campo requerido</div>
                         </div>
-                        <div class="col-6 mb-3">
+                        <div class="col-12 mb-3">
                             <label for="txtDescripcion" class="form-label">Descripcion:</label>
                             <input type="text" formControlName="descripcion" class="form-control" id="txtDescripcion" />
                             <div *ngIf="!dressForm.value.descripcion" class="form-text text-danger">* Campo requerido</div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-2 mb-3">
+                        <div class="col-12 mb-3">
                             <label for="txtColor" class="form-label">Color:</label>
                             <input type="text" formControlName="color" class="form-control" id="txtColor" />
                             <div *ngIf="!dressForm.value.color" class="form-text text-danger">* Campo requerido</div>
                         </div>
-                        <div class="col-2 mb-3">
+                        <div class="col-12 mb-3">
                             <label for="txtTalla" class="form-label">Talla:</label>
                             <input
                                 type="text"
@@ -33,7 +33,7 @@
                                 max="100">
                             <div *ngIf="!dressForm.value.talla" class="form-text text-danger">* Campo requerido</div>
                         </div>
-                        <div class="col-2 mb-3">
+                        <div class="col-6 mb-3">
                             <label for="txtPrecio" class="form-label">Precio:</label>
                             <input
                                 type="number"
@@ -54,7 +54,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-4 mb-3">
+                        <div class="col-12 mb-3">
                             <label for="txtCategoria" class="form-label">Categorias:</label>
                             <div class="row m-0">
                                 <div class="col-md-8 p-0">
@@ -67,7 +67,17 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-3 mb-3">
+                        <div class="mb-3">
+                            <ul class="list-group">
+                                <li class="estilo-cat list-group-item d-flex justify-content-between"
+                                    *ngFor="let categoria of categorias; index as i; first as isFirst">
+                                    {{categoria}}
+                                    <mat-icon class="puntero" (click)="deleteGenre(categoria)">delete</mat-icon>
+                                    <!-- <span *ngIf="isFirst">default</span> -->
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-8 mb-3">
                             <label for="txtStatus" class="form-label">Status:</label>
                             <select id="txtStatus" #txtStatus formControlName="status" class="form-select">
                                 <option value="">Seleccionar</option>
@@ -79,21 +89,11 @@
                             </select>
                             <div *ngIf="dressForm.controls['status'].errors" class="form-text text-danger">* Campo requerido</div>
                         </div>
-                        <div class="col-3 mb-3">
+                        <div class="col-4 mb-3">
                             <label for="cbEsTop" class="form-label">Es Top:</label>
                             <input type="checkbox" name="cbEsTop" #cbEsTop formControlName="esTop"/>
                             <div *ngIf="dressForm.controls['esTop'].errors" class="form-text text-danger">* Campo requerido</div>
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <ul class="list-group">
-                            <li class="estilo-cat list-group-item d-flex justify-content-between"
-                                *ngFor="let categoria of categorias; index as i; first as isFirst">
-                                {{categoria}}
-                                <mat-icon class="puntero" (click)="deleteGenre(categoria)">delete</mat-icon>
-                                <!-- <span *ngIf="isFirst">default</span> -->
-                            </li>
-                        </ul>
                     </div>
                 </form>
             </div>
