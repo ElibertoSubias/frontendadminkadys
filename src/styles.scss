@@ -31,7 +31,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     .sin-padding-movil {
         padding-left: 0px !important;
         padding-right: 0px !important;
-        max-width: 45vh;
+        width: 400px !important;
+    }
+    .center-items-movil {
+        padding-top: 50px;
+        justify-content: center;
     }
     .contenedor-padding-width {
         padding-top: 78px !important;

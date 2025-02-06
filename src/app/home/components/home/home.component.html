@@ -31,7 +31,7 @@
     <div class="row" *ngIf="!movies.length" style="margin: 10rem 0 0 30rem;">
         <p>No se encontrarion coincidencias</p>
     </div>
-    <div class="row row-cols-1 row-cols-md-3 g-4 pb-5" style="margin: 0px 1%;">
+    <div class="row row-cols-1 row-cols-md-3 g-4 pb-5 center-items-movil" style="margin: 0px 1%;">
         <div *ngFor="let movie of movies" class="sin-padding-movil" [ngStyle]="{'width': (movies.length==1) ? '400px' : ''}">
             <div class="col">
                 <div class="card">
