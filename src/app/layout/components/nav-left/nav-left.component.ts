@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, viewChild, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, viewChild, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MoviesService } from '../../../services/movies.service';
 import { ApiService } from '../../../services/api.service';
@@ -11,6 +11,7 @@ import { ApiService } from '../../../services/api.service';
 export class NavLeftComponent implements OnInit {
 
   @ViewChild('txtFiltro') txtFiltro:ElementRef | undefined;
+  @Input() movil: boolean = false;
   pathActive: string = "";
 
   constructor(
@@ -25,6 +26,7 @@ export class NavLeftComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.movil);
     
   }
 

@@ -1,5 +1,5 @@
 <div class="cont-body">
-    <div class="position-relative" style="top: 50px; margin: 10px;">
+    <div class="position-relative nav-left" style="top: 50px; margin: 10px;">
         <div class="mt-4 mb-3 ml-0 mr-0 p-0">
             <div class="d-flex justify-end align-items-center col-form-start pt-3 pb-4 ps-3">
                 <div *ngIf="movies.length" style="cursor: pointer;" (click)="changeOrderBy()">
@@ -32,7 +32,7 @@
         <p>No se encontrarion coincidencias</p>
     </div>
     <div class="row row-cols-1 row-cols-md-3 g-4 pb-5" style="margin: 0px 1%;">
-        <div *ngFor="let movie of movies"   [ngStyle]="{'width': (movies.length==1) ? '400px' : ''}">
+        <div *ngFor="let movie of movies" class="sin-padding-movil" [ngStyle]="{'width': (movies.length==1) ? '400px' : ''}">
             <div class="col">
                 <div class="card">
                     <div class="cont-image">

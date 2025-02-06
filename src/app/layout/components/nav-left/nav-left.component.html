@@ -1,10 +1,10 @@
-<div class="nav-left">
-    <div>
+<div [ngClass]="{'nav-left': movil !== true}">
+    <div [ngClass]="{'ocultar-item': movil === true}">
         <a href="#" class="text-decoration-none" style="color: black;">
             <h2 class="p-2 text-center mb-0">Kadys Renta de<br> Vestidos</h2>
         </a>
     </div>
-    <div class="cont-nav">
+    <div class="cont-nav" [ngClass]="{'sin-margen': movil === true}">
         <ul class="nav flex-column">
             <li class="nav-item">
                 <a
