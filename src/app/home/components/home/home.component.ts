@@ -63,6 +63,11 @@ export class HomeComponent implements OnInit {
 
   }
 
+  cargarMas() {
+    this.paginaActual++;
+    this.getData();
+  }
+
   getData() {
     this.moviesService.getMoviesByFilter(this.tipoFiltro, this.route.snapshot.queryParams['filter'], 10, this.paginaActual).subscribe({
       next: (event: any) => {
