@@ -33,7 +33,7 @@ export class AddItemComponent implements OnInit {
       talla: ['', [Validators.required, Validators.min(0), Validators.max(1000)]],
       categorias: ['', [Validators.required]],
       precio: ['', [Validators.required]],
-      // imagenUrl: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]]
+      imagenUrl: ['', []]
     })
   }
 
