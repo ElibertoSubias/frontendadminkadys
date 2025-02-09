@@ -1,30 +1,31 @@
 <div class="col-md-12 cont-body p-4 mt-3 contenedor-padding-width">
     <ul class="nav nav-tabs">
       <li class="nav-item">
-        <a class="nav-link {{opcion == 1 ? 'active' : ''}}" [routerLink]="['/reports']" >Salidas del Dia</a>
+        <a class="nav-link {{opcion == 1 ? 'active' : ''}}" aria-current="page" [routerLink]="['/reports']">Ventas del Dia</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link {{opcion == 2 ? 'active' : ''}}" [routerLink]="['/reports/entries-for-today']" >
+        <a class="nav-link {{opcion == 2 ? 'active' : ''}}" [routerLink]="['/reports/today']" >Salidas del Dia</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {{opcion == 3 ? 'active' : ''}}" [routerLink]="['/reports/entries-for-today']" >
           Entradas del Dia y Pendientes</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link {{opcion == 3 ? 'active' : ''}}" aria-current="page" [routerLink]="['/reports/future-outs']" >Proximos a Salir</a>
+        <a class="nav-link {{opcion == 4 ? 'active' : ''}}" aria-current="page" [routerLink]="['/reports/future-outs']" >Proximos a Salir</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link {{opcion == 4 ? 'active' : ''}}" aria-current="page" [routerLink]="['/reports/all']" >Todas las reservaciones</a>
+        <a class="nav-link {{opcion == 5 ? 'active' : ''}}" aria-current="page" [routerLink]="['/reports/all']" >Todas las reservaciones</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link {{opcion == 5 ? 'active' : ''}}" aria-current="page" [routerLink]="['/reports/today']">Ventas del Dia</a>
-      </li>
+      
       <li class="nav-item">
         <a class="nav-link {{opcion == 6 ? 'active' : ''}}" aria-current="page" [routerLink]="['/reports/canceled']">Canceladas</a>
       </li>
     </ul>
-    <out-for-today *ngIf="opcion == 1 || opcion == 0"></out-for-today>
-    <entries-for-today *ngIf="opcion == 2"></entries-for-today>
-    <future-outs *ngIf="opcion == 3"></future-outs>
-    <all-reservations *ngIf="opcion == 4"></all-reservations>
-    <today-reservations *ngIf="opcion == 5"></today-reservations>
+    <today-reservations *ngIf="opcion == 1"></today-reservations>
+    <out-for-today *ngIf="opcion == 2"></out-for-today>
+    <entries-for-today *ngIf="opcion == 3"></entries-for-today>
+    <future-outs *ngIf="opcion == 4"></future-outs>
+    <all-reservations *ngIf="opcion == 5"></all-reservations>
     <canceled-reservations *ngIf="opcion == 6"></canceled-reservations>
     <!-- <div *ngIf="opcion == 0">Selecciona un reporte</div> -->
 </div>

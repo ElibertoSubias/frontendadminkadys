@@ -33,7 +33,7 @@ export class AddItemComponent implements OnInit {
       talla: ['', [Validators.required, Validators.min(0), Validators.max(1000)]],
       categorias: ['', [Validators.required]],
       precio: ['', [Validators.required]],
-      imagenUrl: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]]
+      // imagenUrl: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]]
     })
   }
 
@@ -55,6 +55,7 @@ export class AddItemComponent implements OnInit {
   imagenUrl: string = "";
   precio: string = "";
   nextID: number = 0;
+  isLoading: boolean = false;
 
   status: "initial" | "uploading" | "success" | "fail" = "initial"; // Variable to store file status
   file?: File;
@@ -64,7 +65,7 @@ export class AddItemComponent implements OnInit {
       next: (event: any) => {
         this.nextID = event.nextID;
         this.dressForm.controls['codigo'].setValue(this.nextID);
-        this.dressForm.controls['codigo'].disable();
+        // this.dressForm.controls['codigo'].disable();
       },
       error: (err: any) => {
         if (err.status == 401) {
@@ -83,6 +84,7 @@ export class AddItemComponent implements OnInit {
   }
 
   saveItem() {
+    this.isLoading = true;
     this.dressForm.controls['codigo'].enable();
     this.moviesService.checkCodeAvailable(this.dressForm.value.codigo).subscribe({
       next: (event: any) => {
@@ -105,6 +107,7 @@ export class AddItemComponent implements OnInit {
                 timer: 2500
               });
               console.log(err);
+              this.isLoading = false;
             },
             complete: () => {
               // this.currentFile = undefined;
@@ -118,6 +121,7 @@ export class AddItemComponent implements OnInit {
             showConfirmButton: false,
             timer: 2500
           });
+          this.isLoading = false;
         }
       },
       error: (err: any) => {
@@ -128,6 +132,7 @@ export class AddItemComponent implements OnInit {
           showConfirmButton: false,
           timer: 2500
         });
+        this.isLoading = false;
       }
     });
   }
@@ -153,7 +158,6 @@ export class AddItemComponent implements OnInit {
 
       this.moviesService.uploadImage(formData, id).subscribe({
         next: (event: any) => {
-
           // Correcto
           Swal.fire({
             title: "Vestido creado con exito!",
@@ -161,6 +165,7 @@ export class AddItemComponent implements OnInit {
             showCancelButton: false,
             confirmButtonText: "Ok"
           }).then((result) => {
+            this.isLoading = false;
             this.router.navigate([`/home`]);
           });
         },
@@ -176,7 +181,19 @@ export class AddItemComponent implements OnInit {
         },
         complete: () => {
           // this.currentFile = undefined;
+          this.isLoading = false;
         },
+      });
+    } else {
+      // Correcto
+      Swal.fire({
+        title: "Vestido creado con exito!",
+        showDenyButton: false,
+        showCancelButton: false,
+        confirmButtonText: "Ok"
+      }).then((result) => {
+        this.isLoading = false;
+        this.router.navigate([`/home`]);
       });
     }
   }

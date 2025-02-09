@@ -82,6 +82,7 @@ export class BuscarClienteDialog implements AfterViewInit{
   flagCrearCliente = false;
   flagModificarCliente = false;
   idClienteModificar: any = null;
+  isLoading: boolean = false;
 
   ngAfterViewInit(): void {
     
@@ -92,6 +93,7 @@ export class BuscarClienteDialog implements AfterViewInit{
   }
 
   buscarCliente(): void {
+    this.isLoading = true;
     this.clienteForm.reset();
     this.flagCrearCliente = false;
     this.flagModificarCliente = false;
@@ -102,6 +104,7 @@ export class BuscarClienteDialog implements AfterViewInit{
     this.moviesService.getBuscarCliente(this.txtFiltroNombre.nativeElement.value).subscribe({
       next: (event: any) => {
         this.clientes = event.result;
+        this.isLoading = false;
       },
       error: (err: any) => {
         Swal.fire({
@@ -111,6 +114,7 @@ export class BuscarClienteDialog implements AfterViewInit{
           showConfirmButton: false,
           timer: 2500
         });
+        this.isLoading = false;
       },
     });
   }
@@ -141,8 +145,10 @@ export class BuscarClienteDialog implements AfterViewInit{
   }
 
   grabarCliente() {
+    this.isLoading = true;
     this.moviesService.grabarClienteNuevo(this.clienteForm.value).subscribe({
       next: (event: any) => {
+        this.isLoading = false;
         this.clienteSeleccionado = event.result;
         this.seleccionarCliente(event.result);
       },
@@ -154,17 +160,20 @@ export class BuscarClienteDialog implements AfterViewInit{
           showConfirmButton: false,
           timer: 2500
         });
+        this.isLoading = false;
       },
     });
   }
 
   actualizarCliente() {
+    this.isLoading = true;
     if (!this.idClienteModificar) {
       return;
     }
     this.clienteForm.value.idCliente = this.idClienteModificar; 
     this.moviesService.actualizarCliente(this.clienteForm.value).subscribe({
       next: (event: any) => {
+        this.isLoading = false;
         this.clienteSeleccionado = event.result;
         this.seleccionarCliente(event.result);
       },
@@ -176,6 +185,7 @@ export class BuscarClienteDialog implements AfterViewInit{
           showConfirmButton: false,
           timer: 2500
         });
+        this.isLoading = false;
       },
     });
   }

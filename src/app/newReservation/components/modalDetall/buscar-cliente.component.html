@@ -9,8 +9,8 @@
       (search)="buscarCliente()"
       (keyup.enter)="buscarCliente()"
       aria-label="Search">
-    <button (click)="buscarCliente()" class="col-3 btn btn-outline-success my-2 my-sm-0 p-1" type="button">Buscar</button>
-    <button (click)="crearCliente()" class="col-3 btn btn-outline-success my-2 my-sm-0 p-1 ms-5" type="button">Crear</button>
+    <button [disabled]="isLoading" (click)="buscarCliente()" class="col-3 btn btn-outline-info my-2 my-sm-0 p-1" type="button">Buscar</button>
+    <button [disabled]="isLoading" (click)="crearCliente()" class="col-3 btn btn-outline-success my-2 my-sm-0 p-1 ms-5" type="button">Crear</button>
   </div>
   <form [formGroup]="clienteForm">
     <div *ngIf="flagCrearCliente || flagModificarCliente" class="row">
@@ -30,8 +30,8 @@
             <input type="number" formControlName="telefono" class="form-control" #txtTelefono>
             <div *ngIf="clienteForm.controls['telefono'].errors" class="form-text text-danger">* Campo requerido</div>
         </div>
-        <button *ngIf="flagCrearCliente && !idClienteModificar" class="btn btn-success" [disabled]="!clienteForm.valid" (click)="grabarCliente()">Guardar</button>
-        <button *ngIf="flagModificarCliente && idClienteModificar" class="btn btn-success" [disabled]="!clienteForm.valid" (click)="actualizarCliente()">Actualizar</button>
+        <button *ngIf="flagCrearCliente && !idClienteModificar" class="btn btn-success" [disabled]="!clienteForm.valid || isLoading" (click)="grabarCliente()">Guardar</button>
+        <button *ngIf="flagModificarCliente && idClienteModificar" class="btn btn-success" [disabled]="!clienteForm.valid || isLoading" (click)="actualizarCliente()">Actualizar</button>
     </div>
   </form>
   <div *ngIf="clientes.length" class="row">

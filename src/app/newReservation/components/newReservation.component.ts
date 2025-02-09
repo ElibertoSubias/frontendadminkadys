@@ -90,6 +90,7 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
   aggDiasExtras: boolean = false;
   diasCobrados: number = 0;
   costoExtra: number = 0;
+  isLoading: boolean = false;
 
   status: "initial" | "uploading" | "success" | "fail" = "initial"; // Variable to store file status
   file?: File;
@@ -239,6 +240,7 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
   }
 
   addReservation() {
+    this.isLoading = true;
     this.movieForm.value.fecha = this.formatDate(this.currentDate);
     // if (this.cbDiasExtras.nativeElement.checked && this.txtDias.nativeElement.value && this.txtDias.nativeElement.value > 0) {
     //   this.movieForm.value.dias = this.txtDias.nativeElement.value;
@@ -247,9 +249,16 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
     this.movieForm.controls['numCliente'].enable();
     this.moviesService.saveReservation(this.movieForm.value).subscribe({
       next: (event: any) => {
-        Swal.fire("Reservacion creada con exito!");
         this.movieForm.reset();
-        this.movieForm.controls['numCliente'].disable();
+        Swal.fire({
+          title: "Reservacion creada con exito!",
+          showDenyButton: false,
+          showCancelButton: false,
+          confirmButtonText: "Ok"
+        }).then((result) => {
+          this.isLoading = false;
+          this.router.navigate([`/home`]);
+        });
       },
       error: (err: any) => {
         Swal.fire({
@@ -260,6 +269,7 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
           timer: 2500
         });
         console.log(err);
+        this.isLoading = false;
       }
     });
   }
@@ -269,15 +279,23 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
     //   this.movieForm.value.dias = this.txtDias.nativeElement.value;
     //   this.movieForm.value.costoExtra = this.txtCostoExtra.nativeElement.value;
     // }
+    this.isLoading = true;
     this.movieForm.controls['numCliente'].enable();
     this.moviesService.editReservation(this.route.snapshot.params['_id'], this.movieForm.value).subscribe({
       next: (event: any) => {
-        Swal.fire("Reservacion actualizada con exito!");
-        this.movieForm.reset();
-        this.router.navigate([`/reports`]);
+        Swal.fire({
+          title: "Reservacion actualizada con exito!",
+          showDenyButton: false,
+          showCancelButton: false,
+          confirmButtonText: "Ok"
+        }).then((result) => {
+          this.movieForm.reset();
+          this.router.navigate([`/reports`]);
+        });
       },
       error: (err: any) => {
         this.movieForm.controls['numCliente'].disable();
+        this.isLoading = false;
         Swal.fire({
           position: "top-end",
           icon: "error",

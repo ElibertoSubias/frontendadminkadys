@@ -24,14 +24,14 @@ export class ReportsComponent implements OnInit {
     router.events.subscribe((val) => {
       if (this.router.url == '/reports') {
         this.opcion = 1;
-      } else if (this.router.url == '/reports/entries-for-today') {
-        this.opcion = 2;
-      } else if (this.router.url == '/reports/future-outs') {
-        this.opcion = 3;
-      } else if (this.router.url == '/reports/all') {
-        this.opcion = 4;
       } else if (this.router.url == '/reports/today') {
-        this.opcion = 5
+        this.opcion = 2
+      } else if (this.router.url == '/reports/entries-for-today') {
+        this.opcion = 3;
+      } else if (this.router.url == '/reports/future-outs') {
+        this.opcion = 4;
+      } else if (this.router.url == '/reports/all') {
+        this.opcion = 5;
       } else if (this.router.url == '/reports/canceled') {
         this.opcion = 6
       }

@@ -110,8 +110,8 @@
                     </div>
                 </div> -->
             </div>
-            <button *ngIf="!reservation" type="button" class="btn btn-success col-12" (click)="addReservation()" [disabled]="!movieForm.valid || !numCliente.length">Reservar</button>
-            <button *ngIf="reservation" type="button" class="btn btn-success col-12" (click)="editReservation()" [disabled]="!movieForm.valid">Actualizar</button>
+            <button *ngIf="!reservation" type="button" class="btn btn-success col-12" (click)="addReservation()" [disabled]="!movieForm.valid || !numCliente.length || isLoading">Reservar</button>
+            <button *ngIf="reservation" type="button" class="btn btn-success col-12" (click)="editReservation()" [disabled]="!movieForm.valid || isLoading">Actualizar</button>
             <button *ngIf="reservation" type="button" class="btn btn-danger col-12 mt-2" (click)="goBack()">Cancelar</button>
         </form>
         <div class="col-6">

@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-2 mb-3">
                 <label for="txtCodigo" class="form-label">Codigo:</label>
-                <input type="text" formControlName="codigo" name="codigo" class="form-control" id="txtCodigo">
+                <input type="number" formControlName="codigo" name="codigo" class="form-control" id="txtCodigo">
                 <div *ngIf="dressForm.controls['codigo'].errors" class="form-text text-danger">* Campo requerido</div>
             </div>
             <div class="col-4 mb-3">
@@ -47,7 +47,7 @@
                     (click)="addPortada()" value="Seleccionar portada" />
                 <input id="txtImagenUrl" formControlName="imagenUrl" (change)="onChange($event)" #fileImagenUrl type="file"
                     style='display: none;'>
-                <div *ngIf="!dressForm.value.imagenUrl" class="form-text text-danger">* Campo requerido</div>
+                <!-- <div *ngIf="!dressForm.value.imagenUrl" class="form-text text-danger">* Campo requerido</div> -->
             </div>
         </div>
         <div class="row">
@@ -66,6 +66,6 @@
                   </li>
             </ul>
         </div>
-        <button type="button" class="btn btn-success" (click)="saveItem()" [disabled]="!dressForm.valid">Guardar</button>
+        <button type="button" class="btn btn-success" (click)="saveItem()" [disabled]="!dressForm.valid || isLoading">Guardar</button>
     </form>
 </div>
