@@ -59,7 +59,8 @@ export class HomeComponent implements OnInit {
     ).subscribe();
 
     this.route.snapshot.queryParams['filter'];
-    this.tipoFiltro = this.apiService.getTipoFiltro() ? parseInt(this.apiService.getTipoFiltro()) : 1;
+    let tipoFiltro = this.apiService.getTipoFiltro();
+    this.tipoFiltro = tipoFiltro ? parseInt(tipoFiltro) : 1;
 
   }
 
@@ -69,7 +70,8 @@ export class HomeComponent implements OnInit {
   }
 
   getData() {
-    this.moviesService.getMoviesByFilter(this.tipoFiltro, this.route.snapshot.queryParams['filter'], 10, this.paginaActual).subscribe({
+    let tipoFiltro = this.apiService.getTipoFiltro();
+    this.moviesService.getMoviesByFilter(parseInt(tipoFiltro), this.route.snapshot.queryParams['filter'], 10, this.paginaActual).subscribe({
       next: (event: any) => {
         this.totalBloqueEncontrado = event.dresses.length;
         this.movies = [...this.movies,...event.dresses];
