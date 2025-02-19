@@ -61,6 +61,7 @@ export class HomeComponent implements OnInit {
     this.route.snapshot.queryParams['filter'];
     let tipoFiltro = this.apiService.getTipoFiltro();
     this.tipoFiltro = tipoFiltro ? parseInt(tipoFiltro) : 1;
+    this.apiService.setTipoFiltro(this.tipoFiltro);
 
   }
 
