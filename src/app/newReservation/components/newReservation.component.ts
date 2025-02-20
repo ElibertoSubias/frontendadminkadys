@@ -41,7 +41,7 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
       fechaRecoleccion: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
       anticipo: ['', [Validators.required, Validators.min(0), Validators.max(1000)]],
       cantRestante: ['', [Validators.required, Validators.min(0), Validators.max(1000)]],
-      comentarios: ['', [Validators.required, Validators.minLength(0), Validators.maxLength(300)]]
+      comentarios: ['', []]
     });
   }
 

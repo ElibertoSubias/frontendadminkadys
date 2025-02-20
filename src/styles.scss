@@ -11,6 +11,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     left: 15%;
 }
 
+.table-striped-reporte {
+    display: block !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+}
+
 .contenedor-padding-width {
     padding-top: 78px !important;
     max-width: 85%;
@@ -34,11 +40,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
         width: 400px !important;
     }
     .center-items-movil {
-        padding-top: 50px;
+        // padding-top: 50px;
         justify-content: center;
     }
     .contenedor-padding-width {
         padding-top: 78px !important;
         max-width: 100%;
+    }
+    .cont-footer {
+        width: 100% !important;
     }
 }
