@@ -75,7 +75,7 @@ export class EditItemComponent implements OnInit {
         // this.id = this.dress._id;
         this.categorias = this.dress.categorias;
         this.dressForm.patchValue({
-          codigo: this.dress.idDress,
+          codigo: this.dress.numVestido,
           descripcion: this.dress.descripcion,
           color: this.dress.color,
           talla: this.dress.talla,
