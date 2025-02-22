@@ -45,6 +45,7 @@ export class DetailItemComponent implements OnInit {
             showConfirmButton: false,
             timer: 1500
           });
+          this.router.navigate([`/home`]);
         }
       },
     });

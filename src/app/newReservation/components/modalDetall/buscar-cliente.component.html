@@ -1,7 +1,8 @@
 <h2 mat-dialog-title>Buscar/Agregar Cliente</h2>
 <mat-dialog-content>
-  <div class="form-inline p-2 d-flex justify-content-end">
-    <input 
+  <div class="form-inline p-2 d-flex flex-column">
+    <div class="row">
+      <input 
       #txtFiltroNombre
       class="col form-control mr-sm-2 m" 
       type="search"
@@ -9,8 +10,11 @@
       (search)="buscarCliente()"
       (keyup.enter)="buscarCliente()"
       aria-label="Search">
-    <button [disabled]="isLoading" (click)="buscarCliente()" class="col-3 btn btn-outline-info my-2 my-sm-0 p-1" type="button">Buscar</button>
-    <button [disabled]="isLoading" (click)="crearCliente()" class="col-3 btn btn-outline-success my-2 my-sm-0 p-1 ms-5" type="button">Crear</button>
+      <button [disabled]="isLoading" (click)="buscarCliente()" class="col-3 btn btn-outline-info my-2 my-sm-0 p-1" type="button">Buscar</button>
+    </div>
+    <div class="row" *ngIf="!clientes.length">
+      <button [disabled]="isLoading" (click)="crearCliente()" class="col-12 btn btn-outline-success my-2" type="button">Agregar Nueva Cliente</button>
+    </div>
   </div>
   <form [formGroup]="clienteForm">
     <div *ngIf="flagCrearCliente || flagModificarCliente" class="row">
@@ -42,6 +46,7 @@
               <th>Dirección</th>
               <th>Teléfono</th>
               <th></th>
+              <th></th>
           </tr>
       </thead>
       <tbody>
@@ -50,6 +55,9 @@
             <td (click)="seleccionarCliente(item)">{{item.nombre}}</td>
             <td (click)="seleccionarCliente(item)">{{item.direccion}}</td>
             <td (click)="seleccionarCliente(item)">{{item.telefono}}</td>
+            <td style="display: grid;">
+              <button class="btn btn-success" (click)="seleccionarCliente(item)">Seleccionar</button>
+            </td>
             <td>
               <button class="btn btn-warning" (click)="modificarCliente(item)">Editar</button>
             </td>

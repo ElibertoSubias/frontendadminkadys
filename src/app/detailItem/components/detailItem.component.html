@@ -4,7 +4,7 @@
       <div class="row col-12 ">
         <div class="col-6 p-0">
           <div class="card-body color-fondo-info" style="width: 100%;">
-            <h2 class="card-title text-start">Codigo: {{dress.idDress}}</h2>
+            <h2 class="card-title text-start">Codigo: {{dress.numVestido}}</h2>
             <div class="row">
               <div class="col-12">
                 <h2 class="card-title text-start m-0">Descripcion:</h2>
@@ -56,13 +56,13 @@
         *ngIf="dress.status == 1"
         style="margin-right: 10px !important;"
         class="btn btn-success"
-        [routerLink]="['/new-reservation/',dress.idDress]"
+        [routerLink]="['/new-reservation/',dress.numVestido]"
         routerLinkActive="active"
         ariaCurrentWhenActive="page">Reservar</a>
       <a
         style="margin-right: 10px !important;"
         class="btn btn-primary"
-        [routerLink]="['/edit-dress/',dress.idDress]"
+        [routerLink]="['/edit-dress/',dress.numVestido]"
         routerLinkActive="active"
         ariaCurrentWhenActive="page">Editar</a>
       <button type="button" class="btn btn-danger" (click)="removeItem()">Eliminar</button>

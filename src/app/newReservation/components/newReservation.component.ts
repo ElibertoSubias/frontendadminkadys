@@ -36,8 +36,8 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
     this.movieForm = this.fb.group({
       codigo: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(15)]],
       numCliente: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(15)]],
-      fechaEvento: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
-      talla: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+      fechaEvento: ['', []],
+      talla: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
       fechaRecoleccion: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
       anticipo: ['', [Validators.required, Validators.min(0), Validators.max(1000)]],
       cantRestante: ['', [Validators.required, Validators.min(0), Validators.max(1000)]],
@@ -101,7 +101,7 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
         next: (event: any) => {
           this.dress = event.dressExistente;
           this.movieForm.patchValue({
-            codigo: event.dressExistente.idDress,
+            codigo: event.dressExistente.numVestido,
             talla: event.dressExistente.talla
           });
         },
@@ -126,7 +126,7 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
           this.dress = this.reservation.vestidos;
           this.numCliente = this.reservation.cliente.numCliente;
           this.movieForm.patchValue({
-            codigo: this.reservation.vestidos.idDress,
+            codigo: this.reservation.vestidos.numVestido,
             numCliente: this.reservation.cliente.numCliente,
             fechaEvento: this.reservation.fechaEvento,
             talla: this.reservation.talla,
@@ -210,7 +210,7 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
       setTimeout(() => this.txtCodigo.nativeElement.focus(), 0);
       return;
     }
-    this.moviesService.checkDateEvent(this.movieForm.value.fechaEvento, this.dress.idDress, this.movieForm.value.talla).subscribe({
+    this.moviesService.checkDateEvent(this.movieForm.value.fechaEvento, this.dress.numVestido, this.movieForm.value.talla).subscribe({
       next: (data: any) => {
         if (data.reservations.length > 0) {
           this.movieForm.controls['fechaEvento'].reset();
@@ -316,7 +316,7 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
       next: (event: any) => {
         this.dress = event.dressExistente;
         this.movieForm.patchValue({
-          codigo: event.dressExistente.idDress,
+          codigo: event.dressExistente.numVestido,
           talla: event.dressExistente.talla
         });
       },

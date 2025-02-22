@@ -27,7 +27,7 @@ export class ApiService {
         this.cookies.delete("userNumber", "/");
         this.cookies.delete("userType", "/");
         this.router.navigate([`/login`]);
-        return true;
+        // return true;
     }
 
     setToken(token: any) {

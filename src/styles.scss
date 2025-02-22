@@ -11,12 +11,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     left: 15%;
 }
 
-.table-striped-reporte {
-    display: block !important;
-    overflow-x: auto !important;
-    white-space: nowrap !important;
-}
-
 .contenedor-padding-width {
     padding-top: 78px !important;
     max-width: 85%;
@@ -49,5 +43,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     }
     .cont-footer {
         width: 100% !important;
+    }
+    .table-striped-reporte {
+        display: block !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
     }
 }

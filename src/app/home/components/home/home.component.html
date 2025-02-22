@@ -36,7 +36,7 @@
             <div class="col">
                 <div class="card">
                     <div class="cont-image">
-                        <a style="display: contents;" [routerLink]="['/dress/',movie.idDress]" routerLinkActive="active" ariaCurrentWhenActive="page" class="text-decoration-none">
+                        <a style="display: contents;" [routerLink]="['/dress/',movie.numVestido]" routerLinkActive="active" ariaCurrentWhenActive="page" class="text-decoration-none">
                             <img *ngIf="movie.imagenUrl != ''" src="{{baseUrl+'/'+movie.imagenUrl}}" class="card-img-top card-img-bottom" alt="...">
                             <svg *ngIf="movie.imagenUrl == ''" xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-file-earmark-image-fill" viewBox="0 0 16 16">
                                 <path d="M4 0h5.293A1 1 0 0 1 10 .293L13.707 4a1 1 0 0 1 .293.707v5.586l-2.73-2.73a1 1 0 0 0-1.52.127l-1.889 2.644-1.769-1.062a1 1 0 0 0-1.222.15L2 12.292V2a2 2 0 0 1 2-2m5.5 1.5v2a1 1 0 0 0 1 1h2zm-1.498 4a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"/>
@@ -46,10 +46,10 @@
                     </div>
                     <div class="card-body color-fondo-info">
                         <!-- <h2 class="card-title">{{movie.titulo}}</h2> -->
-                        <a style="display: contents;" [routerLink]="['/dress/',movie.idDress]" routerLinkActive="active" ariaCurrentWhenActive="page" class="text-decoration-none">
+                        <a style="display: contents;" [routerLink]="['/dress/',movie.numVestido]" routerLinkActive="active" ariaCurrentWhenActive="page" class="text-decoration-none">
                             <p class="card-text titulo_item text-truncate">{{movie.descripcion.substring(0, 100)}}</p>
                         </a>
-                        <p class="card-text pt-2" style="color: gray;">{{movie.idDress}}</p>
+                        <p class="card-text pt-2" style="color: gray;">{{movie.numVestido}}</p>
                         <div class="row">
                             <div class="col">
                                 <p class="card-text">Color: <br>{{movie.color}}</p>
@@ -63,7 +63,7 @@
                         </div>
                         <a
                             *ngIf="movie.status == 1"
-                            [routerLink]="['/new-reservation/',movie.idDress]"
+                            [routerLink]="['/new-reservation/',movie.numVestido]"
                             routerLinkActive="active"
                             ariaCurrentWhenActive="page"
                             class="btn btn-success col-12"
