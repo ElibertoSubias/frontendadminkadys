@@ -103,17 +103,18 @@ export class MoviesService {
         return this.http.get<any>(`${environment.appBaseUrl}/dresses/all`, { headers });
     }
 
-    public getMoviesByFilter(tipoFiltro: number = 0, filtro: string = '', pageSize: number = 10, page: number = 0): Observable<any> {
+    public getMoviesByFilter(flagSort: number = 1, tipoFiltro: number = 0, filtro: string = '', pageSize: number = 10, page: number = 0): Observable<any> {
         const token = this.apiService.getToken();
         const headers = { 'x-auth-token': `${token}` };
-        let filtros = "";
+        let filtros = `flagSort=${flagSort}&`;
         if (tipoFiltro >= 0 && filtro.length == 0) {
-            filtros = `tipoFiltro=${tipoFiltro}`;
+            filtros += `tipoFiltro=${tipoFiltro}`;
         } else if (tipoFiltro < 0 && filtro.length > 0) {
-            filtros = `filtro=${filtro}`;
+            filtros += `filtro=${filtro}`;
         } else if (tipoFiltro >= 0 && filtro.length > 0) {
-            filtros = `tipoFiltro=${tipoFiltro}&filtro=${filtro}`;
+            filtros += `tipoFiltro=${tipoFiltro}&filtro=${filtro}`;
         }
+
         return this.http.get<any>(`${environment.appBaseUrl}/dresses?pageSize=${pageSize}&page=${page}&${filtros}`, { headers });
     }
 

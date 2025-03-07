@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
 
   movies: any[] = [];
   baseUrl: string = environment.appBaseUrlMedia;
-  defaultOrder: boolean = true;
+  defaultOrder: boolean = false;
   tipoFiltro: number = 1;
   paginaActual: number = 0;
   totalBloqueEncontrado: number = 0;
@@ -72,7 +72,7 @@ export class HomeComponent implements OnInit {
 
   getData() {
     let tipoFiltro = this.apiService.getTipoFiltro();
-    this.moviesService.getMoviesByFilter(parseInt(tipoFiltro), this.route.snapshot.queryParams['filter'], 10, this.paginaActual).subscribe({
+    this.moviesService.getMoviesByFilter(this.defaultOrder ? 1 : -1, parseInt(tipoFiltro), this.route.snapshot.queryParams['filter'], 10, this.paginaActual).subscribe({
       next: (event: any) => {
         this.totalBloqueEncontrado = event.dresses.length;
         this.movies = [...this.movies,...event.dresses];
@@ -97,13 +97,15 @@ export class HomeComponent implements OnInit {
 
   changeOrderBy() {
     this.defaultOrder = !this.defaultOrder;
-    this.movies = this.sortMovie();
+    this.paginaActual = 0;
+    this.movies = [];
+    this.getData();
   }
 
   cambiarFiltro(tipo: number) {
     this.tipoFiltro = tipo;
     this.apiService.setTipoFiltro(this.tipoFiltro);
-    this.moviesService.getMoviesByFilter(this.tipoFiltro, this.route.snapshot.queryParams['filter']).subscribe({
+    this.moviesService.getMoviesByFilter(this.defaultOrder ? 1 : -1, this.tipoFiltro, this.route.snapshot.queryParams['filter']).subscribe({
       next: (event: any) => {
         this.movies = event.dresses;
       },
@@ -128,8 +130,8 @@ export class HomeComponent implements OnInit {
   sortMovie() {
     let order = this.defaultOrder;
     const rta = this.movies.sort(function(a, b){
-      if(a.idDress < b.idDress) { return order ? -1 : 1; }
-      if(a.idDress > b.idDress) { return order ? 1 : -1; }
+      if(a.numVestido < b.numVestido) { return order ? -1 : 1; }
+      if(a.numVestido > b.numVestido) { return order ? 1 : -1; }
       return 0;
   })
     return rta;
