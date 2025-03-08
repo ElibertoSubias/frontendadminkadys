@@ -72,7 +72,7 @@ export class HomeComponent implements OnInit {
 
   getData() {
     let tipoFiltro = this.apiService.getTipoFiltro();
-    this.moviesService.getMoviesByFilter(this.defaultOrder ? 1 : -1, parseInt(tipoFiltro), this.route.snapshot.queryParams['filter'], 10, this.paginaActual).subscribe({
+    this.moviesService.getMoviesByFilter(this.defaultOrder ? 1 : -1, parseInt(tipoFiltro ? tipoFiltro : "1"), this.route.snapshot.queryParams['filter'], 10, this.paginaActual).subscribe({
       next: (event: any) => {
         this.totalBloqueEncontrado = event.dresses.length;
         this.movies = [...this.movies,...event.dresses];
@@ -105,7 +105,8 @@ export class HomeComponent implements OnInit {
   cambiarFiltro(tipo: number) {
     this.tipoFiltro = tipo;
     this.apiService.setTipoFiltro(this.tipoFiltro);
-    this.moviesService.getMoviesByFilter(this.defaultOrder ? 1 : -1, this.tipoFiltro, this.route.snapshot.queryParams['filter']).subscribe({
+    let tipoFiltro = this.apiService.getTipoFiltro();
+    this.moviesService.getMoviesByFilter(this.defaultOrder ? 1 : -1, parseInt(tipoFiltro ? tipoFiltro : "1"), this.route.snapshot.queryParams['filter']).subscribe({
       next: (event: any) => {
         this.movies = event.dresses;
       },

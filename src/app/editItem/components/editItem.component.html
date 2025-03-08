@@ -50,7 +50,24 @@
                             <input type="button" id="fileImagenUrl" class="btn btn-primary mt-0 m-2" style="margin-left: 0px !important;"
                                 (click)="addPortada()" value="Seleccionar portada" />
                             <input id="txtImagenUrl" (change)="onChange($event)" #fileImagenUrl type="file" style='display: none;'>
-                            <div *ngIf="!dressForm.value.imagenUrl" class="form-text text-danger">* Campo requerido</div>
+                            <!-- <div *ngIf="!dressForm.value.imagenUrl" class="form-text text-danger">* Campo requerido</div> -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <ng-container *ngFor="let item of imagenes; index as i; first as isFirst">
+                            <div *ngIf="!item.eliminar && !isFirst" style="width: 8rem;margin-right: 5px;">
+                                <p>{{item.position}}</p>
+                                <img *ngIf="!item.urlObj" style="width: 100px; height: 100px;" src="{{baseUrl+'/'+item.url}}" class="card-img-top card-img-bottom" alt="...">
+                                <img *ngIf="item.urlObj" style="width: 100px; height: 100px;" src="{{item.urlObj}}" class="card-img-top card-img-bottom" alt="...">
+                                <div class="row">
+                                    <!-- <input  class="btn btn-warning" type="button" value="Editar"> -->
+                                    <input (click)="eliminarImagen(i)" class="btn btn-danger mt-1" type="button" value="Eliminar">
+                                </div>
+                            </div>
+                        </ng-container>
+                        <div class="d-flex aling-items-buttom" style="width: 8rem;margin-right: 5px;">
+                            <input (change)="onChange($event, true)" #fileImagenAdd type="file" style='display: none;'>
+                            <input id="fileImagenAdd" (click)="addPortada(true)"   class="btn btn-info" type="button" value="Agregar imagen">
                         </div>
                     </div>
                     <div class="row">
@@ -98,11 +115,11 @@
                 </form>
             </div>
             <div class="justify-content-center cont-image">
-                <svg *ngIf="dress.imagenUrl == '' && !imageUrlActualizar" xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-file-earmark-image-fill" viewBox="0 0 16 16">
+                <svg *ngIf="(dress.imagenUrl == '' || dress.imagenUrl == 'default') && !imageUrlActualizar" xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-file-earmark-image-fill" viewBox="0 0 16 16">
                     <path d="M4 0h5.293A1 1 0 0 1 10 .293L13.707 4a1 1 0 0 1 .293.707v5.586l-2.73-2.73a1 1 0 0 0-1.52.127l-1.889 2.644-1.769-1.062a1 1 0 0 0-1.222.15L2 12.292V2a2 2 0 0 1 2-2m5.5 1.5v2a1 1 0 0 0 1 1h2zm-1.498 4a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"/>
                     <path d="M10.564 8.27 14 11.708V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-.293l3.578-3.577 2.56 1.536 2.426-3.395z"/>
                 </svg>
-                <img *ngIf="dress.imagenUrl != '' && !imageUrlActualizar" src="{{baseUrl+'/'+dress.imagenUrl}}" class="card-img-top card-img-bottom" alt="...">
+                <img *ngIf="(dress.imagenUrl != '' && dress.imagenUrl != 'default') && !imageUrlActualizar" src="{{baseUrl+'/'+dress.imagenUrl}}" class="card-img-top card-img-bottom" alt="...">
                 <img *ngIf="imageUrlActualizar" src="{{imageUrlActualizar}}" class="card-img-top card-img-bottom" alt="...">
             </div>
         </div>

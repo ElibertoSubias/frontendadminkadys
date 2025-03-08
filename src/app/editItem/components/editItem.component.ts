@@ -36,9 +36,9 @@ export class EditItemComponent implements OnInit {
       color: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(400)]],
       talla: ['', [Validators.required]],
       status: ['', [Validators.required]],
-      categorias: ['', [Validators.required]],
+      categorias: ['', []],
       precio: ['', [Validators.required]],
-      imagenUrl: ['', [Validators.required]],
+      imagenUrl: ['', []],
       esTop: ['', []]
     })
   }
@@ -50,6 +50,7 @@ export class EditItemComponent implements OnInit {
   @ViewChild('txtTalla') txtTalla!:ElementRef;
   @ViewChild('txtCategoria') txtCategoria!:ElementRef;
   @ViewChild('fileImagenUrl') fileImagenUrl!:ElementRef;
+  @ViewChild('fileImagenAdd') fileImagenAdd!:ElementRef;
   @ViewChild('txtPrecio') txtPrecio!:ElementRef;
   @ViewChild('cbEsTop') cbEsTop!:ElementRef;
 
@@ -59,12 +60,14 @@ export class EditItemComponent implements OnInit {
   talla: string = "";
   categoria: string = "";
   categorias: String[] = [];
+  imagenes: any = [];
   imagenUrl: string = "";
   imageUrlActualizar: any = null;
   precio: string = "";
   status: number = -1;
   esTop: number = 0;
   file?: File;
+  // files?: File[] = [];
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
@@ -74,6 +77,7 @@ export class EditItemComponent implements OnInit {
         this.dress = event.dressExistente;
         // this.id = this.dress._id;
         this.categorias = this.dress.categorias;
+        this.imagenes = this.dress.imagenes;
         this.dressForm.patchValue({
           codigo: this.dress.numVestido,
           descripcion: this.dress.descripcion,
@@ -83,6 +87,7 @@ export class EditItemComponent implements OnInit {
           imagenUrl: this.dress.imagenUrl,
           precio: this.dress.precio,
           categorias: this.dress.categorias,
+          // imagenes: this.dress.imagenes,
           esTop: this.dress.esTop
         });
         this.dressForm.controls['codigo'].disable();
@@ -105,13 +110,16 @@ export class EditItemComponent implements OnInit {
 
   saveItem() {
     this.dressForm.value.categorias = this.categorias;
-    this.dressForm.value.imagenUrl = this.file ? this.file.name : this.dressForm.value.imagenUrl;
+    // this.dressForm.value.imagenes = this.imagenes;
+    this.dressForm.patchValue({
+      imagenUrl: this.imagenes?.length ? this.imagenes[0].url ? this.imagenes[0].url : "default" : "default"
+    });
     this.dressForm.controls['codigo'].enable();
     this.moviesService.updateMovie(this.dressForm.value, this.dress._id).subscribe({
       next: (event: any) => {
 
         // Subimos portada en caso de ser grabada con exito
-        if (this.file) {
+        if (this.imagenes && this.imagenes.length) {
           this.onUpload(event.dress._id);
         } else {
           Swal.fire({
@@ -138,32 +146,42 @@ export class EditItemComponent implements OnInit {
     });
   }
 
-  onChange(event: any) {
-    const file: File = event.target.files[0];
-    this.imageUrlActualizar = URL.createObjectURL(file)
-    this.dressForm.patchValue({
-      imagenUrl: this.imageUrlActualizar
-    });
-    if (file) {
-      this.file = file;
+  onChange(event: any, flagAddImg: boolean = false) {
+    if (!flagAddImg) {
+      const file: File = event.target.files[0];
+      this.imageUrlActualizar = URL.createObjectURL(file)
+      this.dressForm.patchValue({
+        imagenUrl: this.imageUrlActualizar
+      });
+      if (file && this.imagenes) {
+        this.imagenes[0] = {file, urlObj: URL.createObjectURL(file)};
+      }
+      console.log(this.dressForm);
+    } else {
+      const file: File = event.target.files[0];
+      // this.imageUrlActualizar = URL.createObjectURL(file)
+      // this.imagenes.push({urlObj: URL.createObjectURL(file)})
+      if (file) {
+        this.imagenes?.push({file, urlObj: URL.createObjectURL(file)});
+      }
+      console.log(this.dressForm);
     }
-    console.log(this.dressForm);
+  }
+
+  addPortada(flagAddImg: boolean = false) {
+    if (!flagAddImg) {
+      this.fileImagenUrl?.nativeElement.click();
+    } else {
+      this.fileImagenAdd?.nativeElement.click();
+    }
     
   }
 
-  addPortada() {
-    this.fileImagenUrl?.nativeElement.click();
-  }
-
   onUpload(id: string) {
-    if (this.file) {
-      const formData = new FormData();
+    if (this.imagenes && this.imagenes.length) {
+      for (let x = 0; x < this.imagenes.length; x++) {
 
-      formData.append('archivo', this.file, this.file.name);
-
-      this.moviesService.uploadImage(formData, id).subscribe({
-        next: (event: any) => {
-
+        if (this.imagenes && x == this.imagenes.length - 1) {
           // Correcto
           Swal.fire({
             title: "Informacion grabada con exito!",
@@ -173,20 +191,44 @@ export class EditItemComponent implements OnInit {
           }).then((result) => {
             this.router.navigate([`/dress/${this.id}`]);
           });
+        }
 
-        },
-        error: (err: any) => {
-          console.log(err);
-          Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: "Ocurrio un error al grabar imagen, intenta de nuevo!",
-            showConfirmButton: false,
-            timer: 1500
+        if (!this.imagenes[x].urlObj && !this.imagenes[x].eliminar) {
+          continue;
+        }
+
+        try {
+
+          const formData = new FormData();
+
+          if (!this.imagenes[x].eliminar) {
+            formData.append('archivo', this.imagenes[x].file, this.imagenes[x].file.name);
+          }
+
+          this.moviesService.uploadImage(formData, id, x, this.imagenes[x].eliminar).subscribe({
+            next: (event: any) => {
+            },
+            error: (err: any) => {
+              console.log(err);
+              Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: "Ocurrio un error al grabar imagen, intenta de nuevo!",
+                showConfirmButton: false,
+                timer: 1500
+              });
+            },
           });
-        },
-      });
+
+        } catch (error) {
+            console.log(error);
+        }
+      }
     }
+  }
+
+  eliminarImagen(index: number) {
+    this.imagenes[index].eliminar = 1;
   }
 
   addGenre() {

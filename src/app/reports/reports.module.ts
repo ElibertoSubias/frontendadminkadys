@@ -9,6 +9,7 @@ import { FutureOutsComponent } from './components/future-outs/future-outs.compon
 import { AllReservationsComponent } from './components/all-reservations/all-reservations.component';
 import { TodayReservationsComponent } from './components/today-reservations/today-reservations.component';
 import { CanceledReservationsComponent } from './components/canceled-reservations/canceled-reservations.component';
+import { HttpClient, provideHttpClient } from '@angular/common/http';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { CanceledReservationsComponent } from './components/canceled-reservation
         SharedModule,
         OutForTodayComponent,
         CanceledReservationsComponent
-    ]
+    ],
+    providers: [provideHttpClient(), HttpClient]
 })
 export class ReportsModule { }

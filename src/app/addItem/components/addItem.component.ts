@@ -143,6 +143,7 @@ export class AddItemComponent implements OnInit {
     if (file) {
       this.status = "initial";
       this.file = file;
+      this.imagenUrl = URL.createObjectURL(file)
     }
   }
 

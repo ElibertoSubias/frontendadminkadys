@@ -1,71 +1,80 @@
 <div class="col-md-12 cont-body p-4 mt-3 contenedor-padding-width">
     <h3>Agregar Nuevo Vestido</h3>
-    <form [formGroup]="dressForm">
-        <div class="row">
-            <div class="col-2 mb-3">
-                <label for="txtCodigo" class="form-label">Codigo:</label>
-                <input type="number" formControlName="codigo" name="codigo" class="form-control" id="txtCodigo">
-                <div *ngIf="dressForm.controls['codigo'].errors" class="form-text text-danger">* Campo requerido</div>
-            </div>
-            <div class="col-4 mb-3">
-                <label for="txtDescripcion" class="form-label">Descripcion:</label>
-                <input type="text" formControlName="descripcion" class="form-control" id="txtDescripcion"/>
-                <div *ngIf="!dressForm.value.descripcion" class="form-text text-danger">* Campo requerido</div>
-            </div>
-            <div class="col-2 mb-3">
-                <label for="txtColor" class="form-label">Color:</label>
-                <input type="text" formControlName="color" class="form-control" id="txtColor"/>
-                <div *ngIf="!dressForm.value.color" class="form-text text-danger">* Campo requerido</div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-2 mb-3">
-                <label for="txtTalla" class="form-label">Talla:</label>
-                <input
-                    type="text"
-                    formControlName="talla"
-                    class="form-control"
-                    id="txtTalla">
-                <div *ngIf="dressForm.controls['talla'].errors" class="form-text text-danger">* Campo requerido</div>
-            </div>
-            <div class="col-3 mb-3">
-                <label for="txtCategoria" class="form-label">Categorias:</label>
-                <div class="row m-0">
-                    <div class="col-md-8 p-0">
-                        <input type="text" formControlName="categorias" (keyup.enter)="addGenre()" #txtCategoria
-                            class="form-control" id="txtCategoria">
-                        <div *ngIf="!categorias.length" class="form-text text-danger">* Campo requerido</div>
+    <div class="d-flex">
+        <div class="col-8 justify-content-start">
+            <form [formGroup]="dressForm">
+                <div class="row">
+                    <div class="col-2 mb-3">
+                        <label for="txtCodigo" class="form-label">Codigo:</label>
+                        <input type="number" formControlName="codigo" name="codigo" class="form-control" id="txtCodigo">
+                        <div *ngIf="dressForm.controls['codigo'].errors" class="form-text text-danger">* Campo requerido</div>
                     </div>
-                    <div class="col-md-4 p-0">
-                        <button (click)="addGenre()" type="button" class="btn btn-primary">Agregar</button>
+                    <div class="col-4 mb-3">
+                        <label for="txtDescripcion" class="form-label">Descripcion:</label>
+                        <input type="text" formControlName="descripcion" class="form-control" id="txtDescripcion"/>
+                        <div *ngIf="!dressForm.value.descripcion" class="form-text text-danger">* Campo requerido</div>
+                    </div>
+                    <div class="col-2 mb-3">
+                        <label for="txtColor" class="form-label">Color:</label>
+                        <input type="text" formControlName="color" class="form-control" id="txtColor"/>
+                        <div *ngIf="!dressForm.value.color" class="form-text text-danger">* Campo requerido</div>
                     </div>
                 </div>
-            </div>
-            <div class="col-3 mb-3">
-                <label for="fileImagenUrl" class="form-label">Foto de portada:</label><br>
-                <input type="button" id="fileImagenUrl" class="btn btn-primary mt-0 m-2" style="margin-left: 0px !important;"
-                    (click)="addPortada()" value="Seleccionar portada" />
-                <input id="txtImagenUrl" formControlName="imagenUrl" (change)="onChange($event)" #fileImagenUrl type="file"
-                    style='display: none;'>
-                <!-- <div *ngIf="!dressForm.value.imagenUrl" class="form-text text-danger">* Campo requerido</div> -->
+                <div class="row">
+                    <div class="col-2 mb-3">
+                        <label for="txtTalla" class="form-label">Talla:</label>
+                        <input
+                            type="text"
+                            formControlName="talla"
+                            class="form-control"
+                            id="txtTalla">
+                        <div *ngIf="dressForm.controls['talla'].errors" class="form-text text-danger">* Campo requerido</div>
+                    </div>
+                    <div class="col-3 mb-3">
+                        <label for="txtCategoria" class="form-label">Categorias:</label>
+                        <div class="row m-0">
+                            <div class="col-md-8 p-0">
+                                <input type="text" formControlName="categorias" (keyup.enter)="addGenre()" #txtCategoria
+                                    class="form-control" id="txtCategoria">
+                                <div *ngIf="!categorias.length" class="form-text text-danger">* Campo requerido</div>
+                            </div>
+                            <div class="col-md-4 p-0">
+                                <button (click)="addGenre()" type="button" class="btn btn-primary">Agregar</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3 mb-3">
+                        <label for="fileImagenUrl" class="form-label">Foto de portada:</label><br>
+                        <input type="button" id="fileImagenUrl" class="btn btn-primary mt-0 m-2" style="margin-left: 0px !important;"
+                            (click)="addPortada()" value="Seleccionar portada" />
+                        <input id="txtImagenUrl" formControlName="imagenUrl" (change)="onChange($event)" #fileImagenUrl type="file"
+                            style='display: none;'>
+                        <!-- <div *ngIf="!dressForm.value.imagenUrl" class="form-text text-danger">* Campo requerido</div> -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2 mb-3">
+                        <label for="txtPrecio" class="form-label">Precio:</label>
+                        <input type="number" formControlName="precio" class="form-control" id="txtPrecio" min="0" max="5000">
+                        <div *ngIf="dressForm.controls['precio'].errors" class="form-text text-danger">* Campo requerido</div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <ul class="list-group">
+                        <li  class="estilo-cat list-group-item d-flex justify-content-between" *ngFor="let categoria of categorias; index as i; first as isFirst">
+                            {{categoria}}
+                            <mat-icon class="puntero" (click)="deleteGenre(categoria)">delete</mat-icon>
+                            <!-- <span *ngIf="isFirst">default</span> -->
+                        </li>
+                    </ul>
+                </div>
+                <button type="button" class="btn btn-success" (click)="saveItem()" [disabled]="!dressForm.valid || isLoading">Guardar</button>
+            </form>
+        </div>
+        <div class="justify-content-center cont-image">
+            <div class="justify-content-center cont-image">
+                <img *ngIf="imagenUrl" src="{{imagenUrl}}" class="card-img-top card-img-bottom" alt="...">
             </div>
         </div>
-        <div class="row">
-            <div class="col-2 mb-3">
-                <label for="txtPrecio" class="form-label">Precio:</label>
-                <input type="number" formControlName="precio" class="form-control" id="txtPrecio" min="0" max="5000">
-                <div *ngIf="dressForm.controls['precio'].errors" class="form-text text-danger">* Campo requerido</div>
-            </div>
-        </div>
-        <div class="mb-3">
-            <ul class="list-group">
-                <li  class="estilo-cat list-group-item d-flex justify-content-between" *ngFor="let categoria of categorias; index as i; first as isFirst">
-                    {{categoria}}
-                    <mat-icon class="puntero" (click)="deleteGenre(categoria)">delete</mat-icon>
-                    <!-- <span *ngIf="isFirst">default</span> -->
-                  </li>
-            </ul>
-        </div>
-        <button type="button" class="btn btn-success" (click)="saveItem()" [disabled]="!dressForm.valid || isLoading">Guardar</button>
-    </form>
+    </div>
 </div>
