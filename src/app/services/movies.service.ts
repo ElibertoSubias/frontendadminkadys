@@ -103,7 +103,7 @@ export class MoviesService {
         return this.http.get<any>(`${environment.appBaseUrl}/dresses/all`, { headers });
     }
 
-    public getMoviesByFilter(flagSort: number = 1, tipoFiltro: number = 1, filtro: string = '', pageSize: number = 10, page: number = 0): Observable<any> {
+    public getMoviesByFilter(flagSort: number = -1, tipoFiltro: number = 1, filtro: string = '', pageSize: number = 10, page: number = 0): Observable<any> {
         const token = this.apiService.getToken();
         const headers = { 'x-auth-token': `${token}` };
         let filtros = `flagSort=${flagSort}&`;
