@@ -96,6 +96,7 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
   file?: File;
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     if (this.route.snapshot.params['id']) {
       this.moviesService.getMovie(this.route.snapshot.params['id']).subscribe({
         next: (event: any) => {
