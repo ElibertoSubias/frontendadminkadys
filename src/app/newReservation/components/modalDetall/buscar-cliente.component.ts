@@ -115,6 +115,12 @@ export class BuscarClienteDialog implements AfterViewInit{
           timer: 2500
         });
         this.isLoading = false;
+        if (err.status === 401) {
+          this.router.navigate([`/login`]);
+          // Si rediriges, la función no puede devolver un booleano relevante.
+          // Podrías lanzar un error específico o simplemente dejar que la redirección ocurra.
+          throw new Error("Sesión expirada. Redirigiendo a login.");
+        }
       },
     });
   }

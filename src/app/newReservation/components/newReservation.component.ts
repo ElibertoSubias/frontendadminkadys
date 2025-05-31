@@ -12,6 +12,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { ApiService } from '../../services/api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { BuscarClienteDialog } from './modalDetall/buscar-cliente.component';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-workspace',
@@ -205,50 +206,100 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
     this.location.back();
   }
 
-  checkDateEvent() {
-    if (this.txtCodigo.nativeElement.value == "") {
+  async checkDateEvent(flagClear: boolean = false): Promise<boolean> {
+    // 1. Manejo inicial de validación (sincrónico)
+    if (this.txtCodigo.nativeElement.value === "") {
       setTimeout(() => this.txtCodigo.nativeElement.focus(), 0);
-      return;
+      throw new Error("El campo de código está vacío.");
     }
-    this.moviesService.checkDateEvent(this.movieForm.value.fechaEvento, this.dress.numVestido, this.movieForm.value.talla).subscribe({
-      next: (data: any) => {
-        if (data.reservations.length > 0) {
-          this.movieForm.controls['fechaEvento'].reset();
-          Swal.fire("Vestido no disponible para esta fecha!");
-        } else {
-          this.totalDisponible = 1;
-        }
-      },
-      error: (err: any) => {
-        if (err.status == 401) {
-          this.router.navigate([`/login`]);
-        }
-        Swal.fire({
-          position: "top-end",
-          icon: "error",
-          title: "Ocurrio un error al consultar fecha, intenta de nuevo!",
-          showConfirmButton: false,
-          timer: 1500
-        });
-        this.movieForm.value.fecha = "";
-        console.log(err);
-      },
-      complete: () => {
-        // this.currentFile = undefined;
-      },
-    });
+  
+    try {
+      // Convertir el Observable a una Promesa y esperar su resolución
+      const data: any = await firstValueFrom(
+        this.moviesService.checkDateEvent(
+          this.movieForm.value.fechaRecoleccion,
+          this.dress.numVestido,
+          this.movieForm.value.talla
+        )
+      );
+  
+      // 2. Lógica principal de verificación de reservaciones
+      if (data.reservations.length > 0) {
+        // if (!flagClear) {
+          // this.movieForm.controls['fechaEvento'].reset();
+          // Swal.fire("Vestido no disponible para esta fecha!");
+          return true; // Retorna true si hay reservaciones y no es clear
+        // } else {
+          // Lógica de SweetAlert2 con confirmación
+          // const result = await Swal.fire({
+          //   title: "¿Ya existe una reservación para esta fecha, desea continuar?",
+          //   showCancelButton: true,
+          //   confirmButtonText: "Sí",
+          //   cancelButtonText: `Cancelar`
+          // });
+  
+          // Retorna true o false basado en la confirmación del usuario
+          // return result.isConfirmed;
+        // }
+      } else {
+        // No hay reservaciones
+        this.totalDisponible = 1; // Actualiza el estado si no hay reservaciones
+        return false; // Retorna false si no hay reservaciones
+      }
+    } catch (err: any) {
+      // 3. Manejo de errores de la API
+      if (err.status === 401) {
+        this.router.navigate([`/login`]);
+        // Si rediriges, la función no puede devolver un booleano relevante.
+        // Podrías lanzar un error específico o simplemente dejar que la redirección ocurra.
+        throw new Error("Sesión expirada. Redirigiendo a login.");
+      }
+  
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Ocurrió un error al consultar fecha, intenta de nuevo!",
+        showConfirmButton: false,
+        timer: 1500
+      });
+      this.movieForm.value.fecha = ""; // Esto probablemente debería ser controls['fecha'].reset()
+      console.error(err);
+  
+      // Si ocurre un error, asumimos que no se pudo verificar la existencia,
+      // por lo que podrías retornar false o relanzar el error.
+      // Relanzar es mejor si el llamador necesita saber que hubo un problema.
+      throw err;
+    }
   }
 
-  addReservation() {
-    this.isLoading = true;
-    this.movieForm.value.fecha = this.formatDate(this.currentDate);
-    // if (this.cbDiasExtras.nativeElement.checked && this.txtDias.nativeElement.value && this.txtDias.nativeElement.value > 0) {
-    //   this.movieForm.value.dias = this.txtDias.nativeElement.value;
-    //   this.movieForm.value.costoExtra = this.txtCostoExtra.nativeElement.value;
-    // }
-    this.movieForm.controls['numCliente'].enable();
-    this.moviesService.saveReservation(this.movieForm.value).subscribe({
-      next: (event: any) => {
+  async imprimirTicket(): Promise<boolean> {
+    try {
+      console.log("Ticket impreso correctamente!");
+      console.log("Grabar ticket");
+      return true;
+    } catch (error) {
+      console.log("Error al imprimir ticket");
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Ocurrió un error al imprimir ticket, puedes consultar para reimprimir!",
+        showConfirmButton: false,
+        timer: 1500
+      });
+      return false;
+    }
+  }
+
+  async createNewReservation(): Promise<boolean> {
+  
+    try {
+      // Convertir el Observable a una Promesa y esperar su resolución
+      const data: any = await firstValueFrom(
+        this.moviesService.saveReservation(this.movieForm.value)
+      );
+  
+      // 2. Lógica principal de verificación de reservaciones
+      if (data.reservation) {
         this.movieForm.reset();
         Swal.fire({
           title: "Reservacion creada con exito!",
@@ -259,19 +310,108 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
           this.isLoading = false;
           this.router.navigate([`/home`]);
         });
-      },
-      error: (err: any) => {
+        return true;
+      } else {
         Swal.fire({
           position: "top-end",
           icon: "error",
-          title: "Ocurrio un error al crear la reservacion, intenta de nuevo!",
+          title: "Ocurrió un error al crear la reservacion, intenta de nuevo!",
           showConfirmButton: false,
-          timer: 2500
+          timer: 1500
         });
-        console.log(err);
-        this.isLoading = false;
+        return false;
       }
-    });
+    } catch (err: any) {
+      // 3. Manejo de errores de la API
+      if (err.status === 401) {
+        this.router.navigate([`/login`]);
+        // Si rediriges, la función no puede devolver un booleano relevante.
+        // Podrías lanzar un error específico o simplemente dejar que la redirección ocurra.
+        throw new Error("Sesión expirada. Redirigiendo a login.");
+      }
+  
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Ocurrió un error al consultar fecha, intenta de nuevo!",
+        showConfirmButton: false,
+        timer: 1500
+      });
+      this.movieForm.value.fecha = ""; // Esto probablemente debería ser controls['fecha'].reset()
+      console.error(err);
+  
+      // Si ocurre un error, asumimos que no se pudo verificar la existencia,
+      // por lo que podrías retornar false o relanzar el error.
+      // Relanzar es mejor si el llamador necesita saber que hubo un problema.
+      throw err;
+    }
+  }
+
+  async addReservation() {
+    this.isLoading = true;
+    this.movieForm.value.fecha = this.formatDate(this.currentDate);
+    // if (this.cbDiasExtras.nativeElement.checked && this.txtDias.nativeElement.value && this.txtDias.nativeElement.value > 0) {
+    //   this.movieForm.value.dias = this.txtDias.nativeElement.value;
+    //   this.movieForm.value.costoExtra = this.txtCostoExtra.nativeElement.value;
+    // }
+    this.movieForm.controls['numCliente'].enable();
+    
+    try {
+      const hayReservacion = await this.checkDateEvent(true);
+
+      if (hayReservacion) {
+        Swal.fire({
+          title: "Ya existe una reservacion para esta fecha!",
+          text: "Desea continuar?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Si",
+          cancelButtonText: `No`
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            if (await this.createNewReservation()) {
+              if (await this.imprimirTicket()) {
+                return true;
+              } else {
+                return false;
+              }
+            } else {
+              return false;
+            }
+          } else if (result.isDenied) {
+            this.isLoading = false;
+            return false;
+          } else {
+            this.isLoading = false;
+            return false;
+          }
+        });
+      } else {     
+        if (await this.createNewReservation()) {
+          if (await this.imprimirTicket()) {
+            return true;
+          } else {
+            return false;
+          }
+        } else {
+          return false;
+        }
+      }
+      return false;
+    } catch (error) {
+      this.isLoading = false;
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Ocurrio un error al crear la reservacion, intenta de nuevo!",
+        showConfirmButton: false,
+        timer: 2500
+      });
+      return false;
+    }
+    
   }
 
   editReservation() {
