@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  appBaseUrl: "https://backendkadys.elisodevelopment.cloud/api",
-  appBaseUrlMedia: "https://backendkadys.elisodevelopment.cloud/uploads",
+  appBaseUrl: "http://localhost:3001/api",
+  appBaseUrlMedia: "http://localhost:3001/uploads",
   configFile: "assets/settings/settings.json"
 };
 

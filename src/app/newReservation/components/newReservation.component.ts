@@ -13,6 +13,7 @@ import { ApiService } from '../../services/api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { BuscarClienteDialog } from './modalDetall/buscar-cliente.component';
 import { firstValueFrom } from 'rxjs';
+import { EventTicketData } from '../../ticket-printer/ticket-printer.component'; // Importa la interfaz
 
 @Component({
   selector: 'app-workspace',
@@ -23,6 +24,19 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
 
   movieForm: FormGroup;
   dialog = inject(MatDialog);
+
+  // Variable para controlar la visibilidad del ticket
+  showTicketPreview: boolean = false;
+
+  // Datos del ticket que pasarás al componente ticket-printer
+  ticketData: EventTicketData = {
+    evento: '',
+    fecha: '',
+    hora: '',
+    lugar: '',
+    asiento: '',
+    codigo: ''
+  };
 
   constructor(
     private route: ActivatedRoute,
@@ -274,6 +288,23 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
 
   async imprimirTicket(): Promise<boolean> {
     try {
+      // 1. Prepara los datos del ticket
+      this.ticketData = {
+        evento: 'Concierto de Verano ' + Math.floor(Math.random() * 100), // Ejemplo dinámico
+        fecha: '20 de Agosto de 2025',
+        hora: '19:30',
+        lugar: 'Parque Central',
+        asiento: 'Zona VIP, Fila ' + Math.floor(Math.random() * 20),
+        codigo: '#TICKET' + Math.floor(Math.random() * 99999)
+      };
+
+      // 2. Muestra el componente del ticket
+      this.showTicketPreview = true;
+      // / 3. Ejecuta la impresión automáticamente
+      // Esto esperará un momento para que Angular renderice el ticket antes de imprimir
+      setTimeout(() => {
+        this.imprimirTicketFinal();
+      }, 100); // Pequeño retraso para asegurar el renderizado
       console.log("Ticket impreso correctamente!");
       console.log("Grabar ticket");
       return true;
@@ -290,6 +321,15 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
     }
   }
 
+  // Método para disparar la impresión (se puede llamar directamente o desde un botón)
+  imprimirTicketFinal() {
+    window.print();
+    // Opcional: Ocultar el ticket después de imprimir si no quieres que se vea en pantalla
+    setTimeout(() => {
+      this.showTicketPreview = false;
+    }, 500); 
+  }
+
   async createNewReservation(): Promise<boolean> {
   
     try {
@@ -300,16 +340,16 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
   
       // 2. Lógica principal de verificación de reservaciones
       if (data.reservation) {
-        this.movieForm.reset();
-        Swal.fire({
-          title: "Reservacion creada con exito!",
-          showDenyButton: false,
-          showCancelButton: false,
-          confirmButtonText: "Ok"
-        }).then((result) => {
-          this.isLoading = false;
-          this.router.navigate([`/home`]);
-        });
+        // this.movieForm.reset();
+        // Swal.fire({
+        //   title: "Reservacion creada con exito!",
+        //   showDenyButton: false,
+        //   showCancelButton: false,
+        //   confirmButtonText: "Ok"
+        // }).then((result) => {
+        //   this.isLoading = false;
+        //   this.router.navigate([`/home`]);
+        // });
         return true;
       } else {
         Swal.fire({
