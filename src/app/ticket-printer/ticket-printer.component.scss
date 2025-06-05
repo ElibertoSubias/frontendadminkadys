@@ -1,0 +1,59 @@
+/* Estilos para la visualización en pantalla */
+.ticket-container {
+    border: 2px dashed #333;
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+.ticket-header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+.ticket-details p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+.ticket-footer {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #777;
+}
+
+/* --- Estilos para la impresión (MODIFICADO para 58mm) --- */
+@media print {
+    body {
+        margin: 0 !important;
+        padding: 0 !important;
+        background-color: white !important;
+        min-height: auto !important;
+    }
+    /* Si el botón de imprimir está dentro de este componente y quieres ocultarlo */
+    .print-button {
+        display: none !important;
+    }
+    .ticket-container {
+        border: 1px solid black !important;
+        box-shadow: none !important;
+        /* --- CAMBIO CLAVE AQUÍ PARA 58mm --- */
+        width: 56mm !important; /* O 54mm. Prueba cuál se ajusta mejor */
+        max-width: 100% !important;
+        padding: 3mm !important;
+        margin: 0mm auto !important;
+        page-break-inside: avoid !important;
+    }
+    .ticket-header {
+        font-size: 14pt !important;
+    }
+    .ticket-details p {
+        font-size: 9pt !important;
+        margin: 2px 0 !important;
+    }
+    .ticket-footer {
+        font-size: 8pt !important;
+    }
+}

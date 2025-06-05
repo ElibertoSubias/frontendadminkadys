@@ -12,6 +12,87 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     left: 15%;
 }
 
+/* --- ESTILOS PARA IMPRESIÓN --- */
+@media print {
+    body {
+        margin: 0 !important;
+        padding: 0 !important;
+        background-color: white !important;
+        min-height: auto !important;
+        position: absolute !important; /* Lo saca del flujo normal */
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important; /* Ocupa todo el ancho de la página de impresión */
+        height: auto !important; /* Ajusta la altura automáticamente */
+    }
+    /* 1. Ocultar todo el contenido del body por defecto */
+    /* Excluye el contenedor del SweetAlert2 si lo estás usando, para que no se oculte y luego no se pueda imprimir */
+    body *:not(.swal2-container) {
+        visibility: hidden;
+        margin: 0 !important;
+        padding: 0 !important;
+        background-color: white !important;
+        min-height: auto !important;
+    }
+
+    /* 2. Hacer visible solo el div específico que queremos imprimir */
+    /* Asegúrate de que el ID en este selector coincida con el ID de tu div en el HTML */
+    #ticket-to-print, #ticket-to-print * {
+        visibility: visible;
+    }
+
+    /* 3. Ajustar la posición y el tamaño del div a imprimir para que ocupe la página */
+    #ticket-to-print {
+        position: absolute !important; /* Lo saca del flujo normal */
+        left: 0 !important;
+        top: 0 !important;
+        border: 1px solid black !important;
+        box-shadow: none !important;
+        /* --- CAMBIO CLAVE AQUÍ PARA 58mm --- */
+        width: 56mm !important; /* O 54mm. Prueba cuál se ajusta mejor */
+        max-width: 100% !important;
+        padding: 3mm !important;
+        margin: 0mm auto !important;
+        page-break-inside: avoid !important;
+    }
+
+    .ticket-header {
+        font-size: 14pt !important;
+    }
+    .ticket-details p {
+        font-size: 9pt !important;
+        margin: 2px 0 !important;
+    }
+    .ticket-footer {
+        font-size: 8pt !important;
+    }
+
+    /* 4. Ocultar botones o elementos de la interfaz de usuario que no quieras imprimir */
+    .no-print { /* Agrega esta clase a cualquier elemento que no quieras imprimir */
+        display: none !important;
+    }
+
+    /* Ocultar botones de impresión específicos de Angular */
+    .print-button {
+        display: none !important;
+    }
+
+    /* Opcional: Ajustes de fuente y diseño para impresoras térmicas (58mm) */
+    /* Si tu div a imprimir es un ticket y quieres el estilo de impresora térmica */
+    // #ticket-to-print {
+    //     font-family: 'Courier New', Courier, monospace !important;
+    //     font-size: 9pt !important; /* Tamaño de fuente más pequeño */
+    //     width: 56mm !important; /* Ancho típico de impresora de 58mm */
+    //     max-width: 100% !important;
+    //     padding: 3mm !important;
+    //     margin: 0 auto !important; /* Centrar en la página de impresión */
+    // }
+    /* Estilos para elementos dentro del ticket */
+    // #ticket-to-print h2 { font-size: 14pt !important; }
+    // #ticket-to-print p, #ticket-to-print span { font-size: 9pt !important; margin: 2px 0 !important; }
+    /* ... más estilos específicos de ticket ... */
+}
+
 .contenedor-padding-width {
     padding-top: 78px !important;
     max-width: 85%;
