@@ -363,16 +363,16 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
   
       // 2. Lógica principal de verificación de reservaciones
       if (data.reservation) {
-        // this.movieForm.reset();
-        // Swal.fire({
-        //   title: "Reservacion creada con exito!",
-        //   showDenyButton: false,
-        //   showCancelButton: false,
-        //   confirmButtonText: "Ok"
-        // }).then((result) => {
-        //   this.isLoading = false;
-        //   this.router.navigate([`/home`]);
-        // });
+        this.movieForm.reset();
+        Swal.fire({
+          title: "Reservacion creada con exito!",
+          showDenyButton: false,
+          showCancelButton: false,
+          confirmButtonText: "Ok"
+        }).then((result) => {
+          this.isLoading = false;
+          this.router.navigate([`/home`]);
+        });
         return true;
       } else {
         Swal.fire({

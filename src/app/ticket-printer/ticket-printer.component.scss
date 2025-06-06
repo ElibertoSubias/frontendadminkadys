@@ -72,8 +72,6 @@ body {
     width: 300px; /* Ancho típico de un recibo */
     background-color: #fff;
     padding: 20px;
-    border: 1px solid #ccc;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
     color: #333;
     font-size: 0.9em;
@@ -119,7 +117,7 @@ body {
 .items th:nth-child(4), .items td:nth-child(4) { width: 20%; text-align: right; } /* Importe */
 
 .items thead th {
-    border-bottom: 1px solid #ccc; /* Línea más sólida para el encabezado */
+    // border-bottom: 1px solid #ccc; /* Línea más sólida para el encabezado */
     padding-bottom: 8px;
     font-weight: bold;
 }
