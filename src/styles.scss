@@ -14,17 +14,24 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 /* --- ESTILOS PARA IMPRESIÓN --- */
 @media print {
-    body {
-        margin: 0 !important;
-        padding: 0 !important;
-        background-color: white !important;
-        min-height: auto !important;
-        position: absolute !important; /* Lo saca del flujo normal */
+    .cont-body {
         left: 0 !important;
-        top: 0 !important;
-        width: 100% !important; /* Ocupa todo el ancho de la página de impresión */
-        height: auto !important; /* Ajusta la altura automáticamente */
+      width: 100% !important;
     }
+    .contenedor-padding-width {
+        max-width: 100% !important;
+    }
+    // body {
+    //     margin: 0 !important;
+    //     padding: 0 !important;
+    //     background-color: white !important;
+    //     min-height: auto !important;
+    //     position: absolute !important; /* Lo saca del flujo normal */
+    //     left: 0 !important;
+    //     top: 0 !important;
+    //     width: 100% !important; /* Ocupa todo el ancho de la página de impresión */
+    //     height: auto !important; /* Ajusta la altura automáticamente */
+    // }
     /* 1. Ocultar todo el contenido del body por defecto */
     /* Excluye el contenedor del SweetAlert2 si lo estás usando, para que no se oculte y luego no se pueda imprimir */
     body *:not(.swal2-container) {
@@ -56,26 +63,26 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
         page-break-inside: avoid !important;
     }
 
-    .ticket-header {
-        font-size: 14pt !important;
-    }
-    .ticket-details p {
-        font-size: 9pt !important;
-        margin: 2px 0 !important;
-    }
-    .ticket-footer {
-        font-size: 8pt !important;
-    }
+    // .ticket-header {
+    //     font-size: 14pt !important;
+    // }
+    // .ticket-details p {
+    //     font-size: 9pt !important;
+    //     margin: 2px 0 !important;
+    // }
+    // .ticket-footer {
+    //     font-size: 8pt !important;
+    // }
 
-    /* 4. Ocultar botones o elementos de la interfaz de usuario que no quieras imprimir */
-    .no-print { /* Agrega esta clase a cualquier elemento que no quieras imprimir */
-        display: none !important;
-    }
+    // /* 4. Ocultar botones o elementos de la interfaz de usuario que no quieras imprimir */
+    // .no-print { /* Agrega esta clase a cualquier elemento que no quieras imprimir */
+    //     display: none !important;
+    // }
 
-    /* Ocultar botones de impresión específicos de Angular */
-    .print-button {
-        display: none !important;
-    }
+    // /* Ocultar botones de impresión específicos de Angular */
+    // .print-button {
+    //     display: none !important;
+    // }
 
     /* Opcional: Ajustes de fuente y diseño para impresoras térmicas (58mm) */
     /* Si tu div a imprimir es un ticket y quieres el estilo de impresora térmica */

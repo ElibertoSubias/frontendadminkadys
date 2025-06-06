@@ -1,59 +1,161 @@
-/* Estilos para la visualización en pantalla */
-.ticket-container {
-    border: 2px dashed #333;
-    padding: 20px;
-    width: 300px;
-    text-align: center;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-}
-.ticket-header {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #007bff;
-}
-.ticket-details p {
-    margin: 5px 0;
-    font-size: 16px;
-}
-.ticket-footer {
-    margin-top: 15px;
-    font-size: 14px;
-    color: #777;
+// /* Estilos para la visualización en pantalla */
+// .ticket-container {
+//     border: 2px dashed #333;
+//     padding: 20px;
+//     width: 300px;
+//     text-align: center;
+//     background-color: #fff;
+//     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+//     margin-bottom: 20px;
+// }
+// .ticket-header {
+//     font-size: 24px;
+//     font-weight: bold;
+//     margin-bottom: 10px;
+//     color: #007bff;
+// }
+// .ticket-details p {
+//     margin: 5px 0;
+//     font-size: 16px;
+// }
+// .ticket-footer {
+//     margin-top: 15px;
+//     font-size: 14px;
+//     color: #777;
+// }
+
+// /* --- Estilos para la impresión (MODIFICADO para 58mm) --- */
+// @media print {
+//     body {
+//         margin: 0 !important;
+//         padding: 0 !important;
+//         background-color: white !important;
+//         min-height: auto !important;
+//     }
+//     /* Si el botón de imprimir está dentro de este componente y quieres ocultarlo */
+//     .print-button {
+//         display: none !important;
+//     }
+//     .ticket-container {
+//         border: 1px solid black !important;
+//         box-shadow: none !important;
+//         /* --- CAMBIO CLAVE AQUÍ PARA 58mm --- */
+//         width: 56mm !important; /* O 54mm. Prueba cuál se ajusta mejor */
+//         max-width: 100% !important;
+//         padding: 3mm !important;
+//         margin: 0mm auto !important;
+//         page-break-inside: avoid !important;
+//     }
+//     .ticket-header {
+//         font-size: 14pt !important;
+//     }
+//     .ticket-details p {
+//         font-size: 9pt !important;
+//         margin: 2px 0 !important;
+//     }
+//     .ticket-footer {
+//         font-size: 8pt !important;
+//     }
+// }
+
+body {
+    font-family: 'Courier New', Courier, monospace; /* Fuente que simula recibo */
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
 }
 
-/* --- Estilos para la impresión (MODIFICADO para 58mm) --- */
-@media print {
-    body {
-        margin: 0 !important;
-        padding: 0 !important;
-        background-color: white !important;
-        min-height: auto !important;
-    }
-    /* Si el botón de imprimir está dentro de este componente y quieres ocultarlo */
-    .print-button {
-        display: none !important;
-    }
-    .ticket-container {
-        border: 1px solid black !important;
-        box-shadow: none !important;
-        /* --- CAMBIO CLAVE AQUÍ PARA 58mm --- */
-        width: 56mm !important; /* O 54mm. Prueba cuál se ajusta mejor */
-        max-width: 100% !important;
-        padding: 3mm !important;
-        margin: 0mm auto !important;
-        page-break-inside: avoid !important;
-    }
-    .ticket-header {
-        font-size: 14pt !important;
-    }
-    .ticket-details p {
-        font-size: 9pt !important;
-        margin: 2px 0 !important;
-    }
-    .ticket-footer {
-        font-size: 8pt !important;
-    }
+.ticket {
+    width: 300px; /* Ancho típico de un recibo */
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: #333;
+    font-size: 0.9em;
+    line-height: 1.4;
+    border-radius: 5px; /* Bordes ligeramente redondeados */
+}
+
+.header h1 {
+    font-size: 1.5em;
+    margin-bottom: 5px;
+    color: #000;
+}
+
+.header p {
+    margin: 2px 0;
+}
+
+.header .fecha-hora {
+    font-size: 0.8em;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border-top: 1px dashed #ccc;
+    padding-top: 5px;
+}
+
+.items table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.items th, .items td {
+    border-bottom: 1px dashed #eee;
+    padding: 5px 0;
+    text-align: left;
+    font-size: 0.85em;
+}
+
+.items th:nth-child(1), .items td:nth-child(1) { width: 15%; text-align: center; } /* Cantidad */
+.items th:nth-child(2), .items td:nth-child(2) { width: 45%; } /* Descripción */
+.items th:nth-child(3), .items td:nth-child(3) { width: 20%; text-align: right; } /* Precio Unitario */
+.items th:nth-child(4), .items td:nth-child(4) { width: 20%; text-align: right; } /* Importe */
+
+.items thead th {
+    border-bottom: 1px solid #ccc; /* Línea más sólida para el encabezado */
+    padding-bottom: 8px;
+    font-weight: bold;
+}
+
+.totales p {
+    margin: 3px 0;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-bottom: 1px dashed #eee;
+    padding-bottom: 3px;
+}
+
+.totales p:last-of-type {
+    border-bottom: none; /* Eliminar la última línea punteada */
+}
+
+
+.totales .total {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-top: 10px;
+    padding-top: 5px;
+    border-top: 1px solid #000; /* Línea sólida antes del total */
+    padding-bottom: 5px;
+    border-bottom: 1px solid #000; /* Línea sólida después del total */
+}
+
+.footer {
+    margin-top: 20px;
+    border-top: 1px dashed #ccc;
+    padding-top: 15px;
+}
+
+.footer p {
+    margin: 2px 0;
+    font-size: 0.85em;
 }
