@@ -33,9 +33,12 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
     evento: '',
     fecha: '',
     hora: '',
-    lugar: '',
-    asiento: '',
-    codigo: ''
+    talla: '',
+    precio: '',
+    numTicket: '',
+    codigo: '',
+    anticipo: '',
+    restante: ''
   };
 
   constructor(
@@ -286,16 +289,36 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
     }
   }
 
+  obtenerFechaFormatoDDMMYYYY() {
+    const hoy = new Date();
+    const dia = String(hoy.getDate()).padStart(2, '0');
+    const mes = String(hoy.getMonth() + 1).padStart(2, '0'); // Se suma 1 porque los meses van de 0 a 11
+    const anio = hoy.getFullYear();
+  
+    return `${dia}/${mes}/${anio}`;
+  }
+
+  obtenerHoraFormatoHHMM() {
+    const hoy = new Date();
+    const horas = String(hoy.getHours()).padStart(2, '0'); // Obtiene las horas (0-23) y asegura dos dígitos
+    const minutos = String(hoy.getMinutes()).padStart(2, '0'); // Obtiene los minutos (0-59) y asegura dos dígitos
+  
+    return `${horas}:${minutos}`;
+  }
+
   async imprimirTicket(): Promise<boolean> {
     try {
       // 1. Prepara los datos del ticket
       this.ticketData = {
         evento: 'Concierto de Verano ' + Math.floor(Math.random() * 100), // Ejemplo dinámico
-        fecha: '20 de Agosto de 2025',
-        hora: '19:30',
-        lugar: 'Parque Central',
-        asiento: 'Zona VIP, Fila ' + Math.floor(Math.random() * 20),
-        codigo: '#TICKET' + Math.floor(Math.random() * 99999)
+        fecha: this.obtenerFechaFormatoDDMMYYYY(),
+        hora: this.obtenerHoraFormatoHHMM(),
+        talla: this.movieForm.value.talla,
+        precio: '600',
+        numTicket: '#TICKET' + Math.floor(Math.random() * 99999),
+        codigo: this.movieForm.value.codigo,
+        anticipo: this.movieForm.value.anticipo,
+        restante: this.movieForm.value.cantRestante
       };
 
       // 2. Muestra el componente del ticket

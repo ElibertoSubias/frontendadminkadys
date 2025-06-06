@@ -5,9 +5,12 @@ export interface EventTicketData {
   evento: string;
   fecha: string;
   hora: string;
-  lugar: string;
-  asiento: string;
+  talla: string;
+  precio: string;
+  numTicket: string;
   codigo: string;
+  anticipo: string;
+  restante: string;
 }
 
 @Component({
@@ -20,12 +23,15 @@ export class TicketPrinterComponent implements OnInit {
 
   // @Input() permite que los datos del ticket sean pasados desde el componente padre
   @Input() eventData: EventTicketData = {
-    evento: 'Concierto de Rock',
-    fecha: '15 de Julio de 2025',
-    hora: '20:00',
-    lugar: 'Auditorio Principal',
-    asiento: 'Fila 12, Asiento 05',
-    codigo: '#ABCDE12345'
+    evento: '',
+    fecha: '',
+    hora: '',
+    talla: '',
+    precio: '',
+    numTicket: '',
+    codigo: '',
+    anticipo: '',
+    restante: ''
   };
 
   constructor() { }
