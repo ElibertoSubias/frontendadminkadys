@@ -349,6 +349,16 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
     window.print();
     // Opcional: Ocultar el ticket después de imprimir si no quieres que se vea en pantalla
     setTimeout(() => {
+      this.movieForm.reset();
+      Swal.fire({
+        title: "Reservacion creada con exito!",
+        showDenyButton: false,
+        showCancelButton: false,
+        confirmButtonText: "Ok"
+      }).then((result) => {
+        this.isLoading = false;
+        this.router.navigate([`/home`]);
+      });
       this.showTicketPreview = false;
     }, 500); 
   }
@@ -363,16 +373,6 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
   
       // 2. Lógica principal de verificación de reservaciones
       if (data.reservation) {
-        this.movieForm.reset();
-        Swal.fire({
-          title: "Reservacion creada con exito!",
-          showDenyButton: false,
-          showCancelButton: false,
-          confirmButtonText: "Ok"
-        }).then((result) => {
-          this.isLoading = false;
-          this.router.navigate([`/home`]);
-        });
         return true;
       } else {
         Swal.fire({
