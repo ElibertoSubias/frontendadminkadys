@@ -6,6 +6,8 @@ export interface EventTicketData {
   fecha: string;
   hora: string;
   talla: string;
+  nombreCliente: string;
+  fechaRecoleccion: string;
   precio: string;
   numTicket: string;
   codigo: string;
@@ -27,6 +29,8 @@ export class TicketPrinterComponent implements OnInit {
     fecha: '',
     hora: '',
     talla: '',
+    nombreCliente: '',
+    fechaRecoleccion: '',
     precio: '',
     numTicket: '',
     codigo: '',

@@ -34,6 +34,8 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
     fecha: '',
     hora: '',
     talla: '',
+    nombreCliente: '',
+    fechaRecoleccion: '',
     precio: '',
     numTicket: '',
     codigo: '',
@@ -109,6 +111,7 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
   diasCobrados: number = 0;
   costoExtra: number = 0;
   isLoading: boolean = false;
+  folioTicket: string = "";
 
   status: "initial" | "uploading" | "success" | "fail" = "initial"; // Variable to store file status
   file?: File;
@@ -289,8 +292,7 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
     }
   }
 
-  obtenerFechaFormatoDDMMYYYY() {
-    const hoy = new Date();
+  obtenerFechaFormatoDDMMYYYY(hoy = new Date()) {
     const dia = String(hoy.getDate()).padStart(2, '0');
     const mes = String(hoy.getMonth() + 1).padStart(2, '0'); // Se suma 1 porque los meses van de 0 a 11
     const anio = hoy.getFullYear();
@@ -308,6 +310,11 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
 
   async imprimirTicket(): Promise<boolean> {
     try {
+
+      if (this.folioTicket == "") {
+        return false;
+      }
+
       // 1. Prepara los datos del ticket
       this.ticketData = {
         evento: 'Concierto de Verano ' + Math.floor(Math.random() * 100), // Ejemplo dinámico
@@ -315,7 +322,9 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
         hora: this.obtenerHoraFormatoHHMM(),
         talla: this.movieForm.value.talla,
         precio: '600',
-        numTicket: '#TICKET' + Math.floor(Math.random() * 99999),
+        nombreCliente: this.nombre,
+        fechaRecoleccion: this.movieForm.value.fechaRecoleccion,
+        numTicket: `#TICKET ${String(this.folioTicket).padStart(5, '0')}`,
         codigo: this.movieForm.value.codigo,
         anticipo: this.movieForm.value.anticipo,
         restante: this.movieForm.value.cantRestante
@@ -373,6 +382,7 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
   
       // 2. Lógica principal de verificación de reservaciones
       if (data.reservation) {
+        this.folioTicket = data.reservation.folio;
         return true;
       } else {
         Swal.fire({
@@ -382,6 +392,7 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
           showConfirmButton: false,
           timer: 1500
         });
+        this.isLoading = false;
         return false;
       }
     } catch (err: any) {
@@ -400,7 +411,9 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
         showConfirmButton: false,
         timer: 1500
       });
-      this.movieForm.value.fecha = ""; // Esto probablemente debería ser controls['fecha'].reset()
+
+      this.isLoading = false;
+
       console.error(err);
   
       // Si ocurre un error, asumimos que no se pudo verificar la existencia,
@@ -425,7 +438,7 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
       if (hayReservacion) {
         Swal.fire({
           title: "Ya existe una reservacion para esta fecha!",
-          text: "Desea continuar?",
+          text: "¿Desea continuar?",
           icon: "warning",
           showCancelButton: true,
           confirmButtonColor: "#3085d6",
@@ -464,7 +477,6 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
       }
       return false;
     } catch (error) {
-      this.isLoading = false;
       Swal.fire({
         position: "top-end",
         icon: "error",
@@ -472,6 +484,7 @@ export class NewReservationComponent implements OnInit, AfterViewInit {
         showConfirmButton: false,
         timer: 2500
       });
+      this.isLoading = false;
       return false;
     }
     
