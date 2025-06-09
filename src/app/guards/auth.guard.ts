@@ -10,7 +10,9 @@ export class AppGuard implements CanActivate {
         
     }
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): any {
-        let isLoggeIn = this.apiService.getToken();
+        let isLoggeIn = this.apiService.getAccessToken();
+        // ESTA ES LA LÍNEA CLAVE: Llama a checkAuthStatus() del AuthService
+        const isAuthenticated = this.apiService.checkAuthStatus();
         if (!isLoggeIn) {
             this.router.navigate(['/login']);
         } else {

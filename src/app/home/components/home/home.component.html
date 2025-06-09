@@ -79,3 +79,8 @@
         </div>
     </div>
 </div>
+<div *ngIf="showSessionWarning" class="session-warning-modal">
+    <p>Tu sesión expirará en {{ warningTime }} minutos. ¿Quieres extenderla?</p>
+    <button (click)="extendSession()">Extender Sesión</button>
+    <button (click)="logout()">Cerrar Sesión Ahora</button>
+</div>

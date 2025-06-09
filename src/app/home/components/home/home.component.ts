@@ -6,7 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import Swal from 'sweetalert2';
 import { ApiService } from '../../../services/api.service';
-import { fromEvent, reduce, scan, tap } from 'rxjs';
+import { Subject, Subscription, finalize, fromEvent, reduce, scan, tap } from 'rxjs';
 
 @Component({
   selector: 'app-workspace',
@@ -23,6 +23,12 @@ export class HomeComponent implements OnInit {
   tipoFiltro: number = 1;
   paginaActual: number = 0;
   totalBloqueEncontrado: number = 0;
+  
+  showFilter: boolean = true;
+  private apiCallSubscription: Subscription | undefined;
+  private destroy$: Subject<void> = new Subject<void>(); // Subject para desuscribirse
+  showSessionWarning = false;
+  warningTime = 5; // El mismo tiempo que definiste en AuthService
 
   constructor(
     private http: HttpClient,
@@ -92,6 +98,40 @@ export class HomeComponent implements OnInit {
           });
         }
       },
+    });
+  }
+
+  logout(): void {
+    this.showSessionWarning = false;
+    this.apiService.logout();
+  }
+
+  extendSession(): void {
+    // Ocultar el mensaje inmediatamente al hacer clic en "Extender Sesión"
+    this.showSessionWarning = false;
+    // Si usas OnPush strategy
+    // this.cdr.detectChanges();
+    // this.isLoading = true; // Activa el cargando
+  
+    this.apiService.refreshToken().pipe(
+      finalize(() => {
+        // this.isLoading = false; // Desactiva el cargando SIEMPRE al finalizar
+      })
+    ).subscribe({
+      next: () => {
+        // No necesitas ocultarlo aquí de nuevo, ya lo hiciste.
+        // Pero si quieres ser super seguro, podrías ponerlo.
+        // this.showSessionWarning = false;
+        // this.cdr.detectChanges(); // si usas OnPush
+        console.log('Sesión extendida. El temporizador de aviso se reinició en AuthService.');
+        // startSessionTimer se llama dentro de setTokens en AuthService
+      },
+      error: (err) => {
+        console.error('No se pudo extender la sesión.', err);
+        this.showSessionWarning = false; // Ocultar si falla y se va a logout
+        // this.cdr.detectChanges(); // si usas OnPush
+        this.apiService.logout();
+      }
     });
   }
 
