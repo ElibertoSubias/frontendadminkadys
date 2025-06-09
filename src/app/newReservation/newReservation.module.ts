@@ -7,6 +7,7 @@ import { HttpClient, provideHttpClient } from '@angular/common/http';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
+import { TicketPrinterComponent } from '../ticket-printer/ticket-printer.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
         MatButtonModule, 
         MatIconModule,
         FormsModule, 
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        TicketPrinterComponent
     ],
     providers: [provideHttpClient(), HttpClient]
 })

@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const token = this.apiService.getToken();
+    const token = this.apiService.getAccessToken();
     if (token) {
       this.router.navigateByUrl("/home");
     } else {
@@ -46,9 +46,9 @@ export class LoginComponent implements OnInit {
     const user = { usuario: this.loginForm.value.usuario, contrasenia: this.loginForm.value.contrasenia };
     this.apiService.login(user).subscribe({
       next: (event: any) => {
-        this.apiService.setToken(event.token);
-        this.apiService.setUser(event.user);
-        this.router.navigateByUrl("/home");
+        // this.apiService.setToken(event.token);
+        // this.apiService.setUser(event.user);
+        // this.router.navigateByUrl("/home");
       },
       error: (err: any) => {
         Swal.fire({

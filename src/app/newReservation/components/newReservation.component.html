@@ -28,7 +28,6 @@
                     <div class="col-4 mb-3">
                         <label for="txtFechaEvento" class="form-label">Fecha de Evento:</label>
                         <input
-                            (change)="checkDateEvent()"
                             id="txtFechaEvento"
                             type="date"
                             formControlName="fechaEvento"
@@ -114,6 +113,9 @@
             <button *ngIf="!reservation" type="button" class="btn btn-success col-12" (click)="addReservation()" [disabled]="!movieForm.valid || !numCliente.length || isLoading">Reservar</button>
             <button *ngIf="reservation" type="button" class="btn btn-success col-12" (click)="editReservation()" [disabled]="!movieForm.valid || isLoading">Actualizar</button>
             <button *ngIf="reservation" type="button" class="btn btn-danger col-12 mt-2" (click)="goBack()">Cancelar</button>
+            <div *ngIf="showTicketPreview">
+                <app-ticket-printer [eventData]="ticketData"></app-ticket-printer>
+            </div>
         </form>
         <div class="col-xs-4 col-md-6">
             <div class="justify-content-center cont-image">

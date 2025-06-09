@@ -1,0 +1,49 @@
+<div id="ticket-to-print" class="ticket">
+    <div class="header">
+        <h1>Kadys Renta de Vestidos</h1>
+        <p>Dirección: C. Mauricio Magdaleno 3349, Nakayama, 80194 Culiacán Rosales, Sin.</p>
+        <p>Tel: (667)-229-5707</p>
+        <p>RFC: RFC00000000</p>
+        <p class="fecha-hora">Fecha: {{eventData.fecha}} | Hora: {{eventData.hora}}</p>
+        <p class="fecha-hora">Fecha recolección: {{eventData.fechaRecoleccion}}</p>
+        <p class="fecha-hora">Clienta: {{eventData.nombreCliente}}</p>
+        <p>Ticket No: #{{eventData.numTicket}}</p>
+    </div>
+
+    <div class="items">
+        <table>
+            <thead>
+                <tr>
+                    <th>Cod. Vestido</th>
+                    <th>&nbsp;</th>
+                    <th>Talla</th>
+                    <th>&nbsp;</th>
+                    <th>Importe</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{eventData.codigo}}</td>
+                    <td></td>
+                    <td>{{eventData.talla}}</td>
+                    <td></td>
+                    <td>${{eventData.precio}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="totales">
+        <p>Anticipo: <span>${{eventData.anticipo}}.00</span></p>
+        <p class="total">Cant. Restante: <span>${{eventData.restante}}.00</span></p>
+    </div>
+    <br>
+    <div class="footer">
+        <br>
+        <p>¡Gracias por tu compra!</p>
+        <p>Visítanos de nuevo.</p>
+        <p>kadysrentadevestidos.com</p>
+        <p>&nbsp;</p>
+    </div>
+    <div class="footer"></div>
+</div>

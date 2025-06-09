@@ -11,7 +11,10 @@ import { ContentLayoutComponent } from './layout/components/content-layout/conte
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { ConfigService } from './services/config.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthTokenInterceptor } from './interceptors/jwt.interceptor';
+import { LogoutTimerInterceptor } from './interceptors/logout-timer.interceptor'; // ¡Tu nuevo interceptor!
+
 
 export function ConfigLoader(ConfigService: ConfigService) {
   return () => ConfigService.getJSON();
@@ -35,7 +38,17 @@ export function ConfigLoader(ConfigService: ConfigService) {
   ],
   providers: [
     provideAnimationsAsync(),
-    ConfigService
+    ConfigService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LogoutTimerInterceptor, // Primero este, para gestionar los temporizadores
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS, // Token de inyección para interceptores HTTP
+      useClass: AuthTokenInterceptor, // La clase de tu interceptor
+      multi: true // ¡Importante! Permite que existan múltiples interceptores
+    }
   ],
   bootstrap: [AppComponent]
 })
