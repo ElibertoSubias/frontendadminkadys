@@ -4,7 +4,7 @@ export const environment = {
   appBaseUrlMedia: "https://backendkadys.elisodevelopment.cloud/uploads",
   configFile: "assets/settings/settings.json",
   // ... otras variables que ya tengas
-  WARNING_TIME_BEFORE_EXPIRATION_MINUTES: 15, // Valor para desarrollo
+  WARNING_TIME_BEFORE_EXPIRATION_MINUTES: 1, // Valor para desarrollo
   LOGOUT_AFTER_WARNING_MINUTES: 1,
   TOKEN_REFRESH_BUFFER_SECONDS: 15,
   TOKEN_KEY: 'jwt_token',
