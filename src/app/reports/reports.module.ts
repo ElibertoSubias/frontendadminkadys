@@ -10,6 +10,7 @@ import { AllReservationsComponent } from './components/all-reservations/all-rese
 import { TodayReservationsComponent } from './components/today-reservations/today-reservations.component';
 import { CanceledReservationsComponent } from './components/canceled-reservations/canceled-reservations.component';
 import { HttpClient, provideHttpClient } from '@angular/common/http';
+import { TicketPrinterComponent } from '../ticket-printer/ticket-printer.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { HttpClient, provideHttpClient } from '@angular/common/http';
         ReportsRoutingModule,
         SharedModule,
         OutForTodayComponent,
-        CanceledReservationsComponent
+        CanceledReservationsComponent,
+        TicketPrinterComponent
     ],
     providers: [provideHttpClient(), HttpClient]
 })

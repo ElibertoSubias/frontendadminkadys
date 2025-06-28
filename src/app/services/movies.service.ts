@@ -233,4 +233,10 @@ export class MoviesService {
         return this.http.post<any>(`${environment.appBaseUrl}/client`, JSON.stringify(data), {headers});
     }
 
+    public getTicketInfo(idReservation: string): Observable<any> {
+        const token = this.apiService.getAccessToken();
+        const headers = { 'x-auth-token': `${token}` };
+        return this.http.get<any>(`${environment.appBaseUrl}/reservation/ticket/${idReservation}`, { headers });
+    }
+
 }

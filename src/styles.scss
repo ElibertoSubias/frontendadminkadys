@@ -34,6 +34,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     .contenedor-padding-width {
         max-width: 100% !important;
     }
+
+    table {
+        display: none !important;
+    }
     // body {
     //     margin: 0 !important;
     //     padding: 0 !important;
